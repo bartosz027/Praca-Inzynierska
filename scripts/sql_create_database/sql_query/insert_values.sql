@@ -2,10 +2,10 @@ USE PI_DB;
 
 -- Account
 SET IDENTITY_INSERT [dbo].[Account] ON
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (1, N'pudzian028', N'test1@gmail.com', N'okon')
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (2, N'karmelek17', N'test2@gmail.com', N'okon')
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (3, N'pawelek216', N'test3@gmail.com', N'okon')
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (4, N'marian2000', N'test4@gmail.com', N'okon')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (1, N'pudzian028', N'test1@gmail.com', N'okon1')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (2, N'karmelek17', N'test2@gmail.com', N'okon2')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (3, N'pawelek216', N'test3@gmail.com', N'okon3')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (4, N'marian2000', N'test4@gmail.com', N'okon4')
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 -- Friendship

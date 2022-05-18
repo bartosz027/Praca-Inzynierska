@@ -1,32 +1,32 @@
 @echo off
 echo - mapping database...
 
-set edmx_source_dir=%cd%\EDMX
-set entity_framework_dir=%cd%\EntityFramework
+set edmx_dir=%cd%\EDMX
+set ef_utility_dir=%cd%\EF6.Utility
 
 cd ..\..\
-set edmx_target_dir=%cd%\libs\Network.Server\Database
+set database_dir=%cd%\libs\Network.Server\Database
 
-del %edmx_target_dir% /F /Q
-xcopy %edmx_source_dir%\PiDbModel.* %edmx_target_dir%
+del %database_dir% /F /Q
+xcopy %edmx_dir%\template\PiDbModel.* %database_dir%
 
-cd %edmx_target_dir%
+cd %database_dir%
 %windir%\Microsoft.NET\Framework\v4.0.30319\edmgen.exe /mode:fullgeneration /c:"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=PI_DB; Integrated Security=SSPI" /project:PiDbModel /entitycontainer:PiDbContext /namespace:PiDbModel /language:CSharp /pl
 
-cd %edmx_source_dir%
-start EDMX.exe %edmx_target_dir%\ ..\..\sql_create_database\sql_query\create_tabels.sql
+cd %edmx_dir%
+start EDMX.exe %database_dir%\ ..\..\sql_create_database\sql_query\create_tabels.sql
 
-cd %entity_framework_dir%
-call text_transform.bat %edmx_target_dir% cs
+cd %ef_utility_dir%
+call text_transform.bat %database_dir% cs
 
-del %edmx_target_dir%\PiDbModel.csdl
-del %edmx_target_dir%\PiDbModel.msl
-del %edmx_target_dir%\PiDbModel.ssdl
+del %database_dir%\PiDbModel.csdl
+del %database_dir%\PiDbModel.msl
+del %database_dir%\PiDbModel.ssdl
 
-del %edmx_target_dir%\PiDbModel.ObjectLayer.cs
-del %edmx_target_dir%\PiDbModel.Views.cs
+del %database_dir%\PiDbModel.ObjectLayer.cs
+del %database_dir%\PiDbModel.Views.cs
 
-del %edmx_target_dir%\t4list.txt
+del %database_dir%\t4list.txt
 
 echo - mapping finished
 echo.
