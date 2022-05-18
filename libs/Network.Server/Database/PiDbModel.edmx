@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="PiDbModelStoreContainer">
+          <EntitySet Name="Account" EntityType="PiDbModel.Store.Account" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Friendship" EntityType="PiDbModel.Store.Friendship" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PrivateMessage" EntityType="PiDbModel.Store.PrivateMessage" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Friendshi__Frien__267ABA7A" Association="PiDbModel.Store.FK__Friendshi__Frien__267ABA7A">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friendshi__UserI__25869641" Association="PiDbModel.Store.FK__Friendshi__UserI__25869641">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrivateMe__Recei__2A4B4B5E" Association="PiDbModel.Store.FK__PrivateMe__Recei__2A4B4B5E">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="PrivateMessage" EntitySet="PrivateMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrivateMe__Sende__29572725" Association="PiDbModel.Store.FK__PrivateMe__Sende__29572725">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="PrivateMessage" EntitySet="PrivateMessage" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FriendID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrivateMessage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="varchar" Nullable="false" MaxLength="5000" />
+          <Property Name="SenderID" Type="int" Nullable="false" />
+          <Property Name="ReceiverID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Friendshi__Frien__267ABA7A">
+          <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
+          <End Role="Friendship" Type="PiDbModel.Store.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="FriendID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friendshi__UserI__25869641">
+          <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
+          <End Role="Friendship" Type="PiDbModel.Store.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrivateMe__Recei__2A4B4B5E">
+          <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
+          <End Role="PrivateMessage" Type="PiDbModel.Store.PrivateMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PrivateMessage">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrivateMe__Sende__29572725">
+          <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
+          <End Role="PrivateMessage" Type="PiDbModel.Store.PrivateMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PrivateMessage">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PiDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PiDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="PiDbModel.Account" />
+          <EntitySet Name="Friendships" EntityType="PiDbModel.Friendship" />
+          <EntitySet Name="PrivateMessages" EntityType="PiDbModel.PrivateMessage" />
+          <AssociationSet Name="FK__Friendshi__Frien__267ABA7A" Association="PiDbModel.FK__Friendshi__Frien__267ABA7A">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Friendship" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friendshi__UserI__25869641" Association="PiDbModel.FK__Friendshi__UserI__25869641">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Friendship" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrivateMe__Recei__2A4B4B5E" Association="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="PrivateMessage" EntitySet="PrivateMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrivateMe__Sende__29572725" Association="PiDbModel.FK__PrivateMe__Sende__29572725">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="PrivateMessage" EntitySet="PrivateMessages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Friends" Relationship="PiDbModel.FK__Friendshi__Frien__267ABA7A" FromRole="Account" ToRole="Friendship" />
+          <NavigationProperty Name="PrivateMessagesReceived" Relationship="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E" FromRole="Account" ToRole="PrivateMessage" />
+          <NavigationProperty Name="PrivateMessagesSent" Relationship="PiDbModel.FK__PrivateMe__Sende__29572725" FromRole="Account" ToRole="PrivateMessage" />
+        </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FriendID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Friend" Relationship="PiDbModel.FK__Friendshi__Frien__267ABA7A" FromRole="Friendship" ToRole="Account" />
+          <NavigationProperty Name="User" Relationship="PiDbModel.FK__Friendshi__UserI__25869641" FromRole="Friendship" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="PrivateMessage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="5000" Unicode="false" FixedLength="false" />
+          <Property Name="SenderID" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E" FromRole="PrivateMessage" ToRole="Account" />
+          <NavigationProperty Name="Sender" Relationship="PiDbModel.FK__PrivateMe__Sende__29572725" FromRole="PrivateMessage" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__Friendshi__Frien__267ABA7A">
+          <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
+          <End Role="Friendship" Type="PiDbModel.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="FriendID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friendshi__UserI__25869641">
+          <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
+          <End Role="Friendship" Type="PiDbModel.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrivateMe__Recei__2A4B4B5E">
+          <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
+          <End Role="PrivateMessage" Type="PiDbModel.PrivateMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PrivateMessage">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrivateMe__Sende__29572725">
+          <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
+          <End Role="PrivateMessage" Type="PiDbModel.PrivateMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PrivateMessage">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PiDbModelStoreContainer" CdmEntityContainer="PiDbContext">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="PiDbModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friendships">
+            <EntityTypeMapping TypeName="PiDbModel.Friendship">
+              <MappingFragment StoreEntitySet="Friendship">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FriendID" ColumnName="FriendID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrivateMessages">
+            <EntityTypeMapping TypeName="PiDbModel.PrivateMessage">
+              <MappingFragment StoreEntitySet="PrivateMessage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="ed27a39ef9024b149381e5d54ca68d5b" Name="Diagram1">
+        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="5.375" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="7.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PiDbModel.PrivateMessage" Width="1.5" PointX="7.625" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="PiDbModel.FK__Friendshi__Frien__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__Friendshi__UserI__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__PrivateMe__Sende__29572725" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

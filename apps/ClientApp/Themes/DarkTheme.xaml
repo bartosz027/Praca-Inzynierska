@@ -1,0 +1,165 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Tło okna logowania/rejestracji -->
+    <Style TargetType="{x:Type Grid}" BasedOn="{x:Null}"
+           x:Key="LoginWindowMainBackground">
+        
+        <Setter Property="Background"
+                Value="#212D40"/>
+
+    </Style>
+
+    <!-- Środek okna logowania/rejestracji -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="LoginWindowCenter">
+        
+        <Setter Property="Background"
+                Value="#E1364156"/>
+
+    </Style>
+
+    <!-- Środek okna logowania/rejestracji -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="ToolBarStyle">
+        
+        <Setter Property="Background"
+                Value="#11151C"/>
+
+    </Style>
+    
+    <!-- Widok wprowadzania kodu rejestracji -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="RegisterCodeCenter">
+        
+        <Setter Property="Background"
+                Value="#AA7D4E57"/>
+
+    </Style>
+
+    <!-- TextBlock -->
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{x:Null}"
+           x:Key="LoginWindowTextBlock">
+        
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#EFFFFA"/>
+        <Setter Property="FontSize" Value="16"/>
+
+    </Style>
+
+    <!-- Passwordbox okrągły-->
+    <Style TargetType="PasswordBox" x:Key="RoundCornerPasswordBox">
+        
+        <Setter Property="PasswordChar" Value="●"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Foreground" Value="#EFFFFA"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border CornerRadius="8" x:Name="Bd" Background="#C1D66853"  OpacityMask="{x:Null}">
+                        <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost" Template="{DynamicResource ScrollViewerControlTemplate1}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+
+    <!-- Textbox okrągły-->
+    <Style TargetType="{x:Type TextBox}" BasedOn="{x:Null}"
+           x:Key="RoundCornerTextBox">
+        
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Foreground" Value="#EFFFFA"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border>
+                        <Border CornerRadius="8" x:Name="Bd" Background="#C1D66853"  OpacityMask="{x:Null}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost" Template="{DynamicResource ScrollViewerControlTemplate1}"/>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!--Guziki Okna Logowania-->
+    <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
+           x:Key="LoginWindowButton">
+        
+        <Setter Property="Background" Value="Blue" />
+        <Setter Property="FontSize" Value="16"/>
+
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type Button}">
+                    <Border x:Name="border" CornerRadius="8" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#e8e7e7"/>
+                            <Setter Property="Foreground" Value="#212D40"/>
+                            <Setter Property="BorderBrush" Value="#e8e7e7"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#D66853"/>
+                            <Setter Property="BorderBrush" Value="#00afdd"></Setter>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#7D4E57"/>
+                            <Setter Property="BorderBrush" Value="#254c8e"></Setter>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#D66853"/>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+    
+    <!--ChcekBox Okna Logowania-->
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{x:Null}"
+           x:Key="LoginWindowCheckBox">
+        
+        <Setter Property="Background" Value="#C1D66853" />
+        <Setter Property="Foreground" Value="#EFFFFA" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        
+    </Style>
+
+</ResourceDictionary>
