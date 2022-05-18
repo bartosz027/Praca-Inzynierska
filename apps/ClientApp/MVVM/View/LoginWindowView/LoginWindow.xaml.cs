@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using ClientApp.MVVM.View.PIWindowView;
+using ClientApp.MVVM.ViewModel.PIWindowViewModel;
 
 namespace ClientApp.MVVM.View.LoginWindowView
 {
@@ -37,6 +39,17 @@ namespace ClientApp.MVVM.View.LoginWindowView
 
             // Close current window
             Application.Current.Windows[0].Close();
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+
+            PIWindow PIWindow = new PIWindow();
+            PIWindowViewModel PIWindowViewModel = new PIWindowViewModel();
+            PIWindow.DataContext = PIWindowViewModel;
+            PIWindow.Show();
+            // Close current window
+           // Application.Current.Windows[0].Close();
         }
     }
 }

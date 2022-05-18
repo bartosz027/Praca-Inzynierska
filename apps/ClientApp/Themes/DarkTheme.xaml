@@ -37,6 +37,59 @@
 
     </Style>
 
+    <!-- Pasek nawigacji tło -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="PIWinodwNavigationBarBackground">
+
+        <Setter Property="Background"
+                Value="#364156"/>
+    </Style>
+
+    <!-- Pasek nawigacji -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="PIWinodwNavigationBar">
+
+        <Setter Property="Background"
+                Value="#11151C"/>
+        <Setter Property="CornerRadius"
+                Value="20"/>
+        <Setter Property="Margin"
+                Value="10,5"/>
+    </Style>
+
+    <!-- Pasek nawigacji lewy sektor -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="PIWinodwNavigationBarLeft">
+
+        <Setter Property="BorderBrush"
+                Value="#364156"/>
+        <Setter Property="BorderThickness"
+                Value="0,0,1,0"/>
+
+    </Style>
+
+    <!-- Pasek nawigacji środkowy sektor -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="PIWinodwNavigationBarMiddle">
+
+        <Setter Property="BorderBrush"
+                Value="#364156"/>
+        <Setter Property="BorderThickness"
+                Value="1,0,1,0"/>
+
+    </Style>
+
+    <!-- Pasek nawigacji prawy sektor -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="PIWinodwNavigationBarRight">
+
+        <Setter Property="BorderBrush"
+                Value="#364156"/>
+        <Setter Property="BorderThickness"
+                Value="1,0,0,0"/>
+
+    </Style>
+
     <!-- TextBlock -->
     <Style TargetType="{x:Type TextBlock}" BasedOn="{x:Null}"
            x:Key="LoginWindowTextBlock">

@@ -82,7 +82,8 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="MVVM\ViewModel\LoginWindowViewModel\LoginWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\LoginWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\PIWindowViewModel.cs" />
     <Compile Include="MVVM\View\LoginWindowView\ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="MVVM\View\LoginWindowView\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PIWindowView\PIWindow.xaml.cs">
+      <DependentUpon>PIWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -161,6 +165,10 @@
     <Page Include="MVVM\View\LoginWindowView\RegisterWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\PIWindowView\PIWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\DarkTheme.xaml">
       <Generator>MSBuild:Compile</Generator>

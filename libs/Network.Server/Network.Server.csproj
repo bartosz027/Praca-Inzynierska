@@ -79,11 +79,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\PiDbModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PiDbModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Database\PrivateMessage.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>

@@ -16,6 +16,7 @@
     <Window.DataContext>
         <viewModel:LoginWindowViewModel/>
     </Window.DataContext>
+    
 
     <Grid Style="{DynamicResource LoginWindowMainBackground}">
         
@@ -109,7 +110,8 @@
                                 VerticalAlignment="Top"
                                 Margin="10"
                                 Content="Zaloguj"
-                                Style="{DynamicResource LoginWindowButton}"/>
+                                Style="{DynamicResource LoginWindowButton}"
+                                Click="Login_Click"/>
 
                     </Grid>
                     
