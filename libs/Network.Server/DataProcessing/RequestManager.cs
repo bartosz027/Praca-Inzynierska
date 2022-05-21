@@ -1,25 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+using Network.Server.DataProcessing.Account;
 using Network.Server.DataProcessing.Test;
-using Network.Shared.DataTransfer.Interface;
+
+using Network.Shared.DataTransfer.Base;
 
 namespace Network.Server.DataProcessing {
 
     internal class RequestResult {
         // Response
         public ClientInfo ResponseReceiver { get; set; }
-        public IResponse ResponseData { get; set; }
+        public Response ResponseData { get; set; }
 
         // Notification
         public List<ClientInfo> NotificationReceivers { get; set; }
-        public INotification NotificationData { get; set; }
+        public Notification NotificationData { get; set; }
     }
 
     internal static class RequestManager {
-        public static RequestResult Dispatch(IRequest request, ClientInfo client) {
+        public static RequestResult Dispatch(Request request, ClientInfo client) {
             var dispatcher = new RequestDispatcher(request);
-            TestRequestManager.Dispatch(dispatcher, client);
+
+            AccountRequestManager.Dispatch(dispatcher, client);
+
+            #if DEBUG
+                TestRequestManager.Dispatch(dispatcher, client);
+            #endif
 
             return dispatcher.Result;
         }

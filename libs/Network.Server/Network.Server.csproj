@@ -82,6 +82,7 @@
     <Compile Include="Database\PrivateMessage.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataProcessing\Account\AccountRequestManager.cs" />
     <Compile Include="DataProcessing\Test\TestRequestManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProcessing\RequestManager.cs" />
@@ -117,6 +118,7 @@
       <LastGenOutput>PiDbModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

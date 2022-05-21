@@ -1,15 +1,15 @@
 ﻿using System;
-using Network.Shared.DataTransfer.Interface;
+using Network.Shared.DataTransfer.Base;
 
 namespace Network.Server.DataProcessing {
 
     internal class RequestDispatcher {
-        public RequestDispatcher(IRequest request) {
+        public RequestDispatcher(Request request) {
             _Result = new RequestResult();
             _Request = request;
         }
 
-        public void Dispatch<T>(Func<T, ClientInfo, RequestResult> function, ClientInfo client) where T : IRequest {
+        public void Dispatch<T>(Func<T, ClientInfo, RequestResult> function, ClientInfo client) where T : Request {
             if (_Request.GetType() == typeof(T)) {
                 _Result = function((T)_Request, client);
             }
@@ -25,7 +25,7 @@ namespace Network.Server.DataProcessing {
         }
 
         private RequestResult _Result;
-        private readonly IRequest _Request;
+        private readonly Request _Request;
     }
 
 }

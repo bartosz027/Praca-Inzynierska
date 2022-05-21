@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-using Network.Shared.DataTransfer.Test.Client;
-using Network.Shared.DataTransfer.Test.Server;
+using Network.Shared.DataTransfer.Model.Test.Client;
+using Network.Shared.DataTransfer.Model.Test.Server;
 
 namespace Network.Server.DataProcessing.Test {
 
@@ -18,7 +18,7 @@ namespace Network.Server.DataProcessing.Test {
         public static void Dispatch(RequestDispatcher dispatcher, ClientInfo client) {
             // Server
             dispatcher.Dispatch<ServerTestPacketRequest>(OnServerTestPacketRequest, client);
-            dispatcher.Dispatch<ServerTestSaveLogsRequest>(OnServerTestResultRequest, client);
+            dispatcher.Dispatch<ServerTestSaveLogsRequest>(OnServerTestSaveLogsRequest, client);
 
             // Client
             dispatcher.Dispatch<ClientTestRequest>(OnClientTestRequest, client);
@@ -42,7 +42,7 @@ namespace Network.Server.DataProcessing.Test {
             return null;
         }
 
-        private static RequestResult OnServerTestResultRequest(ServerTestSaveLogsRequest request, ClientInfo client) {
+        private static RequestResult OnServerTestSaveLogsRequest(ServerTestSaveLogsRequest request, ClientInfo client) {
             var test = _Logger.Find(p => p.Filepath == request.Filepath);
             File.WriteAllText(test.Filepath, test.Data);
 
@@ -63,7 +63,7 @@ namespace Network.Server.DataProcessing.Test {
                     Server.SendResponse(client, new ClientTestResponse() {
                         ID = i,
 
-                        LastResponse = ((i + 1) == request.ResponseCount),
+                        IsLastResponse = ((i + 1) == request.ResponseCount),
                         UselessData = data
                     });
                 }
@@ -80,7 +80,7 @@ namespace Network.Server.DataProcessing.Test {
                     Server.SendNotification(client, new ClientTestNotification() {
                         ID = i,
 
-                        LastNotification = ((i + 1) == request.NotificationCount),
+                        IsLastNotification = ((i + 1) == request.NotificationCount),
                         UselessData = data
                     });
                 }

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Network.Client;
-using Network.Shared.DataTransfer.Test.Server;
+using Network.Shared.DataTransfer.Model.Test.Server;
 
 namespace ServerTest {
 

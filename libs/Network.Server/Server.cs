@@ -13,7 +13,7 @@ using Network.Server.Core;
 using Network.Server.DataProcessing;
 
 using Network.Shared.Core;
-using Network.Shared.DataTransfer.Interface;
+using Network.Shared.DataTransfer.Base;
 
 namespace Network.Server {
 
@@ -25,6 +25,9 @@ namespace Network.Server {
         // Connection data
         public TcpClient TCP { get; set; }
         public NetworkStream Stream { get; set; }
+
+        // Authentication
+        public string AccessToken { get; set; }
     }
 
     public class Server {
@@ -64,7 +67,7 @@ namespace Network.Server {
         }
 
         private void StartClientThread(ClientInfo client) {
-            var request_queue = new BlockingCollection<IRequest>();
+            var request_queue = new BlockingCollection<Request>();
             var cancellation_token = new CancellationTokenSource();
 
             // Receive request
@@ -100,7 +103,7 @@ namespace Network.Server {
                             var data = new byte[length];
                             Array.Copy(request_buffer, index + 4, data, 0, length);
 
-                            var request = Serializer.Deserialize(data) as IRequest;
+                            var request = Serializer.Deserialize(data) as Request;
                             request_queue.Add(request);
                         }
                     }
@@ -156,7 +159,7 @@ namespace Network.Server {
         }
 
 
-        internal static void SendResponse(ClientInfo client, IResponse response) {
+        internal static void SendResponse(ClientInfo client, Response response) {
             try {
                 byte[] response_bytes = Serializer.Serialize(response);
                 client.Stream.Write(response_bytes, 0, response_bytes.Length);
@@ -166,7 +169,7 @@ namespace Network.Server {
             }
         }
 
-        internal static void SendNotification(ClientInfo client, INotification notification) {
+        internal static void SendNotification(ClientInfo client, Notification notification) {
             try {
                 byte[] notification_bytes = Serializer.Serialize(notification);
                 client.Stream.Write(notification_bytes, 0, notification_bytes.Length);
@@ -177,7 +180,7 @@ namespace Network.Server {
         }
 
 
-        internal static void BroadcastNotification(List<ClientInfo> receivers, INotification notification) {
+        internal static void BroadcastNotification(List<ClientInfo> receivers, Notification notification) {
             foreach (var receiver in receivers) {
                 Server.SendNotification(receiver, notification);
             }

@@ -52,15 +52,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Serializer.cs" />
-    <Compile Include="DataTransfer\Interface\INotification.cs" />
-    <Compile Include="DataTransfer\Interface\IRequest.cs" />
-    <Compile Include="DataTransfer\Interface\IResponse.cs" />
-    <Compile Include="DataTransfer\Test\Client\ClientTestNotification.cs" />
-    <Compile Include="DataTransfer\Test\Client\ClientTestResponse.cs" />
-    <Compile Include="DataTransfer\Test\Client\ClientTestRequest.cs" />
-    <Compile Include="DataTransfer\Test\Server\ServerTestSaveLogsRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\Login\LoginRequest.cs" />
+    <Compile Include="DataTransfer\Base\Notification.cs" />
+    <Compile Include="DataTransfer\Base\Request.cs" />
+    <Compile Include="DataTransfer\Base\Response.cs" />
+    <Compile Include="DataTransfer\Model\Account\Login\LoginResponse.cs" />
+    <Compile Include="DataTransfer\Model\Test\Client\ClientTestNotification.cs" />
+    <Compile Include="DataTransfer\Model\Test\Client\ClientTestResponse.cs" />
+    <Compile Include="DataTransfer\Model\Test\Client\ClientTestRequest.cs" />
+    <Compile Include="DataTransfer\Model\Test\Server\ServerTestSaveLogsRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataTransfer\Test\Server\ServerTestPacketRequest.cs" />
+    <Compile Include="DataTransfer\Model\Test\Server\ServerTestPacketRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Network.Shared.DataTransfer.Interface;
+using Network.Shared.DataTransfer.Base;
 
-namespace Network.Shared.DataTransfer.Test.Client {
+namespace Network.Shared.DataTransfer.Model.Test.Client {
 
     [Serializable]
-    public class ClientTestResponse : IResponse {
+    public class ClientTestResponse : Response {
         public int ID { get; set; }
-        public bool LastResponse { get; set; }
+        public bool IsLastResponse { get; set; }
 
         // For random packet size
         public List<long> UselessData { get; set; }

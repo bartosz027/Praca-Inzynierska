@@ -1,20 +1,20 @@
 ﻿using System;
-using Network.Shared.DataTransfer.Interface;
+using Network.Shared.DataTransfer.Base;
 
 namespace Network.Client.DataProcessing {
 
     public class ResponseDispatcher {
-        public ResponseDispatcher(IResponse response) {
+        public ResponseDispatcher(Response response) {
             _Response = response;
         }
 
-        public void Dispatch<T>(Action<T> function) where T : IResponse {
+        public void Dispatch<T>(Action<T> function) where T : Response {
             if (_Response.GetType() == typeof(T)) {
                 function((T)_Response);
             }
         }
 
-        private readonly IResponse _Response;
+        private readonly Response _Response;
     }
 
 }

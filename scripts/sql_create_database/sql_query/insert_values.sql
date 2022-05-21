@@ -2,10 +2,10 @@ USE PI_DB;
 
 -- Account
 SET IDENTITY_INSERT [dbo].[Account] ON
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (1, N'pudzian028', N'test1@gmail.com', N'okon1')
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (2, N'karmelek17', N'test2@gmail.com', N'okon2')
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (3, N'pawelek216', N'test3@gmail.com', N'okon3')
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password]) VALUES (4, N'marian2000', N'test4@gmail.com', N'okon4')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [AccessToken]) VALUES (1, N'pudzian028', N'test1@gmail.com', N'okon1', N'4f7e1E38C8014022956e0C78C7634412')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [AccessToken]) VALUES (2, N'karmelek17', N'test2@gmail.com', N'okon2', N'e7FD0528FFCa4eFe8Dbca0b7594b2eF5')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [AccessToken]) VALUES (3, N'pawelek216', N'test3@gmail.com', N'okon3', N'b6d49fE0Be924495970BA655C568ad72')
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [AccessToken]) VALUES (4, N'marian2000', N'test4@gmail.com', N'okon4', N'E4393aDF21a2419793cDea936fd894cD')
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 -- Friendship

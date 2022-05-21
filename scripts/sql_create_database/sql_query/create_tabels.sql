@@ -7,6 +7,8 @@ CREATE TABLE Account (
     Email               VARCHAR(128)        NOT NULL,
     Password            VARCHAR(1024)       NOT NULL,
 	
+	AccessToken			VARCHAR(32)			NOT NULL,
+	
 	-- NP:Friendships -> rename_to("Friends")
 	-- NP:Friendships1 -> remove_property(true)
 	

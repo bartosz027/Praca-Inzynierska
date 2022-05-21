@@ -4,8 +4,9 @@ using System.IO;
 using System.Threading;
 
 using Network.Client;
-using Network.Shared.DataTransfer.Interface;
-using Network.Shared.DataTransfer.Test.Client;
+
+using Network.Shared.DataTransfer.Base;
+using Network.Shared.DataTransfer.Model.Test.Client;
 
 namespace ClientTest {
 
@@ -42,20 +43,20 @@ namespace ClientTest {
         }
 
 
-        static void OnResponseReceived(object sender, IResponse response) {
+        static void OnResponseReceived(object sender, Response response) {
             var server_response = (ClientTestResponse)response;
             ReceivedResponses += "[" + DateTime.Now + "] = " + server_response.ID + "\n";
 
-            if (server_response.LastResponse) {
+            if (server_response.IsLastResponse) {
                 AllResponseReceived = true;
             }
         }
 
-        static void OnNotificationReceived(object sender, INotification notification) {
+        static void OnNotificationReceived(object sender, Notification notification) {
             var server_notification = (ClientTestNotification)notification;
             ReceivedNotifications += "[" + DateTime.Now + "] = " + server_notification.ID + "\n";
 
-            if (server_notification.LastNotification) {
+            if (server_notification.IsLastNotification) {
                 AllNotificationReceived = true;
             }
         }

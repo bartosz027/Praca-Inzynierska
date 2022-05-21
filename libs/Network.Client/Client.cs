@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Network.Shared.Core;
-using Network.Shared.DataTransfer.Interface;
+using Network.Shared.DataTransfer.Base;
 
 namespace Network.Client {
 
@@ -96,12 +96,12 @@ namespace Network.Client {
                         var received_data = received_data_queue.Take(cancellation.Token);
 
                         switch (received_data) {
-                            case IResponse: {
-                                ResponseReceived?.Invoke(this, (IResponse)received_data);
+                            case Response: {
+                                ResponseReceived?.Invoke(this, (Response)received_data);
                                 break;
                             }
-                            case INotification: {
-                                NotificationReceived?.Invoke(this, (INotification)received_data);
+                            case Notification: {
+                                NotificationReceived?.Invoke(this, (Notification)received_data);
                                 break;
                             }
                         }
@@ -119,7 +119,7 @@ namespace Network.Client {
         }
 
 
-        public void SendRequest(IRequest request) {
+        public void SendRequest(Request request) {
             try {
                 byte[] request_bytes = Serializer.Serialize(request);
                 Client.Data.Stream.Write(request_bytes, 0, request_bytes.Length);
@@ -132,7 +132,7 @@ namespace Network.Client {
 
         public static class Data {
             // User data
-            // TODO: Username, Access token
+            public static string AccessToken { get; set; }
 
             // Connection data
             internal static TcpClient TCP { get; set; }
@@ -141,8 +141,8 @@ namespace Network.Client {
 
         
         // Events
-        public event EventHandler<IResponse> ResponseReceived;
-        public event EventHandler<INotification> NotificationReceived;
+        public event EventHandler<Response> ResponseReceived;
+        public event EventHandler<Notification> NotificationReceived;
     }
 
 }

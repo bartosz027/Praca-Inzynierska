@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Network.Shared.DataTransfer.Interface;
+using Network.Shared.DataTransfer.Base;
 
-namespace Network.Shared.DataTransfer.Test.Server {
+namespace Network.Shared.DataTransfer.Model.Test.Server {
 
     [Serializable]
-    public class ServerTestPacketRequest : IRequest {
+    public class ServerTestPacketRequest : Request {
         public int ID { get; set; }
 
         // For logging

@@ -26,6 +26,7 @@ namespace Network.Server.Database
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string AccessToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friendship> Friends { get; set; }
