@@ -202,6 +202,175 @@
         </Setter>
         
     </Style>
+
+    <!--Guziki nawigacyjne PIWindow-->
+    <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
+           x:Key="NavigationButton">
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type Button}">
+
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            <Setter Property="Width" Value="70"/>
+                            <Setter Property="Height" Value="70"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!--Guziki nawigacyjne dynamiczne mikrofon PIWindow-->
+    <Style TargetType="{x:Type ToggleButton}" BasedOn="{x:Null}"
+           x:Key="MicroButton">
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type ToggleButton}">
+
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="/ClientApp;component/Images/Icons/DarkThemeIcons/MicrophoneIcon.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="/ClientApp;component/Images/Icons/DarkThemeIcons/MutedMicrophoneIcon.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            <Setter Property="Width" Value="70"/>
+                            <Setter Property="Height" Value="70"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!--Guziki nawigacyjne dynamiczne Słuchawki PIWindow-->
+    <Style TargetType="{x:Type ToggleButton}" BasedOn="{x:Null}"
+           x:Key="HeadphonesButton">
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type ToggleButton}">
+
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="/ClientApp;component/Images/Icons/DarkThemeIcons/HeadphonesIcon.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="/ClientApp;component/Images/Icons/DarkThemeIcons/MutedHeadphonesIcon.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            <Setter Property="Width" Value="70"/>
+                            <Setter Property="Height" Value="70"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!--Ikona Listy znajomych-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="FriendListIcon">
+
+        <Setter Property="Source" Value="/ClientApp;component/Images/Icons/DarkThemeIcons/FriendsListIcon.png"/>
+    </Style>
+
+    <!--Ikona Ustawień znajomych-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="SettingsIcon">
+
+        <Setter Property="Source" Value="/ClientApp;component/Images/Icons/DarkThemeIcons/SettingsIcon.png"/>
+    </Style>
     
     <!--ChcekBox Okna Logowania-->
     <Style TargetType="{x:Type CheckBox}" BasedOn="{x:Null}"
@@ -214,5 +383,23 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         
     </Style>
+
+    <!--Kuleczka powiadomień-->
+    <Style TargetType="{x:Type Ellipse}" BasedOn="{x:Null}"
+           x:Key="NotificationBalls">
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Fill" Value="#D66853"/>
+            </Trigger>
+            
+        </Style.Triggers>
+
+    </Style>
+    
 
 </ResourceDictionary>
