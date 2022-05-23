@@ -12,14 +12,11 @@ namespace Network.Server.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class PrivateMessage
+    public partial class Verification
     {
         public int ID { get; set; }
-        public string Content { get; set; }
-        public int SenderID { get; set; }
-        public int ReceiverID { get; set; }
-    
-        public virtual Account Receiver { get; set; }
-        public virtual Account Sender { get; set; }
+        public string Email { get; set; }
+        public string Code { get; set; }
+        public System.DateTime ExpireDate { get; set; }
     }
 }

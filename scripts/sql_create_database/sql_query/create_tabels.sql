@@ -7,13 +7,14 @@ CREATE TABLE Account (
     Email               VARCHAR(128)        NOT NULL,
     Password            VARCHAR(1024)       NOT NULL,
 	
-	AccessToken			VARCHAR(32)			NOT NULL,
+	Verified			BIT					NOT NULL,
+	AccessToken			VARCHAR(32)			NULL,
 	
-	-- NP:Friendships -> rename_to("Friends")
-	-- NP:Friendships1 -> remove_property(true)
+	-- NP:Friendships  -> rename_to("Friends")
+	-- NP:Friendships1 -> remove_property()
 	
-	-- NP:PrivateMessages -> rename_to("PrivateMessagesReceived")
-	-- NP:PrivateMessages1 -> rename_to("PrivateMessagesSent")
+	-- NP:Messages  -> rename_to("MessagesReceived")
+	-- NP:Messages1 -> rename_to("MessagesSent")
 );
 
 CREATE TABLE Friendship (
@@ -22,17 +23,26 @@ CREATE TABLE Friendship (
     UserID              INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
     FriendID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
 	
-	-- NP:Account -> rename_to("Friend")
+	-- NP:Account  -> rename_to("Friend")
 	-- NP:Account1 -> rename_to("User")
 );
 
-CREATE TABLE PrivateMessage (
+CREATE TABLE Message (
     ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
     Content             VARCHAR(5000)       NOT NULL,
 
     SenderID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
     ReceiverID          INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
 	
-	-- NP:Account -> rename_to("Receiver")
+	-- NP:Account  -> rename_to("Receiver")
 	-- NP:Account1 -> rename_to("Sender")
+);
+
+CREATE TABLE Verification (
+	ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
+	
+	Email				VARCHAR(128)		NOT NULL,
+	Code				VARCHAR(6)			NOT NULL,
+	
+	ExpireDate			DATETIME			NOT NULL,
 );

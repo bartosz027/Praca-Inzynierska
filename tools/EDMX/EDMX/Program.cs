@@ -99,11 +99,7 @@ namespace EDMX {
                         }
 
                         if(data[i].Contains("remove_property")) {
-                            var start_index = data[i].IndexOf('(');
-                            var end_index = data[i].LastIndexOf(')');
-
-                            var value = data[i].Substring(start_index + 1, end_index - start_index - 1);
-                            RemoveNavigationProperty(ref edmx_file, current_table, current_property, value);
+                            RemoveNavigationProperty(ref edmx_file, current_table, current_property);
                         }
                     }
                 }
@@ -136,30 +132,24 @@ namespace EDMX {
             }
         }
 
-        private static void RemoveNavigationProperty(ref string[] edmx, string current_table, string current_property, string value) {
-            if (value != "true" && value != "false") {
-                throw new ArgumentException();
-            }
+        private static void RemoveNavigationProperty(ref string[] edmx, string current_table, string current_property) {
+            bool csdl_content = false;
+            bool entity_type = false;
 
-            if (value == "true") {
-                bool csdl_content = false;
-                bool entity_type = false;
+            for (int i = 0; i < edmx.Length; i++) {
+                if (edmx[i].Contains("<!-- CSDL content -->")) {
+                    csdl_content = true;
+                }
 
-                for (int i = 0; i < edmx.Length; i++) {
-                    if(edmx[i].Contains("<!-- CSDL content -->")) {
-                        csdl_content = true;
-                    }
+                if (edmx[i].Contains("<EntityType Name=\"" + current_table + "\">")) {
+                    entity_type = true;
+                }
 
-                    if (edmx[i].Contains("<EntityType Name=\"" + current_table + "\">")) {
-                        entity_type = true;
-                    }
+                if ((csdl_content && entity_type) && edmx[i].Contains("<NavigationProperty Name=\"" + current_property + "\"")) {
+                    var line_to_be_removed = edmx[i];
+                    edmx = edmx.Where(p => p != line_to_be_removed).ToArray();
 
-                    if ((csdl_content && entity_type) && edmx[i].Contains("<NavigationProperty Name=\"" + current_property + "\"")) {
-                        var line_to_be_removed = edmx[i];
-                        edmx = edmx.Where(p => p != line_to_be_removed).ToArray();
-
-                        break;
-                    }
+                    break;
                 }
             }
         }

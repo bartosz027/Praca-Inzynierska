@@ -61,12 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\TokenGenerator.cs" />
+    <Compile Include="Core\SMTP.cs" />
     <Compile Include="Core\ThreadSafeList.cs" />
     <Compile Include="Core\TimestampTextWriter.cs" />
     <Compile Include="Database\Account.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Friendship.cs">
+      <DependentUpon>PiDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Message.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\PiDbModel.Context.cs">
@@ -79,7 +84,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\PrivateMessage.cs">
+    <Compile Include="Database\Verification.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataProcessing\Account\AccountRequestManager.cs" />

@@ -62,11 +62,12 @@ namespace ClientTest {
         }
 
 
-        static bool AllResponseReceived = false;
-        static bool AllNotificationReceived = false;
-
+        // TODO: Change this to logging library
         static string ReceivedResponses = "Responses: \n";
         static string ReceivedNotifications = "Notifications: \n";
+		
+		static bool AllResponseReceived = false;
+        static bool AllNotificationReceived = false;
     }
 
 }

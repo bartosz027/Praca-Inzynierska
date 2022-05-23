@@ -57,6 +57,10 @@
     <Compile Include="DataTransfer\Base\Request.cs" />
     <Compile Include="DataTransfer\Base\Response.cs" />
     <Compile Include="DataTransfer\Model\Account\Login\LoginResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\Register\RegisterRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\Register\RegisterResponse.cs" />
     <Compile Include="DataTransfer\Model\Test\Client\ClientTestNotification.cs" />
     <Compile Include="DataTransfer\Model\Test\Client\ClientTestResponse.cs" />
     <Compile Include="DataTransfer\Model\Test\Client\ClientTestRequest.cs" />

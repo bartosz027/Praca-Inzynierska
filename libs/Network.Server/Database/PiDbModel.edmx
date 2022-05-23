@@ -8,7 +8,8 @@
         <EntityContainer Name="PiDbModelStoreContainer">
           <EntitySet Name="Account" EntityType="PiDbModel.Store.Account" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Friendship" EntityType="PiDbModel.Store.Friendship" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PrivateMessage" EntityType="PiDbModel.Store.PrivateMessage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Message" EntityType="PiDbModel.Store.Message" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Verification" EntityType="PiDbModel.Store.Verification" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__Friendshi__Frien__267ABA7A" Association="PiDbModel.Store.FK__Friendshi__Frien__267ABA7A">
             <End Role="Account" EntitySet="Account" />
             <End Role="Friendship" EntitySet="Friendship" />
@@ -17,13 +18,13 @@
             <End Role="Account" EntitySet="Account" />
             <End Role="Friendship" EntitySet="Friendship" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrivateMe__Recei__2A4B4B5E" Association="PiDbModel.Store.FK__PrivateMe__Recei__2A4B4B5E">
+          <AssociationSet Name="FK__Message__Receive__2A4B4B5E" Association="PiDbModel.Store.FK__Message__Receive__2A4B4B5E">
             <End Role="Account" EntitySet="Account" />
-            <End Role="PrivateMessage" EntitySet="PrivateMessage" />
+            <End Role="Message" EntitySet="Message" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrivateMe__Sende__29572725" Association="PiDbModel.Store.FK__PrivateMe__Sende__29572725">
+          <AssociationSet Name="FK__Message__SenderI__29572725" Association="PiDbModel.Store.FK__Message__SenderI__29572725">
             <End Role="Account" EntitySet="Account" />
-            <End Role="PrivateMessage" EntitySet="PrivateMessage" />
+            <End Role="Message" EntitySet="Message" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
@@ -34,7 +35,8 @@
           <Property Name="Username" Type="varchar" Nullable="false" MaxLength="64" />
           <Property Name="Email" Type="varchar" Nullable="false" MaxLength="128" />
           <Property Name="Password" Type="varchar" Nullable="false" MaxLength="1024" />
-          <Property Name="AccessToken" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="Verified" Type="bit" Nullable="false" />
+          <Property Name="AccessToken" Type="varchar" MaxLength="32" />
         </EntityType>
         <EntityType Name="Friendship">
           <Key>
@@ -44,7 +46,7 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="FriendID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="PrivateMessage">
+        <EntityType Name="Message">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -52,6 +54,15 @@
           <Property Name="Content" Type="varchar" Nullable="false" MaxLength="5000" />
           <Property Name="SenderID" Type="int" Nullable="false" />
           <Property Name="ReceiverID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="Code" Type="varchar" Nullable="false" MaxLength="6" />
+          <Property Name="ExpireDate" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Friendshi__Frien__267ABA7A">
           <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
@@ -77,26 +88,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrivateMe__Recei__2A4B4B5E">
+        <Association Name="FK__Message__Receive__2A4B4B5E">
           <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
-          <End Role="PrivateMessage" Type="PiDbModel.Store.PrivateMessage" Multiplicity="*" />
+          <End Role="Message" Type="PiDbModel.Store.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PrivateMessage">
+            <Dependent Role="Message">
               <PropertyRef Name="ReceiverID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrivateMe__Sende__29572725">
+        <Association Name="FK__Message__SenderI__29572725">
           <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
-          <End Role="PrivateMessage" Type="PiDbModel.Store.PrivateMessage" Multiplicity="*" />
+          <End Role="Message" Type="PiDbModel.Store.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PrivateMessage">
+            <Dependent Role="Message">
               <PropertyRef Name="SenderID" />
             </Dependent>
           </ReferentialConstraint>
@@ -109,7 +120,8 @@
         <EntityContainer Name="PiDbContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="PiDbModel.Account" />
           <EntitySet Name="Friendships" EntityType="PiDbModel.Friendship" />
-          <EntitySet Name="PrivateMessages" EntityType="PiDbModel.PrivateMessage" />
+          <EntitySet Name="Messages" EntityType="PiDbModel.Message" />
+          <EntitySet Name="Verifications" EntityType="PiDbModel.Verification" />
           <AssociationSet Name="FK__Friendshi__Frien__267ABA7A" Association="PiDbModel.FK__Friendshi__Frien__267ABA7A">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Friendship" EntitySet="Friendships" />
@@ -118,13 +130,13 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Friendship" EntitySet="Friendships" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrivateMe__Recei__2A4B4B5E" Association="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E">
+          <AssociationSet Name="FK__Message__Receive__2A4B4B5E" Association="PiDbModel.FK__Message__Receive__2A4B4B5E">
             <End Role="Account" EntitySet="Accounts" />
-            <End Role="PrivateMessage" EntitySet="PrivateMessages" />
+            <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrivateMe__Sende__29572725" Association="PiDbModel.FK__PrivateMe__Sende__29572725">
+          <AssociationSet Name="FK__Message__SenderI__29572725" Association="PiDbModel.FK__Message__SenderI__29572725">
             <End Role="Account" EntitySet="Accounts" />
-            <End Role="PrivateMessage" EntitySet="PrivateMessages" />
+            <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
@@ -135,10 +147,11 @@
           <Property Name="Username" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
-          <Property Name="AccessToken" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="Verified" Type="Boolean" Nullable="false" />
+          <Property Name="AccessToken" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Friends" Relationship="PiDbModel.FK__Friendshi__Frien__267ABA7A" FromRole="Account" ToRole="Friendship" />
-          <NavigationProperty Name="PrivateMessagesReceived" Relationship="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E" FromRole="Account" ToRole="PrivateMessage" />
-          <NavigationProperty Name="PrivateMessagesSent" Relationship="PiDbModel.FK__PrivateMe__Sende__29572725" FromRole="Account" ToRole="PrivateMessage" />
+          <NavigationProperty Name="MessagesReceived" Relationship="PiDbModel.FK__Message__Receive__2A4B4B5E" FromRole="Account" ToRole="Message" />
+          <NavigationProperty Name="MessagesSent" Relationship="PiDbModel.FK__Message__SenderI__29572725" FromRole="Account" ToRole="Message" />
         </EntityType>
         <EntityType Name="Friendship">
           <Key>
@@ -150,7 +163,7 @@
           <NavigationProperty Name="Friend" Relationship="PiDbModel.FK__Friendshi__Frien__267ABA7A" FromRole="Friendship" ToRole="Account" />
           <NavigationProperty Name="User" Relationship="PiDbModel.FK__Friendshi__UserI__25869641" FromRole="Friendship" ToRole="Account" />
         </EntityType>
-        <EntityType Name="PrivateMessage">
+        <EntityType Name="Message">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -158,8 +171,17 @@
           <Property Name="Content" Type="String" Nullable="false" MaxLength="5000" Unicode="false" FixedLength="false" />
           <Property Name="SenderID" Type="Int32" Nullable="false" />
           <Property Name="ReceiverID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E" FromRole="PrivateMessage" ToRole="Account" />
-          <NavigationProperty Name="Sender" Relationship="PiDbModel.FK__PrivateMe__Sende__29572725" FromRole="PrivateMessage" ToRole="Account" />
+          <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__Message__Receive__2A4B4B5E" FromRole="Message" ToRole="Account" />
+          <NavigationProperty Name="Sender" Relationship="PiDbModel.FK__Message__SenderI__29572725" FromRole="Message" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="false" />
+          <Property Name="ExpireDate" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Friendshi__Frien__267ABA7A">
           <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
@@ -185,26 +207,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrivateMe__Recei__2A4B4B5E">
+        <Association Name="FK__Message__Receive__2A4B4B5E">
           <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
-          <End Role="PrivateMessage" Type="PiDbModel.PrivateMessage" Multiplicity="*" />
+          <End Role="Message" Type="PiDbModel.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PrivateMessage">
+            <Dependent Role="Message">
               <PropertyRef Name="ReceiverID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrivateMe__Sende__29572725">
+        <Association Name="FK__Message__SenderI__29572725">
           <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
-          <End Role="PrivateMessage" Type="PiDbModel.PrivateMessage" Multiplicity="*" />
+          <End Role="Message" Type="PiDbModel.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PrivateMessage">
+            <Dependent Role="Message">
               <PropertyRef Name="SenderID" />
             </Dependent>
           </ReferentialConstraint>
@@ -222,6 +244,7 @@
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
                 <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -235,13 +258,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PrivateMessages">
-            <EntityTypeMapping TypeName="PiDbModel.PrivateMessage">
-              <MappingFragment StoreEntitySet="PrivateMessage">
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="PiDbModel.Message">
+              <MappingFragment StoreEntitySet="Message">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
                 <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verifications">
+            <EntityTypeMapping TypeName="PiDbModel.Verification">
+              <MappingFragment StoreEntitySet="Verification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -267,14 +300,15 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="a57f9ba8f9694edca8c4fcd94318b6ee" Name="Diagram1">
-        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+      <Diagram DiagramId="b6eee87c337c4aca904c4c2ea8402a52" Name="Diagram1">
+        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PiDbModel.PrivateMessage" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PiDbModel.Message" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PiDbModel.Verification" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="PiDbModel.FK__Friendshi__Frien__267ABA7A" ManuallyRouted="false" />
         <AssociationConnector Association="PiDbModel.FK__Friendshi__UserI__25869641" ManuallyRouted="false" />
-        <AssociationConnector Association="PiDbModel.FK__PrivateMe__Recei__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="PiDbModel.FK__PrivateMe__Sende__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__Message__Receive__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__Message__SenderI__29572725" ManuallyRouted="false" />
       </Diagram>
     </Diagrams>
   </Designer>

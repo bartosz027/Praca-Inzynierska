@@ -18,21 +18,22 @@ namespace Network.Server.Database
         public Account()
         {
             this.Friends = new HashSet<Friendship>();
-            this.PrivateMessagesReceived = new HashSet<PrivateMessage>();
-            this.PrivateMessagesSent = new HashSet<PrivateMessage>();
+            this.MessagesReceived = new HashSet<Message>();
+            this.MessagesSent = new HashSet<Message>();
         }
     
         public int ID { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public bool Verified { get; set; }
         public string AccessToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friendship> Friends { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrivateMessage> PrivateMessagesReceived { get; set; }
+        public virtual ICollection<Message> MessagesReceived { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrivateMessage> PrivateMessagesSent { get; set; }
+        public virtual ICollection<Message> MessagesSent { get; set; }
     }
 }

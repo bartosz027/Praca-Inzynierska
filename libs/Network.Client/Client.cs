@@ -30,6 +30,7 @@ namespace Network.Client {
             Client.Data.Stream = Client.Data.TCP.GetStream();
 
             if (Client.Data.TCP.Connected) {
+                // TODO: Write to log file
                 StartListenerThread();
             }
         }
@@ -77,14 +78,13 @@ namespace Network.Client {
                     }
                     catch (Exception e) {
                         if(Client.Data.TCP.Connected == false) {
-                            Console.WriteLine("Disconnected from the server!");
-                            cancellation.Cancel();
+                            // TODO: Write to log file
 
+                            cancellation.Cancel();
                             break;
                         }
-                        else {
-                            Console.WriteLine(e);
-                        }
+
+                        // TODO: Write to log file
                     }
                 }
             }, TaskCreationOptions.LongRunning);
@@ -110,9 +110,8 @@ namespace Network.Client {
                         if(e is OperationCanceledException) {
                             break;
                         }
-                        else {
-                            Console.WriteLine(e);
-                        }
+
+                        // TODO: Write to log file
                     }
                 }
             }, TaskCreationOptions.LongRunning);
@@ -125,18 +124,21 @@ namespace Network.Client {
                 Client.Data.Stream.Write(request_bytes, 0, request_bytes.Length);
             }
             catch (Exception e) {
-                Console.WriteLine(e);
+                // TODO: Write to log file
             }
         }
 
 
         public static class Data {
             // User data
-            public static string AccessToken { get; set; }
+            public static string Username { get; set; }
 
             // Connection data
             internal static TcpClient TCP { get; set; }
             internal static NetworkStream Stream { get; set; }
+
+            // Authentication
+            internal static string AccessToken { get; set; }
         }
 
         

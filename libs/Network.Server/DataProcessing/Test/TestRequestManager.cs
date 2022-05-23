@@ -90,6 +90,7 @@ namespace Network.Server.DataProcessing.Test {
         }
 
 
+        // TODO: Change this to logging library
         private static List<TestResult> _Logger = new List<TestResult>();
     }
 

@@ -32,6 +32,10 @@ namespace Network.Server {
 
     public class Server {
         private Server() {
+            // TODO: Move this to config file
+            SMTP.Email = "noreplyteampi@gmail.com";
+            SMTP.Password = "Qwerty123.";
+
             Console.SetOut(new TimestampTextWriter());
         }
 
@@ -62,6 +66,7 @@ namespace Network.Server {
                 client_info.TCP = client;
                 client_info.Stream = client.GetStream();
 
+                Console.WriteLine("Connection established with {0}!", client_info.TCP.Client.RemoteEndPoint);
                 StartClientThread(client_info);
             }
         }
@@ -112,16 +117,17 @@ namespace Network.Server {
                             var client_info = Server.Data.Clients.Find(p => (p.TCP == client.TCP));
 
                             if (client_info != null) {
-                                Console.WriteLine("Client [id={0}, username={1}] connection lost!", client_info.UserID, client_info.Username);
+                                Console.WriteLine("Client [id={0}, username={1}] disconnected!", client_info.UserID, client_info.Username);
                                 Server.Data.Clients.Remove(client_info);
                             }
 
+                            Console.WriteLine("Connection lost with {0}!", client.TCP.Client.RemoteEndPoint);
                             cancellation_token.Cancel();
+
                             break;
                         }
-                        else {
-                            Console.WriteLine(e);
-                        }
+
+                        Console.WriteLine(e);
                     }
                 }
             }, TaskCreationOptions.LongRunning);
@@ -150,9 +156,8 @@ namespace Network.Server {
                         if (e is OperationCanceledException) {
                             break;
                         }
-                        else {
-                            Console.WriteLine(e);
-                        }
+
+                        Console.WriteLine(e);
                     }
                 }
             }, TaskCreationOptions.LongRunning);
