@@ -21,27 +21,6 @@ namespace ClientApp.MVVM.View.LoginWindowView
             Client.Instance.ResponseReceived += OnResponseReceived;
         }
 
-        private void OnResponseReceived(object sender, Response response)
-        {
-            var dispatcher = new ResponseDispatcher(response);
-            dispatcher.Dispatch<LoginResponse>(OnLoginResponse);
-            
-        }
-
-        private void OnLoginResponse(LoginResponse response)
-        {
-            switch (response.Status)
-            {
-                case STATUS.SUCCESS:
-                    MessageBox.Show(response.AccessToken);
-                    break;
-
-                case STATUS.FAILURE:
-                    MessageBox.Show("Wypierdalaj");
-                    break;
-            }
-        }
-
         private void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -50,6 +29,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
             }
         }
 
+        // Click
         private void Register_Click(object sender, RoutedEventArgs e)
         {
             RegisterWindow RegisterWindow = new RegisterWindow();
@@ -70,18 +50,41 @@ namespace ClientApp.MVVM.View.LoginWindowView
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
+            Client.Instance.SendRequest(new LoginRequest() { 
+                Email = EmailBox.Text, 
+                Password = PasswordBox.Password 
+            });
+        }
 
-            PIWindow PIWindow = new PIWindow();
-            PIWindowViewModel PIWindowViewModel = new PIWindowViewModel();
-            PIWindow.DataContext = PIWindowViewModel;
-            PIWindow.Show();
+        // Response Event Handling
+        private void OnResponseReceived(object sender, Response response)
+        {
+            var dispatcher = new ResponseDispatcher(response);
+            dispatcher.Dispatch<LoginResponse>(OnLoginResponse);
+        }
 
-            
-            //Client.Instance.SendRequest(new LoginRequest() { Email = EmailBox.Text, Password = PasswordBox.Password });
+        private void OnLoginResponse(LoginResponse response)
+        {
+            switch (response.Status)
+            {
+                case STATUS.SUCCESS:
+                {
+                    App.Current.Dispatcher.Invoke(delegate {
+                        PIWindow PIWindow = new PIWindow();
+                        PIWindowViewModel PIWindowViewModel = new PIWindowViewModel();
 
+                        PIWindow.DataContext = PIWindowViewModel;
+                        PIWindow.Show();
 
-            // Close current window
-           // Application.Current.Windows[0].Close();
+                        Application.Current.Windows[0].Close();
+                    });
+                }
+                break;
+
+                case STATUS.FAILURE:
+                    MessageBox.Show("TODO: LUX powiadomienie");
+                    break;
+            }
         }
     }
 }

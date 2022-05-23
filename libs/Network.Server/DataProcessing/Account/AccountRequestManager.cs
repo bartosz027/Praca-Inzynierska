@@ -87,7 +87,7 @@ namespace Network.Server.DataProcessing.Account {
                 };
 
                 var account = new Database.Account() {
-                    Username = request.Email.Substring(0, request.Email.IndexOf('@')),
+                    Username = request.Username,
 
                     Email = request.Email,
                     Password = request.Password,
