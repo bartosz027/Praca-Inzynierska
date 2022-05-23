@@ -79,7 +79,8 @@
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
                         
-                        <TextBox Grid.Row="1"
+                        <TextBox x:Name="EmailBox"
+                                 Grid.Row="1"
                                  Margin="10,0,0,0"
                                  Width="300"
                                  Style="{DynamicResource RoundCornerTextBox}"/>
@@ -91,7 +92,8 @@
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
-                        <PasswordBox Grid.Row="3"
+                        <PasswordBox x:Name="PasswordBox"
+                                     Grid.Row="3"
                                      Margin="10,0,0,0"
                                      Width="300"
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>

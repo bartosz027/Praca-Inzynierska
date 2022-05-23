@@ -41,7 +41,14 @@
                     
                     <Border Grid.Column="0"
                             Style="{DynamicResource PIWinodwNavigationBarLeft}">
-                        
+                        <Grid>
+                            <Button Style="{DynamicResource NavigationButton}">
+                                <Image Style="{DynamicResource FriendListIcon}"/>
+                            </Button>
+                            <Ellipse Style="{DynamicResource NotificationBalls}"
+                                     IsEnabled="True"/>
+                        </Grid>
+
                     </Border>
                     
                     <Border Grid.Column="1"
@@ -51,6 +58,25 @@
                     
                     <Border Grid.Column="2"
                             Style="{DynamicResource PIWinodwNavigationBarMiddle}">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <ToggleButton Grid.Column="0"
+                                      Style="{DynamicResource MicroButton}"/>
+                            
+                            <ToggleButton Grid.Column="1"
+                                      Style="{DynamicResource HeadphonesButton}"/>
+
+                            <Button Grid.Column="2"
+                                    Style="{DynamicResource NavigationButton}">
+                                <Image Style="{DynamicResource SettingsIcon}"/>
+                            </Button>
+                        </Grid>
 
                     </Border>
 
@@ -63,6 +89,11 @@
                
             </Border>
             
+        </Border>
+        <!-- Find User Male icon by Icons8-->
+        <Border Grid.Row="2"
+                Margin="10">
+            <ContentControl Content="{Binding CurrentView}"/>
         </Border>
     </Grid>
 </Window>
