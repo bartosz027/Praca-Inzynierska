@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using Network.Server.DataProcessing.Account;
-using Network.Server.DataProcessing.Test;
-
 using Network.Shared.DataTransfer.Base;
 
 namespace Network.Server.DataProcessing {
@@ -21,11 +19,8 @@ namespace Network.Server.DataProcessing {
         public static RequestResult Dispatch(Request request, ClientInfo client) {
             var dispatcher = new RequestDispatcher(request);
 
+            // Request managers
             AccountRequestManager.Dispatch(dispatcher, client);
-
-            #if DEBUG
-                TestRequestManager.Dispatch(dispatcher, client);
-            #endif
 
             return dispatcher.Result;
         }

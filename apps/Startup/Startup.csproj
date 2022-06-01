@@ -94,14 +94,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\tests\ClientTest\ClientTest.csproj">
-      <Project>{2ff1e12d-8e69-4290-8951-5b8310379cf0}</Project>
-      <Name>ClientTest</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\tests\ServerTest\ServerTest.csproj">
-      <Project>{bcc3c409-20a8-4959-a4db-b5a9a95da306}</Project>
-      <Name>ServerTest</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ClientApp\ClientApp.csproj">
       <Project>{02f220bf-9f61-4bd4-a59b-a427c701abf7}</Project>
       <Name>ClientApp</Name>
