@@ -1,5 +1,4 @@
-﻿using ClientApp.MVVM.ViewModel.LoginWindowViewModel;
-using Network.Client;
+﻿using Network.Client;
 using Network.Client.DataProcessing;
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Account.Register;
@@ -82,9 +81,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
                 {
                     App.Current.Dispatcher.Invoke(delegate {
                         LoginWindow LoginWindow = new LoginWindow();
-                        LoginWindowViewModel LoginWindowViewModel = new LoginWindowViewModel();
-
-                        LoginWindow.DataContext = LoginWindowViewModel;
+                        
                         LoginWindow.Show();
 
                         Application.Current.Windows[0].Close();

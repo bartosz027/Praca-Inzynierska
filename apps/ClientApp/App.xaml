@@ -2,15 +2,29 @@
              
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             
              xmlns:PIWindowView="clr-namespace:ClientApp.MVVM.View.PIWindowView"
+             xmlns:SettingsView="clr-namespace:ClientApp.MVVM.View.PIWindowView.SettingsViews"
+             
              xmlns:PIWindowViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel"
+             xmlns:SettingsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels"
+             
              StartupUri="MVVM/View/LoginWindowView/LoginWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type PIWindowViewModel:PIWindowSettingsViewModel}">
+            <DataTemplate DataType="{x:Type PIWindowViewModel:SettingsViewModel}">
                 <PIWindowView:SettingsView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type PIWindowViewModel:ContactsViewModel}">
+                <PIWindowView:ContactsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type SettingsViewModel:ThemesSettingViewModel}">
+                <SettingsView:ThemesSettingsView/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 

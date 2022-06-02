@@ -82,9 +82,10 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\LoginWindowViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\PIWindowSettingsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\PIWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModels\ThemesSettingViewModel.cs" />
     <Compile Include="MVVM\View\LoginWindowView\ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
@@ -97,11 +98,17 @@
     <Compile Include="MVVM\View\LoginWindowView\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\PIWindowView\ContactsView.xaml.cs">
+      <DependentUpon>ContactsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\PIWindowView\PIWindow.xaml.cs">
       <DependentUpon>PIWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\PIWindowView\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PIWindowView\SettingsViews\ThemesSettingsView.xaml.cs">
+      <DependentUpon>ThemesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -170,11 +177,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MVVM\View\PIWindowView\ContactsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\PIWindowView\PIWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\PIWindowView\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\PIWindowView\SettingsViews\ThemesSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,6 +252,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Icons\LightThemeIcons\SettingsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pictures\DarkThemeButton.PNG" />
+    <Resource Include="Images\Pictures\LigthtThemeButton.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

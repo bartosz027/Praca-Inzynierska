@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
 {
-    internal class PIWindowSettingsViewModel : ObservableObject
+    internal class ContactsViewModel : ObservableObject
     {
+        public ContactsViewModel()
+        {
 
+        }
     }
 }

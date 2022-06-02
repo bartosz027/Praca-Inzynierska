@@ -90,6 +90,17 @@
 
     </Style>
 
+    <!-- Sektor dolny zaokrąglony -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="PIWinodwBottomSector">
+
+        <Setter Property="Background"
+                Value="#364156"/>
+        <Setter Property="CornerRadius"
+                Value="10"/>
+
+    </Style>
+    
     <!-- TextBlock -->
     <Style TargetType="{x:Type TextBlock}" BasedOn="{x:Null}"
            x:Key="LoginWindowTextBlock">
@@ -203,6 +214,54 @@
         
     </Style>
 
+    <!--Guziki Ustawień PIWindow-->
+    <Style TargetType="{x:Type RadioButton}" BasedOn="{x:Null}"
+           x:Key="PIWindowRadioButon">
+
+        <Setter Property="Background" Value="Blue" />
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type RadioButton}">
+                    <Border x:Name="border" CornerRadius="8" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            <Setter Property="Foreground" Value="#C3BEF7"/>
+                            <Setter Property="BorderBrush" Value="#e8e7e7"></Setter>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="#00afdd"></Setter>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#212D40"/>
+                            <Setter Property="BorderBrush" Value="#254c8e"></Setter>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#364156"/>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#D66853"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    
     <!--Guziki nawigacyjne PIWindow-->
     <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
            x:Key="NavigationButton">
@@ -237,6 +296,49 @@
                             <Setter Property="Background" TargetName="border" Value="Transparent"/>
                             <Setter Property="Width" Value="60"/>
                             <Setter Property="Height" Value="60"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!--Guziki kontaktowe nawigacyjne PIWindow-->
+    <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
+           x:Key="ContactsNavigationButton">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type Button}">
+
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            <Setter Property="Width" Value="50"/>
+                            <Setter Property="Height" Value="50"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="40"/>
+                            <Setter Property="Height" Value="40"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -358,6 +460,20 @@
 
     </Style>
 
+    <!--Ikona szukaj kontaktu-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="SearchIcon">
+
+        <Setter Property="Source" Value="/ClientApp;component/Images/Icons/DarkThemeIcons/FriendsListSearchIcon.png"/>
+    </Style>
+
+    <!--Ikona dodaj kontakt-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="AddFriendIcon">
+
+        <Setter Property="Source" Value="/ClientApp;component/Images/Icons/DarkThemeIcons/AddFriendIcon.png"/>
+    </Style>
+    
     <!--Ikona Listy znajomych-->
     <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
            x:Key="FriendListIcon">

@@ -42,7 +42,8 @@
                     <Border Grid.Column="0"
                             Style="{DynamicResource PIWinodwNavigationBarLeft}">
                         <Grid>
-                            <Button Style="{DynamicResource NavigationButton}">
+                            <Button Style="{DynamicResource NavigationButton}"
+                                    Command="{Binding ContactsButtonCommand}">
                                 <Image Style="{DynamicResource FriendListIcon}"/>
                             </Button>
                             <Ellipse Style="{DynamicResource NotificationBalls}"
@@ -73,7 +74,8 @@
                                       Style="{DynamicResource HeadphonesButton}"/>
 
                             <Button Grid.Column="2"
-                                    Style="{DynamicResource NavigationButton}">
+                                    Style="{DynamicResource NavigationButton}"
+                                    Command="{Binding SettingsButtonCommand}">
                                 <Image Style="{DynamicResource SettingsIcon}"/>
                             </Button>
                         </Grid>

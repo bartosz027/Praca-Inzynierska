@@ -9,11 +9,24 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
 {
     internal class PIWindowViewModel : ObservableObject
     {
-        PIWindowSettingsViewModel SettingsViewModel { get; set; } 
+        public RelayCommand ContactsButtonCommand { get; set; }
+        public RelayCommand SettingsButtonCommand { get; set; }
+        SettingsViewModel SettingsViewModel { get; set; } 
+        ContactsViewModel ContactsViewModel { get; set; }
         public PIWindowViewModel()
         {
-            SettingsViewModel = new PIWindowSettingsViewModel();
-            CurrentView = SettingsViewModel;
+            SettingsViewModel = new SettingsViewModel();
+            ContactsViewModel = new ContactsViewModel();
+            CurrentView = ContactsViewModel;
+
+            ContactsButtonCommand = new RelayCommand(o => 
+            {
+                CurrentView = ContactsViewModel;
+            });
+            SettingsButtonCommand = new RelayCommand(o =>
+            {
+                CurrentView = SettingsViewModel;
+            });
         }
         public object CurrentView
         {

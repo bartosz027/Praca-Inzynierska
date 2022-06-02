@@ -7,17 +7,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         
-        xmlns:viewModel="clr-namespace:ClientApp.MVVM.ViewModel.LoginWindowViewModel"
-        xmlns:themes="clr-namespace:Simple.Wpf.Themes;assembly=Simple.Wpf.Themes"
-
         Title="LoginWindow" Height="400" Width="700"
         WindowStyle="None" ResizeMode="NoResize">
     
-    <Window.DataContext>
-        <viewModel:LoginWindowViewModel/>
-    </Window.DataContext>
-    
-
     <Grid Style="{DynamicResource LoginWindowMainBackground}">
         
         <Grid.RowDefinitions>
@@ -30,15 +22,6 @@
 
         <Border Style="{DynamicResource ToolBarStyle}"
                 MouseDown="ResizeWindow_MouseDown">
-
-            <themes:Themes x:Name="ThemesControl"
-                           ItemsSource="{Binding Path=Themes,Mode=OneWay}"
-                           SelectedItem="{Binding Path=SelectedTheme, Mode=TwoWay}" 
-                           Height="20"
-                           HorizontalAlignment="Left"
-                           Width="200"
-                           Margin="5,0"/>
-
         </Border>
 
         <Border Grid.Row="1"
