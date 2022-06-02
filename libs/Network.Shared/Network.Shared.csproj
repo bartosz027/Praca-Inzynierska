@@ -57,10 +57,22 @@
     <Compile Include="DataTransfer\Base\Request.cs" />
     <Compile Include="DataTransfer\Base\Response.cs" />
     <Compile Include="DataTransfer\Model\Account\Login\LoginResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\Login\VerifyAccessTokenResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\Login\VerifyAccessTokenRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\FriendsListRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\FriendsListResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Guild\MessageHistoryRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\MessageHistoryRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Guild\MessageHistoryResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\MessageHistoryResponse.cs" />
+    <Compile Include="DataTransfer\Model\Friends\SendMessage\SendMessageNotification.cs" />
+    <Compile Include="DataTransfer\Model\Friends\SendMessage\SendMessageRequest.cs" />
+    <Compile Include="DataTransfer\Model\Guild\SendMessage\SendMessageNotification.cs" />
+    <Compile Include="DataTransfer\Model\Guild\SendMessage\SendMessageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

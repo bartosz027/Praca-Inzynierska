@@ -87,7 +87,10 @@
     <Compile Include="Database\Verification.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataProcessing\Account\AccountRequestManager.cs" />
+    <Compile Include="DataProcessing\Managers\AccountRequestManager.cs" />
+    <Compile Include="DataProcessing\Managers\FriendsRequestManager.cs" />
+    <Compile Include="DataProcessing\Managers\DatabaseRequestManager.cs" />
+    <Compile Include="DataProcessing\Managers\GuildRequestManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProcessing\RequestManager.cs" />
     <Compile Include="DataProcessing\RequestDispatcher.cs" />

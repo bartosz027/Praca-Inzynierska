@@ -21,22 +21,19 @@ namespace Network.Server {
         // User data
         public int UserID { get; set; }
         public string Username { get; set; }
+        public string AccessToken { get; set; }
 
         // Connection data
         public TcpClient TCP { get; set; }
         public NetworkStream Stream { get; set; }
-
-        // Authentication
-        public string AccessToken { get; set; }
     }
 
     public class Server {
         private Server() {
-            // TODO: Move this to config file
-            SMTP.Email = "noreplyteampi@gmail.com";
-            SMTP.Password = "Qwerty123.";
-
             Console.SetOut(new TimestampTextWriter());
+
+            // TODO: Move this to config file
+            SMTP.Init("noreplyteampi@gmail.com", "Qwerty123.");
         }
 
         public static Server Instance {

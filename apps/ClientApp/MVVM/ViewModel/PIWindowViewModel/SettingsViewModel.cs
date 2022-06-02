@@ -10,8 +10,6 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
 {
     internal class SettingsViewModel : ObservableObject
     {
-        public ThemesSettingViewModel ThemesSettingViewModel { get; set; }
-        public RelayCommand ThemesSettingCommand { get; set; }
         public SettingsViewModel()
         {
             ThemesSettingViewModel = new ThemesSettingViewModel();
@@ -21,6 +19,13 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
             });
         }
 
+        // VM's
+        public ThemesSettingViewModel ThemesSettingViewModel { get; set; }
+
+        // Commands
+        public RelayCommand ThemesSettingCommand { get; set; }
+
+        // Current View
         public object CurrentView
         {
             get { return _currentView; }

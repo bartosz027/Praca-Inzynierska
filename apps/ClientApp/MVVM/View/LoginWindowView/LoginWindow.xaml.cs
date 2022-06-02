@@ -36,6 +36,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
             RegisterWindow.Show();
 
             // Close current window
+            Client.Instance.ResponseReceived -= OnResponseReceived;
             Application.Current.Windows[0].Close();
         }
 
@@ -45,6 +46,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
             ForgotPasswordWindow.Show();
 
             // Close current window
+            Client.Instance.ResponseReceived -= OnResponseReceived;
             Application.Current.Windows[0].Close();
         }
 
@@ -76,14 +78,16 @@ namespace ClientApp.MVVM.View.LoginWindowView
                         PIWindow.DataContext = PIWindowViewModel;
                         PIWindow.Show();
 
+                        Client.Instance.ResponseReceived -= OnResponseReceived;
                         Application.Current.Windows[0].Close();
                     });
+                    break;
                 }
-                break;
-
-                case STATUS.FAILURE:
+                case STATUS.FAILURE: 
+                {
                     MessageBox.Show("TODO: LUX powiadomienie");
                     break;
+                }
             }
         }
     }

@@ -119,6 +119,8 @@ namespace Network.Client {
 
 
         public void SendRequest(Request request) {
+            request.AccessToken = Client.Data.AccessToken;
+
             try {
                 byte[] request_bytes = Serializer.Serialize(request);
                 Client.Data.Stream.Write(request_bytes, 0, request_bytes.Length);
@@ -132,13 +134,11 @@ namespace Network.Client {
         public static class Data {
             // User data
             public static string Username { get; set; }
+            public static string AccessToken { get; set; }
 
             // Connection data
             internal static TcpClient TCP { get; set; }
             internal static NetworkStream Stream { get; set; }
-
-            // Authentication
-            internal static string AccessToken { get; set; }
         }
 
         

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-using Network.Server.DataProcessing.Account;
 using Network.Shared.DataTransfer.Base;
+using Network.Server.DataProcessing.Managers;
 
 namespace Network.Server.DataProcessing {
 
@@ -21,6 +22,9 @@ namespace Network.Server.DataProcessing {
 
             // Request managers
             AccountRequestManager.Dispatch(dispatcher, client);
+            DatabaseRequestManager.Dispatch(dispatcher, client);
+            FriendsRequestManager.Dispatch(dispatcher, client);
+            GuildRequestManager.Dispatch(dispatcher, client);
 
             return dispatcher.Result;
         }

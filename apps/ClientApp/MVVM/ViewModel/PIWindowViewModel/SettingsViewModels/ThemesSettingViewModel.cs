@@ -11,20 +11,16 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels
 {
     internal class ThemesSettingViewModel : ObservableObject
     {
-        public RelayCommand LightThemeButtonCommand { get; set; }
-        public RelayCommand DarkThemeButtonCommand { get; set; }
         public ThemesSettingViewModel()
         {
             ThemesList = new[]
             {
-                new Theme("Light theme",
-                    new Uri("/ClientApp;component/Themes/LightTheme.xaml", UriKind.Relative)),
-                new Theme("Dark theme",
-                    new Uri("/ClientApp;component/Themes/DarkTheme.xaml", UriKind.Relative))
+                new Theme("Light theme", new Uri("/ClientApp;component/Themes/LightTheme.xaml", UriKind.Relative)),
+                new Theme("Dark theme", new Uri("/ClientApp;component/Themes/DarkTheme.xaml", UriKind.Relative))
             };
-            Themes themes = new Themes();
-            
 
+            var themes = new Themes();
+            
             LightThemeButtonCommand = new RelayCommand(o =>
             {
                 themes.ItemsSource = ThemesList;
@@ -37,7 +33,12 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels
                 themes.SelectedItem = ThemesList.First(p => p.Name == "Dark theme");
             });
         }
-        public IEnumerable<Theme> ThemesList { get; }
 
+        // Themes
+        public IEnumerable<Theme> ThemesList { get; private set; }
+
+        // Commands
+        public RelayCommand LightThemeButtonCommand { get; set; }
+        public RelayCommand DarkThemeButtonCommand { get; set; }
     }
 }

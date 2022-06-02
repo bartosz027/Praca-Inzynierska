@@ -31,11 +31,12 @@ namespace ClientApp.MVVM.View.LoginWindowView
         // Click
         private void SendCode_Click(object sender, RoutedEventArgs e)
         {
-            Client.Instance.SendRequest(new RegisterRequest()
-            {
+            Client.Instance.SendRequest(new RegisterRequest() {
                 Email = EmailBox.Text,
+                Password = PasswordBox.Password,
+
                 Username = UsernameBox.Text,
-                Password = PasswordBox.Password
+                DateOfBirth = DateTime.Now
             });
         }
         private void VerifyCode_Click(object sender, RoutedEventArgs e)
@@ -66,10 +67,11 @@ namespace ClientApp.MVVM.View.LoginWindowView
                     });
                     break;
                 }
-                    
-                case STATUS.FAILURE:
+                case STATUS.FAILURE: 
+                {
                     MessageBox.Show("TODO: LUX powiadomienie");
                     break;
+                }
             }
         }
         
@@ -81,18 +83,19 @@ namespace ClientApp.MVVM.View.LoginWindowView
                 {
                     App.Current.Dispatcher.Invoke(delegate {
                         LoginWindow LoginWindow = new LoginWindow();
-                        
                         LoginWindow.Show();
 
+                        Client.Instance.ResponseReceived -= OnResponseReceived;
                         Application.Current.Windows[0].Close();
                     });
                     break;
                 }
-                case STATUS.FAILURE:
+                case STATUS.FAILURE: 
+                {
                     MessageBox.Show("TODO: LUX powiadomienie");
                     break;
+                }
             }
         }
-
     }
 }
