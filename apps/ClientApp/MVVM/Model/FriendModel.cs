@@ -9,6 +9,15 @@ namespace ClientApp.MVVM.Model
 {
     internal class FriendModel : ObservableObject
     {
+        public int UserID {
+            get { return _UserID; }
+            set {
+                _UserID = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _UserID;
+
         public string Username
         {
             get { return _Username; }

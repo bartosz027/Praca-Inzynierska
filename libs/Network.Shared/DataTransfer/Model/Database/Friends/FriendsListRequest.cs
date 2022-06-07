@@ -5,7 +5,7 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends {
 
     [Serializable]
     public class FriendsListRequest : Request {
-        // TODO: Implement this
+        
     }
 
 }

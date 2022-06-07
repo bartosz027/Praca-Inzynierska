@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using Network.Shared.DataTransfer.Base;
 
 namespace Network.Shared.DataTransfer.Model.Database.Friends {
 
+    public class FriendInfo {
+        public int UserID { get; set; }
+        public string Username { get; set; }
+    }
+
     [Serializable]
     public class FriendsListResponse : Response {
-        // TODO: Implement this
+        public List<FriendInfo> FriendsList { get; set; }
     }
 
 }
