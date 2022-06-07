@@ -159,6 +159,16 @@
                     
                 </Border>
 
+                <Border Grid.Column="1"
+                        Grid.Row="0"
+                        x:Name="DebugDzudzuys">
+                    <StackPanel>
+                         <Button Content="PUDZIAN"/>
+                         <Button Content="PAWELEK"/>
+                     </StackPanel>
+                     
+                </Border>
+
             </Grid>
             
         </Border>

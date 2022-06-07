@@ -15,10 +15,17 @@ namespace ClientApp.MVVM.View.LoginWindowView
     /// </summary>
     public partial class LoginWindow : Window
     {
+
+       
         public LoginWindow()
         {
             InitializeComponent();
             Client.Instance.ResponseReceived += OnResponseReceived;
+#if DEBUG
+            DebugDzudzuys.Visibility = Visibility.Visible;
+#else
+            DebugDzudzuys.Visibility = Visibility.Hidden;        
+#endif
         }
 
         private void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e)
