@@ -1,4 +1,5 @@
 ﻿using ClientApp.Core;
+using ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,22 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
     {
         public ContactsViewModel()
         {
-
+            ChatViewModel = new ChatViewModel();
+            CurrentView = ChatViewModel;
         }
+        // VM's
+        public ChatViewModel ChatViewModel { get; set; }
+
+        // Current View
+        public object CurrentView
+        {
+            get { return _currentView; }
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged();
+            }
+        }
+        private object _currentView;
     }
 }

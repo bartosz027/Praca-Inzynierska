@@ -5,20 +5,27 @@
              
              xmlns:PIWindowView="clr-namespace:ClientApp.MVVM.View.PIWindowView"
              xmlns:SettingsView="clr-namespace:ClientApp.MVVM.View.PIWindowView.SettingsViews"
+             xmlns:ContactsView="clr-namespace:ClientApp.MVVM.View.PIWindowView.ContactsViews"
              
              xmlns:PIWindowViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel"
              xmlns:SettingsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels"
+             xmlns:ContactsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels"
              
              StartupUri="MVVM/View/LoginWindowView/LoginWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type PIWindowViewModel:SettingsViewModel}">
-                <PIWindowView:SettingsView/>
-            </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type PIWindowViewModel:ContactsViewModel}">
                 <PIWindowView:ContactsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type ContactsViewModel:ChatViewModel}">
+                <ContactsView:ChatView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type PIWindowViewModel:SettingsViewModel}">
+                <PIWindowView:SettingsView/>
             </DataTemplate>
             
             <DataTemplate DataType="{x:Type SettingsViewModel:ThemesSettingViewModel}">

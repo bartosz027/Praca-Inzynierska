@@ -101,6 +101,17 @@
 
     </Style>
 
+    <!-- Czat górny sektor -->
+    <Style TargetType="{x:Type Border}" BasedOn="{x:Null}"
+           x:Key="ChatTopSector">
+
+        <Setter Property="BorderBrush"
+                Value="#EFFFFA"/>
+        <Setter Property="BorderThickness"
+                Value="0,0,0,2"/>
+
+    </Style>
+
     <!-- TextBlock -->
     <Style TargetType="{x:Type TextBlock}" BasedOn="{x:Null}"
            x:Key="LoginWindowTextBlock">
@@ -110,7 +121,46 @@
         <Setter Property="FontSize" Value="16"/>
 
     </Style>
+
+    <!-- TextBlock Chat -->
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{x:Null}"
+           x:Key="ChatTextBlock">
+
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#212D40"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+
+    </Style>
     
+    <!-- Textbox Chat-->
+    <Style TargetType="{x:Type TextBox}" BasedOn="{x:Null}"
+           x:Key="ChatTextBox">
+
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Foreground" Value="#212D40"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border>
+                        <Border CornerRadius="8" x:Name="Bd" Background="Transparent"  OpacityMask="{x:Null}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost" Template="{DynamicResource ScrollViewerControlTemplate1}"/>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
     <!-- Passwordbox okrągły-->
     <Style TargetType="PasswordBox" x:Key="RoundCornerPasswordBox">
         
@@ -145,7 +195,7 @@
     <!-- Textbox okrągły-->
     <Style TargetType="{x:Type TextBox}" BasedOn="{x:Null}"
            x:Key="RoundCornerTextBox">
-        
+
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -153,7 +203,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="Foreground" Value="#212D40"/>
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -165,9 +215,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
-    </Style>
 
+    </Style>
+    
     <!--Guziki Okna Logowania-->
     <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
            x:Key="LoginWindowButton">

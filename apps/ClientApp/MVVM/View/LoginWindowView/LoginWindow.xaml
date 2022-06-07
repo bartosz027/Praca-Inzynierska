@@ -96,7 +96,8 @@
                                 Margin="10"
                                 Content="Zaloguj"
                                 Style="{DynamicResource LoginWindowButton}"
-                                Click="Login_Click"/>
+                                Click="Login_Click"
+                                IsDefault="True"/>
 
                     </Grid>
                     

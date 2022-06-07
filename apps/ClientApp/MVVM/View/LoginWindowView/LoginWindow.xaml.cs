@@ -71,6 +71,8 @@ namespace ClientApp.MVVM.View.LoginWindowView
             {
                 case STATUS.SUCCESS:
                 {
+                    Client.Data.AccessToken = response.AccessToken;
+                    
                     App.Current.Dispatcher.Invoke(delegate {
                         PIWindow PIWindow = new PIWindow();
                         PIWindowViewModel PIWindowViewModel = new PIWindowViewModel();
