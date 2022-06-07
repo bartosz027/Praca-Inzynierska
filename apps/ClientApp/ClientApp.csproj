@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="MVVM\Model\FriendModel.cs" />
     <Compile Include="MVVM\Model\MessageModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\ChatViewModel.cs" />

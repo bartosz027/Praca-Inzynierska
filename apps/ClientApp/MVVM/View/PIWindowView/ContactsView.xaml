@@ -16,7 +16,8 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Border Style="{DynamicResource PIWinodwNavigationBar}">
@@ -43,9 +44,30 @@
                             </Button>
 
                         </Border>
-
                     </Grid>
                 </Border>
+                <ListBox Grid.Row="1"
+                         Background="Yellow">
+                    
+                </ListBox>
+                <ListBox Grid.Row="2"
+                         ItemsSource="{Binding FriendList}"
+                         SelectedItem="{Binding SelectedFriend}"
+                         Background="Transparent"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                         ScrollViewer.CanContentScroll="False"
+                         FocusVisualStyle="{x:Null}"
+                         BorderBrush="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Content="{Binding Username}"
+                                         Style="{DynamicResource UserView}"
+                                         IsEnabled="{Binding Status}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
             </Grid>
         </Border>
          
