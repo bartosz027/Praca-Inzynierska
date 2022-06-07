@@ -15,17 +15,16 @@ namespace ClientApp.MVVM.View.LoginWindowView
     /// </summary>
     public partial class LoginWindow : Window
     {
-
-       
         public LoginWindow()
         {
             InitializeComponent();
             Client.Instance.ResponseReceived += OnResponseReceived;
-#if DEBUG
-            DebugDzudzuys.Visibility = Visibility.Visible;
-#else
-            DebugDzudzuys.Visibility = Visibility.Hidden;        
-#endif
+
+            #if DEBUG
+                AutoLoginButtons.Visibility = Visibility.Visible;
+            #else
+                AutoLoginButtons.Visibility = Visibility.Hidden;
+            #endif
         }
 
         private void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e)
@@ -62,6 +61,27 @@ namespace ClientApp.MVVM.View.LoginWindowView
             Client.Instance.SendRequest(new LoginRequest() { 
                 Email = EmailBox.Text, 
                 Password = PasswordBox.Password 
+            });
+        }
+
+        private void Account1_Click(object sender, RoutedEventArgs e) {
+            Client.Instance.SendRequest(new LoginRequest() {
+                Email = "test1@gmail.com",
+                Password = "okon1"
+            });
+        }
+
+        private void Account2_Click(object sender, RoutedEventArgs e) {
+            Client.Instance.SendRequest(new LoginRequest() {
+                Email = "test2@gmail.com",
+                Password = "okon2"
+            });
+        }
+
+        private void Account3_Click(object sender, RoutedEventArgs e) {
+            Client.Instance.SendRequest(new LoginRequest() {
+                Email = "test3@gmail.com",
+                Password = "okon3"
             });
         }
 

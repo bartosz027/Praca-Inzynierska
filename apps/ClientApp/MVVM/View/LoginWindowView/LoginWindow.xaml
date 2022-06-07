@@ -159,13 +159,17 @@
                     
                 </Border>
 
-                <Border Grid.Column="1"
-                        Grid.Row="0"
-                        x:Name="DebugDzudzuys">
+                <Border x:Name="AutoLoginButtons" Margin="0,20,0,0"
+                        Grid.Row="0" Grid.Column="1">
+                    
                     <StackPanel>
-                         <Button Content="PUDZIAN"/>
-                         <Button Content="PAWELEK"/>
-                     </StackPanel>
+                        <Button Content="Konto 1" Click="Account1_Click"
+                                Width="250" Margin="0,25,0,0"/>
+                        <Button Content="Konto 2" Click="Account2_Click"
+                                Width="250" Margin="0,25,0,0"/>
+                        <Button Content="Konto 3" Click="Account3_Click"
+                                Width="250" Margin="0,25,0,0"/>
+                    </StackPanel>
                      
                 </Border>
 
