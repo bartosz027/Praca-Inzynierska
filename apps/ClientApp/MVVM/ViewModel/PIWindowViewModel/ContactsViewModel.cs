@@ -1,7 +1,9 @@
 ﻿using ClientApp.Core;
+using ClientApp.MVVM.Model;
 using ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,12 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
     {
         public ContactsViewModel()
         {
-            ChatViewModel = new ChatViewModel();
+            FriendList = new ObservableCollection<FriendModel> { new FriendModel { Username = "DzikiSzczur", Status= true },
+                                                                 new FriendModel { Username = "Jaszczomb", Status= true },
+                                                                 new FriendModel { Username = "LeniwyMalpiszon", Status= true },
+                                                                 new FriendModel { Username = "KrzysJanuszek", Status= false }
+            };
+               ChatViewModel = new ChatViewModel();
             CurrentView = ChatViewModel;
         }
         // VM's
@@ -29,5 +36,19 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
             }
         }
         private object _currentView;
+
+
+        // items
+        public ObservableCollection<FriendModel> FriendList { get; set; }
+        public FriendModel SelecteFriend
+        {
+            get { return _SelecteFriend; }
+            set
+            {
+                _SelecteFriend = value;
+                OnPropertyChanged();
+            }
+        }
+        private FriendModel _SelecteFriend;
     }
 }
