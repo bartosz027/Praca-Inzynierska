@@ -41,6 +41,7 @@ namespace Network.Server.DataProcessing.Managers {
                     db.SaveChanges();
 
                     response.AccessToken = token;
+                    response.Username = user_account.Username;
                     response.Status = STATUS.SUCCESS;
 
                     client.UserID = user_account.ID;

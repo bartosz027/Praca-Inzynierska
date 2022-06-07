@@ -98,13 +98,11 @@ namespace ClientApp.MVVM.View.LoginWindowView
             {
                 case STATUS.SUCCESS:
                 {
+                    Client.Data.Username = response.Username;
                     Client.Data.AccessToken = response.AccessToken;
                     
                     App.Current.Dispatcher.Invoke(delegate {
                         PIWindow PIWindow = new PIWindow();
-                        PIWindowViewModel PIWindowViewModel = new PIWindowViewModel();
-
-                        PIWindow.DataContext = PIWindowViewModel;
                         PIWindow.Show();
 
                         Client.Instance.ResponseReceived -= OnResponseReceived;

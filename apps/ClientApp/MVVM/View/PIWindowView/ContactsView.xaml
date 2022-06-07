@@ -61,9 +61,9 @@
                          BorderBrush="Transparent">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <RadioButton Content="{Binding Username}"
+                            <RadioButton Content="{Binding CurrentFriend.Username}"
                                          Style="{DynamicResource UserView}"
-                                         IsEnabled="{Binding Status}"/>
+                                         IsEnabled="{Binding CurrentFriend.Status}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
 

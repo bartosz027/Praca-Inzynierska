@@ -17,22 +17,22 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
     internal class ChatViewModel : ObservableObject
     {
        
-        public ChatViewModel()
+        public ChatViewModel(FriendModel friendModel)
         {
             Messages = new ObservableCollection<MessageModel>();
-
+            CurrentFriend = friendModel;
             Client.Instance.NotificationReceived += OnNotificationReceived;
 
             SendMessageCommand = new RelayCommand(o => 
             {
                 if (RichBoxContent.Length >1)
                 {
-                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = RichBoxContent,  Sender = "Kurwx"});
+                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = RichBoxContent,  Sender = Client.Data.Username});
                     
                     Client.Instance.SendRequest(new SendMessageRequest()
                     {
                         Content = RichBoxContent,
-                        ReceiverID = 1
+                        ReceiverID = CurrentFriend.UserID
                     });
 
                     RichBoxContent = String.Empty;
@@ -69,6 +69,17 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
         }
         private ObservableCollection<MessageModel> _Messages;
 
+        public FriendModel CurrentFriend
+        {
+            get { return _CurrentFriend; }
+            set
+            {
+                _CurrentFriend = value;
+                OnPropertyChanged();
+            }
+        }
+        private FriendModel _CurrentFriend;
+
         // 
         private void OnNotificationReceived(object sender, Notification notification)
         {
@@ -78,7 +89,12 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
 
         private void OnSendMessageNotification(SendMessageNotification notification)
         {
-            Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = notification.Content, Sender = "pudzian028" });
+            if(notification.SenderID == CurrentFriend.UserID)
+            {
+                App.Current.Dispatcher.Invoke(delegate {
+                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = notification.Content, Sender = CurrentFriend.Username });
+                });
+            }
         }
     }
 }
