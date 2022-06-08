@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 using Network.Server.Database;
-
-using Network.Shared.DataTransfer.Model.Database.Friends;
 using Network.Shared.DataTransfer.Model.Friends.SendMessage;
 
 namespace Network.Server.DataProcessing.Managers {

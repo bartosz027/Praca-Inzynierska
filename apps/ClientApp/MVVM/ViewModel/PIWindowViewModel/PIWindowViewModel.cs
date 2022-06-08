@@ -1,9 +1,4 @@
 ﻿using ClientApp.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
 {
@@ -19,7 +14,7 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
                 CurrentView = ContactsViewModel;
             });
 
-            SettingsButtonCommand = new RelayCommand(o =>
+            SettingsButtonCommand = new RelayCommand(o => 
             {
                 CurrentView = SettingsViewModel;
             });
@@ -38,16 +33,13 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
         // Current view
         public object CurrentView
         {
-            get 
-            { 
-                return _currentView; 
-            }
+            get { return _CurrentView; }
             set
             {
-                _currentView = value;
+                _CurrentView = value;
                 OnPropertyChanged();
             }
         }
-        private object _currentView;
+        private object _CurrentView;
     }
 }

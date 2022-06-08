@@ -10,8 +10,8 @@ CREATE TABLE Account (
 	Verified			BIT					NOT NULL,
 	AccessToken			VARCHAR(32)			NULL,
 	
-	-- NP:Friendships  -> rename_to("Friends")
-	-- NP:Friendships1 -> remove_property()
+	-- NP:Friendships  -> remove_property()
+	-- NP:Friendships1 -> rename_to("Friends")
 	
 	-- NP:Messages  -> rename_to("MessagesReceived")
 	-- NP:Messages1 -> rename_to("MessagesSent")

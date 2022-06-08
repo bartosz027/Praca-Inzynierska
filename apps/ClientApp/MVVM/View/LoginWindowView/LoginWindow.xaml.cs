@@ -38,8 +38,8 @@ namespace ClientApp.MVVM.View.LoginWindowView
         // Click
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            RegisterWindow RegisterWindow = new RegisterWindow();
-            RegisterWindow.Show();
+            var window = new RegisterWindow();
+            window.Show();
 
             // Close current window
             Client.Instance.ResponseReceived -= OnResponseReceived;
@@ -48,8 +48,8 @@ namespace ClientApp.MVVM.View.LoginWindowView
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            ForgotPasswordWindow ForgotPasswordWindow = new ForgotPasswordWindow();
-            ForgotPasswordWindow.Show();
+            var window = new ForgotPasswordWindow();
+            window.Show();
 
             // Close current window
             Client.Instance.ResponseReceived -= OnResponseReceived;
@@ -89,7 +89,10 @@ namespace ClientApp.MVVM.View.LoginWindowView
         private void OnResponseReceived(object sender, Response response)
         {
             var dispatcher = new ResponseDispatcher(response);
-            dispatcher.Dispatch<LoginResponse>(OnLoginResponse);
+
+            App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<LoginResponse>(OnLoginResponse);
+            });
         }
 
         private void OnLoginResponse(LoginResponse response)
@@ -101,13 +104,13 @@ namespace ClientApp.MVVM.View.LoginWindowView
                     Client.Data.Username = response.Username;
                     Client.Data.AccessToken = response.AccessToken;
                     
-                    App.Current.Dispatcher.Invoke(delegate {
-                        PIWindow PIWindow = new PIWindow();
-                        PIWindow.Show();
+                    var window = new PIWindow();
+                    window.Show();
 
-                        Client.Instance.ResponseReceived -= OnResponseReceived;
-                        Application.Current.Windows[0].Close();
-                    });
+                    // Close current window
+                    Client.Instance.ResponseReceived -= OnResponseReceived;
+                    Application.Current.Windows[0].Close();
+
                     break;
                 }
                 case STATUS.FAILURE: 

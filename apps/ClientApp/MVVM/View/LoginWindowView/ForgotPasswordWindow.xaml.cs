@@ -21,6 +21,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
             }
         }
 
+        // Click
         private void SendCode_Click(object sender, RoutedEventArgs e)
         {
             ForgotPasswordCode.Visibility = Visibility.Visible;
@@ -28,8 +29,8 @@ namespace ClientApp.MVVM.View.LoginWindowView
 
         private void NewPasswordWindow_Click(object sender, RoutedEventArgs e)
         {
-            NewPasswordWindow NewPasswordWindow = new NewPasswordWindow();
-            NewPasswordWindow.Show();
+            var window = new NewPasswordWindow();
+            window.Show();
 
             // Close current window
             Application.Current.Windows[0].Close();

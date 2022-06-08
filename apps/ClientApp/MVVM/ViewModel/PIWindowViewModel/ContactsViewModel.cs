@@ -1,16 +1,14 @@
-﻿using ClientApp.Core;
+﻿using System;
+using System.Collections.ObjectModel;
+
+using ClientApp.Core;
 using ClientApp.MVVM.Model;
 using ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels;
+
 using Network.Client;
 using Network.Client.DataProcessing;
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Database.Friends;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
 {
@@ -21,59 +19,63 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
             Client.Instance.ResponseReceived += OnResponseReceived;
 
             FriendList = new ObservableCollection<ChatViewModel>();
-
-            Client.Instance.SendRequest(new FriendsListRequest()
-            {
-                
-            });
+            Client.Instance.SendRequest(new FriendListRequest());
 
             CurrentView = SelectedFriend;
         }
-        // Current View
-        public object CurrentView
-        {
-            get { return _currentView; }
-            set
-            {
-                _currentView = value;
-                OnPropertyChanged();
-            }
-        }
-        private object _currentView;
 
-
-        // items
+        // VM's
         public ObservableCollection<ChatViewModel> FriendList { get; set; }
+
+        // Properties
         public ChatViewModel SelectedFriend
         {
             get { return _SelectedFriend; }
-            set
+            set 
             {
                 _SelectedFriend = value;
-                CurrentView = _SelectedFriend;
+
+                CurrentView = SelectedFriend;
                 OnPropertyChanged();
             }
         }
         private ChatViewModel _SelectedFriend;
 
+        // Current view
+        public object CurrentView
+        {
+            get { return _CurrentView; }
+            set
+            {
+                _CurrentView = value;
+                OnPropertyChanged();
+            }
+        }
+        private object _CurrentView;
+
+        // Response event handling
         private void OnResponseReceived(object sender, Response response)
         {
             var dispatcher = new ResponseDispatcher(response);
-            dispatcher.Dispatch<FriendsListResponse>(OnFriendsListResponse);
+
+            App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<FriendListResponse>(OnFriendsListResponse);
+            });
         }
 
-        private void OnFriendsListResponse(FriendsListResponse response)
+        private void OnFriendsListResponse(FriendListResponse response)
         {
-            App.Current.Dispatcher.Invoke(delegate 
+            foreach (var friend_info in response.FriendList)
             {
-                foreach (var friend in response.FriendsList)
-                    FriendList.Add(new ChatViewModel(new FriendModel
-                    {
-                        UserID = friend.UserID,
-                        Username = friend.Username,
-                        Status = true
-                    }));
-            });
+                var friend = new FriendModel()
+                {
+                    UserID = friend_info.UserID,
+                    Username = friend_info.Username
+                };
+
+                friend.Status = true;
+                FriendList.Add(new ChatViewModel(friend));
+            }
         }
     }
 }

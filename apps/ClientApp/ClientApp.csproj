@@ -277,8 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Pictures\DarkThemeButton.PNG" />
-    <Resource Include="Images\Pictures\LigthtThemeButton.PNG" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Pictures\LightThemeButton.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

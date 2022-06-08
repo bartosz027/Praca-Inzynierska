@@ -11,8 +11,8 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends {
     }
 
     [Serializable]
-    public class FriendsListResponse : Response {
-        public List<FriendInfo> FriendsList { get; set; }
+    public class FriendListResponse : Response {
+        public List<FriendInfo> FriendList { get; set; }
     }
 
 }

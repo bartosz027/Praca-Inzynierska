@@ -149,7 +149,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
           <Property Name="Verified" Type="Boolean" Nullable="false" />
           <Property Name="AccessToken" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Friends" Relationship="PiDbModel.FK__Friendshi__Frien__267ABA7A" FromRole="Account" ToRole="Friendship" />
+          <NavigationProperty Name="Friends" Relationship="PiDbModel.FK__Friendshi__UserI__25869641" FromRole="Account" ToRole="Friendship" />
           <NavigationProperty Name="MessagesReceived" Relationship="PiDbModel.FK__Message__Receive__2A4B4B5E" FromRole="Account" ToRole="Message" />
           <NavigationProperty Name="MessagesSent" Relationship="PiDbModel.FK__Message__SenderI__29572725" FromRole="Account" ToRole="Message" />
         </EntityType>
@@ -300,7 +300,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="b6eee87c337c4aca904c4c2ea8402a52" Name="Diagram1">
+      <Diagram DiagramId="bdbc72b808a94b1f846b640c0ce4dfdb" Name="Diagram1">
         <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Message" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />

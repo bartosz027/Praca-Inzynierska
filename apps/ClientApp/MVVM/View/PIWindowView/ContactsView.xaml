@@ -1,19 +1,25 @@
 ﻿<UserControl x:Class="ClientApp.MVVM.View.PIWindowView.ContactsView"
+             
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ClientApp.MVVM.View.PIWindowView"
              mc:Ignorable="d" 
+
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              d:DesignHeight="450" d:DesignWidth="800">
-     <Grid>
+    
+    <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="210"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Border Style="{DynamicResource PIWinodwBottomSector}">
+            
             <Grid>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="Auto"/>
@@ -21,14 +27,16 @@
                 </Grid.RowDefinitions>
 
                 <Border Style="{DynamicResource PIWinodwNavigationBar}">
+                    
                     <Grid Margin="0,5">
+                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0"
-                            Style="{DynamicResource PIWinodwNavigationBarLeft}">
+                                Style="{DynamicResource PIWinodwNavigationBarLeft}">
 
                             <Button Style="{DynamicResource ContactsNavigationButton}">
                                 <Image Style="{DynamicResource SearchIcon}"/>
@@ -37,45 +45,56 @@
                         </Border>
 
                         <Border Grid.Column="1"
-                            Style="{DynamicResource PIWinodwNavigationBarRight}">
+                                Style="{DynamicResource PIWinodwNavigationBarRight}">
 
                             <Button Style="{DynamicResource ContactsNavigationButton}">
                                 <Image Style="{DynamicResource AddFriendIcon}"/>
                             </Button>
 
                         </Border>
+                        
                     </Grid>
-                </Border>
-                <ListBox Grid.Row="1"
-                         Background="Yellow">
                     
-                </ListBox>
+                </Border>
+
+                <ListBox Grid.Row="1"
+                         Background="Yellow"/>
+
                 <ListBox Grid.Row="2"
+                         
                          ItemsSource="{Binding FriendList}"
                          SelectedItem="{Binding SelectedFriend}"
+                         
                          Background="Transparent"
+                         
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
                          ScrollViewer.CanContentScroll="False"
+                         
                          FocusVisualStyle="{x:Null}"
                          BorderBrush="Transparent">
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <RadioButton Content="{Binding CurrentFriend.Username}"
-                                         Style="{DynamicResource UserView}"
-                                         IsEnabled="{Binding CurrentFriend.Status}"/>
+                            
+                            <RadioButton Content="{Binding Friend.Username}" IsEnabled="{Binding Friend.Status}"
+                                         Style="{DynamicResource UserView}"/>
+                            
                         </DataTemplate>
                     </ListBox.ItemTemplate>
 
                 </ListBox>
+                
             </Grid>
+            
         </Border>
-         
-        <Border Grid.Column="1"
-                Style="{DynamicResource PIWinodwBottomSector}"
-                Margin="10,0,0,0">
-            <ContentControl Content="{Binding CurrentView}"/>
 
+        <Border Grid.Column="1" Margin="10,0,0,0"
+                Style="{DynamicResource PIWinodwBottomSector}">
+
+            <ContentControl Content="{Binding CurrentView}"/>
         </Border>
+        
     </Grid>
+    
 </UserControl>

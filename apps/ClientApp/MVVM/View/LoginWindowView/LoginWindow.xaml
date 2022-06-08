@@ -20,14 +20,12 @@
         <Image Grid.RowSpan="2"
                Source="/ClientApp;component/Images/Pictures/TestLoginBackground.png"/>
 
-        <Border Style="{DynamicResource ToolBarStyle}"
-                MouseDown="ResizeWindow_MouseDown">
-        </Border>
+        <Border MouseDown="ResizeWindow_MouseDown"
+                Style="{DynamicResource ToolBarStyle}"/>
 
         <Border Grid.Row="1"
-                Style="{DynamicResource LoginWindowCenter}"
-                Margin="40"
-                CornerRadius="5">
+                Margin="40" CornerRadius="5"
+                Style="{DynamicResource LoginWindowCenter}">
 
             <Grid Background="Transparent">
                 
@@ -57,47 +55,60 @@
                         
                         <TextBlock Grid.Row="0"
                                    Text="Wprowadź e-mail:"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
+                                   
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
                         
                         <TextBox x:Name="EmailBox"
                                  Grid.Row="1"
-                                 Margin="10,0,0,0"
+                                 
                                  Width="300"
+                                 Margin="10,0,0,0"
+                                 
                                  Style="{DynamicResource RoundCornerTextBox}"/>
     
                         <TextBlock Grid.Row="2"
                                    Text="Wprowadź hasło:"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
+                                   
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <PasswordBox x:Name="PasswordBox"
                                      Grid.Row="3"
-                                     Margin="10,0,0,0"
+                                     
                                      Width="300"
+                                     Margin="10,0,0,0"
+                                     
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>
                         
                         <CheckBox Grid.Row="4"
                                   Margin="10,0,0,0"
+                                  
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Left"
+                                  
                                   Content="Zaloguj automatycznie"
                                   Style="{DynamicResource LoginWindowCheckBox}"/>
 
                         <Button Grid.Row="5"
-                                Width="100"
-                                Height="30"
-                                HorizontalAlignment="Center"
+                                Width="100" Height="30"
+                                
                                 VerticalAlignment="Top"
+                                HorizontalAlignment="Center"
+                                
                                 Margin="10"
                                 Content="Zaloguj"
-                                Style="{DynamicResource LoginWindowButton}"
+                                
+                                IsDefault="True"
                                 Click="Login_Click"
-                                IsDefault="True"/>
+                                
+                                Style="{DynamicResource LoginWindowButton}"/>
 
                     </Grid>
                     
@@ -121,39 +132,45 @@
                         
                         <TextBlock Grid.Row="0"
                                    Text="Nie pamiętasz hasła?"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
+                                   
                                    FontSize="12"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
-                        <Button Grid.Column="1"
-                                Grid.Row="0"
-                                Width="150"
-                                Height="30"
+                        <Button Grid.Column="1" Grid.Row="0"
+                                Width="150" Height="30"
+                                
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
+                                
                                 Margin="10,0,0,0"
                                 Content="Resetuj hasło"
-                                Style="{DynamicResource LoginWindowButton}"
-                                Click="ForgotPassword_Click"/>
+                                
+                                Click="ForgotPassword_Click"
+                                Style="{DynamicResource LoginWindowButton}"/>
 
                         <TextBlock Grid.Row="1"
                                    Text="Nie masz jescze konta?"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
+                                   
                                    FontSize="12"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
                         
-                        <Button Grid.Column="1"
-                                Grid.Row="1"
-                                Width="150"
-                                Height="30"
+                        <Button Grid.Column="1" Grid.Row="1"
+                                Width="150" Height="30"
+                                
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
+                                
                                 Margin="10,0,0,0"
                                 Content="Utwórz nowe konto"
-                                Style="{DynamicResource LoginWindowButton}"
-                                Click="Register_Click"/>
+                                
+                                Click="Register_Click"
+                                Style="{DynamicResource LoginWindowButton}"/>
                         
                     </Grid>
                     

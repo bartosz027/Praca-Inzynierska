@@ -1,10 +1,5 @@
 ﻿using ClientApp.Core;
 using ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
 {
@@ -25,16 +20,16 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
         // Commands
         public RelayCommand ThemesSettingCommand { get; set; }
 
-        // Current View
+        // Current view
         public object CurrentView
         {
-            get { return _currentView; }
+            get { return _CurrentView; }
             set
             {
-                _currentView = value;
+                _CurrentView = value;
                 OnPropertyChanged();
             }
         }
-        private object _currentView;
+        private object _CurrentView;
     }
 }

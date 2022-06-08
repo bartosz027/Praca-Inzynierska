@@ -1,38 +1,37 @@
-﻿using ClientApp.Core;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+
+using ClientApp.Core;
 using ClientApp.MVVM.Model;
+
 using Network.Client;
 using Network.Client.DataProcessing;
+
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Friends.SendMessage;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
 {
     internal class ChatViewModel : ObservableObject
     {
-       
-        public ChatViewModel(FriendModel friendModel)
+        public ChatViewModel(FriendModel friend)
         {
-            Messages = new ObservableCollection<MessageModel>();
-            CurrentFriend = friendModel;
             Client.Instance.NotificationReceived += OnNotificationReceived;
+
+            Friend = friend;
+            Messages = new ObservableCollection<MessageModel>();
 
             SendMessageCommand = new RelayCommand(o => 
             {
-                if (RichBoxContent.Length >1)
+                if (RichBoxContent.Length > 1)
                 {
-                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = RichBoxContent,  Sender = Client.Data.Username});
+                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = RichBoxContent, Sender = Client.Data.Username});
                     
                     Client.Instance.SendRequest(new SendMessageRequest()
                     {
                         Content = RichBoxContent,
-                        ReceiverID = CurrentFriend.UserID
+                        ReceiverID = Friend.UserID
                     });
 
                     RichBoxContent = String.Empty;
@@ -45,12 +44,26 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             });
         }
 
+        // Commands
         public RelayCommand SendMessageCommand { get; set; }
         public RelayCommand TestoweUsuwanie { get; set; }
-        public string RichBoxContent
+
+        // Properties
+        public FriendModel Friend
+        {
+            get { return _Friend; }
+            set
+            {
+                _Friend = value;
+                OnPropertyChanged();
+            }
+        }
+        private FriendModel _Friend;
+
+        public string RichBoxContent 
         {
             get { return _RichBoxContent; }
-            set
+            set 
             {
                 _RichBoxContent = value;
                 OnPropertyChanged();
@@ -69,31 +82,21 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
         }
         private ObservableCollection<MessageModel> _Messages;
 
-        public FriendModel CurrentFriend
-        {
-            get { return _CurrentFriend; }
-            set
-            {
-                _CurrentFriend = value;
-                OnPropertyChanged();
-            }
-        }
-        private FriendModel _CurrentFriend;
-
-        // 
+        // Notification event handling
         private void OnNotificationReceived(object sender, Notification notification)
         {
             var dispatcher = new NotificationDispatcher(notification);
-            dispatcher.Dispatch<SendMessageNotification>(OnSendMessageNotification);
+
+            App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<SendMessageNotification>(OnSendMessageNotification);
+            });
         }
 
         private void OnSendMessageNotification(SendMessageNotification notification)
         {
-            if(notification.SenderID == CurrentFriend.UserID)
+            if(notification.SenderID == Friend.UserID)
             {
-                App.Current.Dispatcher.Invoke(delegate {
-                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = notification.Content, Sender = CurrentFriend.Username });
-                });
+                Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = notification.Content, Sender = Friend.Username });
             }
         }
     }

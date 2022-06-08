@@ -1,17 +1,14 @@
 ﻿using ClientApp.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientApp.MVVM.Model
 {
     internal class FriendModel : ObservableObject
     {
-        public int UserID {
+        public int UserID 
+        {
             get { return _UserID; }
-            set {
+            set 
+            {
                 _UserID = value;
                 OnPropertyChanged();
             }

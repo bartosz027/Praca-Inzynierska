@@ -18,16 +18,16 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2"
-               Source="/ClientApp;component/Images/Pictures/TestLoginBackground.png"
-               Stretch="UniformToFill"/>
+               
+               Stretch="UniformToFill"
+               Source="/ClientApp;component/Images/Pictures/TestLoginBackground.png"/>
 
-        <Border Style="{DynamicResource ToolBarStyle}"
-                MouseDown="ResizeWindow_MouseDown"/>
+        <Border MouseDown="ResizeWindow_MouseDown"
+                Style="{DynamicResource ToolBarStyle}"/>
 
         <Border Grid.Row="1"
-                Style="{DynamicResource LoginWindowCenter}"
-                Margin="40"
-                CornerRadius="5">
+                Margin="40" CornerRadius="5"
+                Style="{DynamicResource LoginWindowCenter}">
             
             <Grid>
                 
@@ -57,61 +57,78 @@
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0"
+                        <TextBlock Grid.Row="0" 
                                    Text="Wprowadź e-mail:"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
+                                   
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <TextBox x:Name="EmailBox"
                                  Grid.Row="1"
+                                 
+                                 Width="300" 
                                  Margin="10,0,0,0"
-                                 Width="300"
                                  HorizontalAlignment="Left"
+                                 
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
                         <TextBlock Grid.Row="2"
                                    Text="Pseudonim artystyczny:"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
+                                   
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <TextBox x:Name="UsernameBox" 
                                  Grid.Row="3"
+                                 
+                                 Width="300"
                                  Margin="10,0,0,0"
                                  HorizontalAlignment="Left"
-                                 Width="300"
+                                 
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
                         <TextBlock Grid.Row="4"
                                    Text="Wprowadź hasło ponownie:"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
+                                   
                                    Padding="10,0,0,0"
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <PasswordBox x:Name="PasswordBox"
                                      Grid.Row="5"
-                                     Margin="10,0,0,0"
+                                     
                                      Width="300"
+                                     Margin="10,0,0,0"
                                      HorizontalAlignment="Left"
+                                     
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>
                         
                         <TextBlock Grid.Row="6"
                                    Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+                                   
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
+                                   
                                    FontSize="11"
                                    TextWrapping="Wrap"
                                    Padding="10,10,20,10"
+                                   
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <CheckBox Grid.Row="7"
                                   Margin="10,0,0,0"
+                                  
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Left"
+                                  
                                   Content="Akceptuj Lorem Ipsum"
                                   Style="{DynamicResource LoginWindowCheckBox}"/>
 
@@ -121,15 +138,17 @@
                 
                 <Border Grid.Row="1"
                         Grid.ColumnSpan="2">
-                    
-                    <Button Width="100"
-                            Height="30"
+
+                    <Button Content="Dalej"
+                            
+                            Width="100" Height="30"
+                            Margin="10"
+                            
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Margin="10"
-                            Content="Dalej"
-                            Style="{DynamicResource LoginWindowButton}" 
-                            Click="SendCode_Click"/>
+                            
+                            Click="SendCode_Click"
+                            Style="{DynamicResource LoginWindowButton}"/>
 
                 </Border>
                 
@@ -138,16 +157,16 @@
         </Border>
         
         <Border x:Name="RegisterCode"
-                Grid.Row="1"
-                Style="{DynamicResource RegisterCodeCenter}"
-                Visibility="Collapsed">
+                Grid.Row="1" Visibility="Collapsed"
+                Style="{DynamicResource RegisterCodeCenter}">
 
             <Border Grid.Row="1"
-                    Style="{DynamicResource LoginWindowCenter}"
-                    Margin="40"
+                    Width="400" Height="200"
+                    
                     CornerRadius="5"
-                    Height="200"
-                    Width="400">
+                    Margin="40"
+                    
+                    Style="{DynamicResource LoginWindowCenter}">
                 
                 <Grid>
                     
@@ -157,30 +176,35 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0"
+                    <TextBlock Grid.Row="0" 
                                Text="Wprowadź kod wysłany na e-mail:"
+                               
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Center"
+                               
                                Margin="10"
                                Style="{DynamicResource LoginWindowTextBlock}"/>
 
                     <TextBox x:Name="CodeBox"
                              Grid.Row="1"
-                             Width="150"
+                             
                              HorizontalAlignment="Center"
-                             Padding="0"
                              HorizontalContentAlignment="Center"
+                             
+                             Width="150" Padding="0"
                              Style="{DynamicResource RoundCornerTextBox}"/>
 
-                    <Button Grid.Row="2"
-                            Width="100"
-                            Height="30"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
+                    <Button Grid.Row="2" 
+                            Width="100" Height="30"
+                            
                             Margin="10"
                             Content="Wyślij"
-                            Style="{DynamicResource LoginWindowButton}"
-                            Click="VerifyCode_Click"/>
+                            
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+
+                            Click="VerifyCode_Click"
+                            Style="{DynamicResource LoginWindowButton}"/>
                     
                 </Grid>
 

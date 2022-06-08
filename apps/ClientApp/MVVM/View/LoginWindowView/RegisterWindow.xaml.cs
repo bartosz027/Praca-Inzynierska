@@ -39,6 +39,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
                 DateOfBirth = DateTime.Now
             });
         }
+
         private void VerifyCode_Click(object sender, RoutedEventArgs e)
         {
             Client.Instance.SendRequest(new VerifyEmailRequest()
@@ -52,8 +53,11 @@ namespace ClientApp.MVVM.View.LoginWindowView
         private void OnResponseReceived(object sender, Response response)
         {
             var dispatcher = new ResponseDispatcher(response);
-            dispatcher.Dispatch<RegisterResponse>(OnRegisterResponse);
-            dispatcher.Dispatch<VerifyEmailResponse>(OnVerifyEmailResponse);
+
+            App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<RegisterResponse>(OnRegisterResponse);
+                dispatcher.Dispatch<VerifyEmailResponse>(OnVerifyEmailResponse);
+            });
         }
 
         private void OnRegisterResponse(RegisterResponse response)
@@ -62,9 +66,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
             {
                 case STATUS.SUCCESS:
                 {
-                    App.Current.Dispatcher.Invoke(delegate {
-                        RegisterCode.Visibility = Visibility.Visible;
-                    });
+                    RegisterCode.Visibility = Visibility.Visible;
                     break;
                 }
                 case STATUS.FAILURE: 
@@ -81,13 +83,13 @@ namespace ClientApp.MVVM.View.LoginWindowView
             {
                 case STATUS.SUCCESS:
                 {
-                    App.Current.Dispatcher.Invoke(delegate {
-                        LoginWindow LoginWindow = new LoginWindow();
-                        LoginWindow.Show();
+                    var window = new LoginWindow();
+                    window.Show();
 
-                        Client.Instance.ResponseReceived -= OnResponseReceived;
-                        Application.Current.Windows[0].Close();
-                    });
+                    // Close current window
+                    Client.Instance.ResponseReceived -= OnResponseReceived;
+                    Application.Current.Windows[0].Close();
+
                     break;
                 }
                 case STATUS.FAILURE: 
