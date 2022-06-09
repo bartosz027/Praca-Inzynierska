@@ -7,6 +7,7 @@ namespace Network.Shared.DataTransfer.Model.Friends.SendMessage {
     public class SendMessageRequest : Request {
         public int ReceiverID { get; set; }
         public string Content { get; set; }
+        public DateTime SendDate { get; set; }
     }
 
 }

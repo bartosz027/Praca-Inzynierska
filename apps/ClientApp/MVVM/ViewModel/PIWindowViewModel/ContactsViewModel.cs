@@ -2,11 +2,13 @@
 using System.Collections.ObjectModel;
 
 using ClientApp.Core;
+
 using ClientApp.MVVM.Model;
 using ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels;
 
 using Network.Client;
 using Network.Client.DataProcessing;
+
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Database.Friends;
 
@@ -27,13 +29,18 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
         // VM's
         public ObservableCollection<ChatViewModel> FriendList { get; set; }
 
-        // Properties
+        // Obserable properties
         public ChatViewModel SelectedFriend
         {
             get { return _SelectedFriend; }
             set 
             {
                 _SelectedFriend = value;
+
+                if(!SelectedFriend.Initialized) 
+                {
+                    SelectedFriend.Init();
+                }
 
                 CurrentView = SelectedFriend;
                 OnPropertyChanged();

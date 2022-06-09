@@ -2,7 +2,7 @@
 
     [System.Serializable]
     public abstract class Request {
-        public string AccessToken { get; internal set; }
+        internal string AccessToken { get; set; }
     }
 
 }

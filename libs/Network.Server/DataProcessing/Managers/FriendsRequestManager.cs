@@ -20,7 +20,9 @@ namespace Network.Server.DataProcessing.Managers {
                 db.Messages.Add(new Message() {
                     SenderID = client.UserID,
                     ReceiverID = request.ReceiverID,
-                    Content = request.Content
+
+                    Content = request.Content,
+                    SendDate = request.SendDate
                 });
 
                 db.SaveChanges();

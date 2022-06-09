@@ -1,10 +1,12 @@
-﻿using Network.Client;
-using Simple.Wpf.Themes;
-using Simple.Wpf.Themes.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+
+using Simple.Wpf.Themes;
+using Simple.Wpf.Themes.Common;
+
+using Network.Client;
 
 namespace ClientApp
 {

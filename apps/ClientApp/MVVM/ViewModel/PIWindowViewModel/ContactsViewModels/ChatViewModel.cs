@@ -9,6 +9,8 @@ using Network.Client;
 using Network.Client.DataProcessing;
 
 using Network.Shared.DataTransfer.Base;
+
+using Network.Shared.DataTransfer.Model.Database.Friends;
 using Network.Shared.DataTransfer.Model.Friends.SendMessage;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
@@ -17,6 +19,7 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
     {
         public ChatViewModel(FriendModel friend)
         {
+            Client.Instance.ResponseReceived += OnResponseReceived;
             Client.Instance.NotificationReceived += OnNotificationReceived;
 
             Friend = friend;
@@ -26,12 +29,15 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             {
                 if (RichBoxContent.Length > 1)
                 {
-                    Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = RichBoxContent, Sender = Client.Data.Username});
+                    var current_time = DateTime.Now;
+                    Messages.Add(new MessageModel { Date = current_time.ToString("HH:mm"), Content = RichBoxContent, Sender = Client.Data.Username});
                     
                     Client.Instance.SendRequest(new SendMessageRequest()
                     {
+                        ReceiverID = Friend.UserID,
+
                         Content = RichBoxContent,
-                        ReceiverID = Friend.UserID
+                        SendDate = current_time
                     });
 
                     RichBoxContent = String.Empty;
@@ -44,11 +50,26 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             });
         }
 
+        // Methods
+        public void Init() 
+        {
+            Client.Instance.SendRequest(new MessageHistoryRequest() 
+            {
+                FriendID = Friend.UserID
+            });
+
+            // TODO: Move this to "OnMessageHistoryResponse" method
+            Initialized = true;
+        }
+
         // Commands
         public RelayCommand SendMessageCommand { get; set; }
         public RelayCommand TestoweUsuwanie { get; set; }
 
-        // Properties
+        // Common properties
+        public bool Initialized { get; private set; }
+
+        // Observable properties
         public FriendModel Friend
         {
             get { return _Friend; }
@@ -81,6 +102,34 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             }
         }
         private ObservableCollection<MessageModel> _Messages;
+
+        // Response event handling
+        private void OnResponseReceived(object sender, Response response) 
+        {
+            var dispatcher = new ResponseDispatcher(response);
+
+            App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<MessageHistoryResponse>(OnMessageHistoryResponse);
+            });
+        }
+
+        private void OnMessageHistoryResponse(MessageHistoryResponse response) 
+        {
+            if(response.FriendID == Friend.UserID) 
+            {
+                foreach(var message_info in response.Messages) 
+                {
+                    var message = new MessageModel();
+                    message.Content = message_info.Content;
+
+                    var username = (message_info.SenderID == Friend.UserID) ? Friend.Username : Client.Data.Username;
+                    message.Sender = username;
+
+                    message.Date = message_info.SendDate.ToString("HH:mm");
+                    Messages.Add(message);
+                }
+            }
+        }
 
         // Notification event handling
         private void OnNotificationReceived(object sender, Notification notification)

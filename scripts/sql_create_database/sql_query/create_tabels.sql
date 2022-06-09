@@ -29,7 +29,9 @@ CREATE TABLE Friendship (
 
 CREATE TABLE Message (
     ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
+	
     Content             VARCHAR(5000)       NOT NULL,
+	SendDate			DATETIME			NOT NULL,
 
     SenderID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
     ReceiverID          INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),

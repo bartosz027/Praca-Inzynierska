@@ -5,7 +5,7 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends {
 
     [Serializable]
     public class MessageHistoryRequest : Request {
-        // TODO: Implement this
+        public int FriendID { get; set; }
     }
 
 }

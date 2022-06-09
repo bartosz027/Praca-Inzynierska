@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Network.Shared.Core {
 
-    public static class Serializer {
+    internal static class Serializer {
         public static byte[] Serialize(object data) {
             var binaryFormatter = new BinaryFormatter();
             var memoryStream = new MemoryStream(); 

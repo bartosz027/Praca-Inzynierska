@@ -52,6 +52,7 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Content" Type="varchar" Nullable="false" MaxLength="5000" />
+          <Property Name="SendDate" Type="datetime" Nullable="false" />
           <Property Name="SenderID" Type="int" Nullable="false" />
           <Property Name="ReceiverID" Type="int" Nullable="false" />
         </EntityType>
@@ -169,6 +170,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Content" Type="String" Nullable="false" MaxLength="5000" Unicode="false" FixedLength="false" />
+          <Property Name="SendDate" Type="DateTime" Nullable="false" />
           <Property Name="SenderID" Type="Int32" Nullable="false" />
           <Property Name="ReceiverID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__Message__Receive__2A4B4B5E" FromRole="Message" ToRole="Account" />
@@ -263,6 +265,7 @@
               <MappingFragment StoreEntitySet="Message">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
                 <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
               </MappingFragment>
@@ -300,8 +303,8 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="bdbc72b808a94b1f846b640c0ce4dfdb" Name="Diagram1">
-        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+      <Diagram DiagramId="060713c550b241e28614ad58b2e90f79" Name="Diagram1">
+        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Message" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Verification" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
