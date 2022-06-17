@@ -106,7 +106,7 @@
            x:Key="ChatTopSector">
 
         <Setter Property="BorderBrush"
-                Value="#11151C"/>
+                Value="#212D40"/>
         <Setter Property="BorderThickness"
                 Value="0,0,0,2"/>
 
@@ -161,6 +161,48 @@
 
     </Style>
 
+    <!-- ListboxItem kontakty-->
+    <Style x:Key="ContactsListbox" TargetType="ListBox">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+
+    <!-- ListboxItem kontakty-->
+    <Style x:Key="ContactsListboxItem" TargetType="ListBoxItem">
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="_Border" 
+                            SnapsToDevicePixels="true"
+                            Margin="5"
+                            CornerRadius="10">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        
+                        <Trigger Property="IsEnabled" Value="true">
+                            <Setter TargetName="_Border" Property="Background" Value="Transparent"/>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="_Border" Property="Background" Value="#D66853"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="_Border" Property="Background" Value="#C1D66853 "/>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Passwordbox okrągły-->
     <Style TargetType="PasswordBox" x:Key="RoundCornerPasswordBox">
         
@@ -195,7 +237,7 @@
     <!-- Textbox okrągły-->
     <Style TargetType="{x:Type TextBox}" BasedOn="{x:Null}"
            x:Key="RoundCornerTextBox">
-        
+
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -203,7 +245,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="Foreground" Value="#EFFFFA"/>
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -217,24 +259,7 @@
         </Setter>
 
     </Style>
-
-    <Style TargetType="ListViewItem" x:Key="ChatItem">
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <StackPanel>
-                        <Label Content="{Binding Content}"
-                               Foreground="White"
-                               FontWeight="SemiBold"
-                               VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-    </Style>
-
+    
     <!--Guziki Okna Logowania-->
     <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
            x:Key="LoginWindowButton">
@@ -573,49 +598,42 @@
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="Fill" Value="#D66853"/>
         <Setter Property="Margin" Value="10,0,0,0"/>
         <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="True">
-                <Setter Property="Fill" Value="#D66853"/>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Fill" Value="Transparent"/>
             </Trigger>
             
         </Style.Triggers>
 
     </Style>
 
+    <!--Kuleczka statusu-->
+    <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource NotificationBalls}"
+           x:Key="StatusBalls">
+        <Setter Property="Fill" Value="#007C77"/>
+    </Style>
+
     <!-- Okno profilu -->
     <Style TargetType="{x:Type RadioButton}" BasedOn="{x:Null}"
            x:Key="UserView">
-
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#EFFFFA"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        
+        <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+
         <Setter Property="Template">
+         
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid Height="40">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Ellipse x:Name="Status"
-                                 Style="{DynamicResource NotificationBalls}"
-                                 Fill="Green"
-                                 IsEnabled="{TemplateBinding Property=IsEnabled}"/>
 
+                    <Grid Height="40">
+                        
                         <TextBlock Grid.Column="1"
-                                   Style="{DynamicResource ChatTextBlock}"
-                                   Text="{TemplateBinding Property=Content}"
-                                   Padding="10,0,0,0"/>
+                                  Style="{DynamicResource ChatTextBlock}"
+                                  Text="{TemplateBinding Property=Content}"
+                                  Padding="10,0,0,0"/>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Fill" TargetName="Status" Value="Black"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

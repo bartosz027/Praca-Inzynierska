@@ -94,10 +94,14 @@
     </Compile>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="MVVM\Model\ContactManagerItemModel.cs" />
     <Compile Include="MVVM\Model\FriendModel.cs" />
     <Compile Include="MVVM\Model\MessageModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\AddContactViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\ChatViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\ContactManagerViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\NotificationListViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\PIWindowViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModels\ThemesSettingViewModel.cs" />
@@ -116,8 +120,17 @@
     <Compile Include="MVVM\View\PIWindowView\ContactsView.xaml.cs">
       <DependentUpon>ContactsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\PIWindowView\ContactsViews\AddContactView.xaml.cs">
+      <DependentUpon>AddContactView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\PIWindowView\ContactsViews\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PIWindowView\ContactsViews\ContactManagerView.xaml.cs">
+      <DependentUpon>ContactManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PIWindowView\ContactsViews\NotificationListView.xaml.cs">
+      <DependentUpon>NotificationListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\PIWindowView\PIWindow.xaml.cs">
       <DependentUpon>PIWindow.xaml</DependentUpon>
@@ -199,7 +212,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\PIWindowView\ContactsViews\AddContactView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\PIWindowView\ContactsViews\ChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\PIWindowView\ContactsViews\ContactManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\PIWindowView\ContactsViews\NotificationListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

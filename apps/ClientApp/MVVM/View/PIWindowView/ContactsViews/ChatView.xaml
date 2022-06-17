@@ -18,7 +18,9 @@
         </Grid.RowDefinitions>
 
         <Border Margin="10,0"
-                Style="{DynamicResource ChatTopSector}"/>
+                Style="{DynamicResource ChatTopSector}">
+            
+        </Border>
 
         <Border x:Name="ChatSector"
                 Grid.Row="1" Margin="10">
@@ -34,10 +36,8 @@
                       BorderBrush="Transparent">
                 
                 <ListView.ItemContainerStyle>
-                    
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="IsSelected" Value="{Binding Content.IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Self}}"/>
 
+                    <Style TargetType="ListBoxItem">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -86,14 +86,22 @@
                                      FontSize="16"
                                      
                                      IsReadOnly="True"
-                                     Style="{DynamicResource ChatTextBox}"/>
+                                     Style="{DynamicResource ChatTextBox}"
+                                     Background="Transparent">
+                                <TextBox.ContextMenu>
+                                    <ContextMenu StaysOpen="False">
+                                        <MenuItem Header="TEST" Command="{Binding TestoweUsuwanie}"/>
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+
+                            </TextBox>
 
                             <Grid.ContextMenu>
-                                <ContextMenu Name="Mleko" StaysOpen="False">
+                                <ContextMenu StaysOpen="False">
                                     <MenuItem Header="TEST" Command="{Binding TestoweUsuwanie}"/>
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            
+
                         </Grid>
                         
                     </DataTemplate>

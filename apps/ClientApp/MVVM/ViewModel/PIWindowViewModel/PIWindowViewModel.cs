@@ -6,25 +6,25 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
     {
         public PIWindowViewModel()
         {
-            SettingsViewModel = new SettingsViewModel();
-            ContactsViewModel = new ContactsViewModel();
+            SettingsVM = new SettingsViewModel();
+            ContactsVM = new ContactsViewModel();
 
             ContactsButtonCommand = new RelayCommand(o => 
             {
-                CurrentView = ContactsViewModel;
+                CurrentView = ContactsVM;
             });
 
             SettingsButtonCommand = new RelayCommand(o => 
             {
-                CurrentView = SettingsViewModel;
+                CurrentView = SettingsVM;
             });
 
-            CurrentView = ContactsViewModel;
+            CurrentView = ContactsVM;
         }
 
         // VM's
-        public SettingsViewModel SettingsViewModel { get; set; }
-        public ContactsViewModel ContactsViewModel { get; set; }
+        public SettingsViewModel SettingsVM { get; set; }
+        public ContactsViewModel ContactsVM { get; set; }
 
         // Commands
         public RelayCommand ContactsButtonCommand { get; set; }

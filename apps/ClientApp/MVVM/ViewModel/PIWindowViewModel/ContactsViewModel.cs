@@ -19,15 +19,22 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
         public ContactsViewModel()
         {
             Client.Instance.ResponseReceived += OnResponseReceived;
-
+            ContactManagerVM = new ContactManagerViewModel();
             FriendList = new ObservableCollection<ChatViewModel>();
             Client.Instance.SendRequest(new FriendListRequest());
 
             CurrentView = SelectedFriend;
+
+            ContactManagerButtonCommand = new RelayCommand(o => 
+            {
+                   SelectedFriend = null;
+                   CurrentView = ContactManagerVM;
+            });
         }
 
         // VM's
         public ObservableCollection<ChatViewModel> FriendList { get; set; }
+        public ContactManagerViewModel ContactManagerVM { get; set; }
 
         // Obserable properties
         public ChatViewModel SelectedFriend
@@ -37,7 +44,7 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
             {
                 _SelectedFriend = value;
 
-                if(!SelectedFriend.Initialized) 
+                if(SelectedFriend != null && !SelectedFriend.Initialized) 
                 {
                     SelectedFriend.Init();
                 }
@@ -47,6 +54,9 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
             }
         }
         private ChatViewModel _SelectedFriend;
+
+        // Commands
+        public RelayCommand ContactManagerButtonCommand { get; set; }
 
         // Current view
         public object CurrentView

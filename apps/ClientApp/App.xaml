@@ -24,6 +24,18 @@
                 <ContactsView:ChatView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type ContactsViewModel:ContactManagerViewModel}">
+                <ContactsView:ContactManagerView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type ContactsViewModel:NotificationListViewModel}">
+                <ContactsView:NotificationListView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type ContactsViewModel:AddContactViewModel}">
+                <ContactsView:AddContactView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type PIWindowViewModel:SettingsViewModel}">
                 <PIWindowView:SettingsView/>
             </DataTemplate>

@@ -9,6 +9,7 @@
         mc:Ignorable="d"
 
         Title="PIWindow" MinHeight="550" MinWidth="900"
+        Height="550" Width="900"
         WindowStyle="None">
 
     <Window.DataContext>
