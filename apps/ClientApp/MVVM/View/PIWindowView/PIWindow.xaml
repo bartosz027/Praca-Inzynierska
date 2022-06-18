@@ -15,7 +15,7 @@
     <Window.DataContext>
         <viewModel:PIWindowViewModel/>
     </Window.DataContext>
-
+    
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>

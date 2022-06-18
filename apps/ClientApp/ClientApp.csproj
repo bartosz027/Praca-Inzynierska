@@ -306,5 +306,9 @@
   <ItemGroup>
     <Resource Include="Images\Pictures\LightThemeButton.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\Shared\AcceptIcon.png" />
+    <Resource Include="Images\Icons\Shared\DeclineIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

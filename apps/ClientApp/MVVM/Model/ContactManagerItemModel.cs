@@ -19,6 +19,18 @@ namespace ClientApp.MVVM.Model
             }
         }
         private string _Username;
+
+        public string ItemInfo
+        {
+            get { return _ItemInfo; }
+            set
+            {
+                _ItemInfo = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _ItemInfo;
+
         public bool IsEnabledAcceptOption
         {
             get { return _IsEnabledAcceptOption; }
@@ -40,5 +52,6 @@ namespace ClientApp.MVVM.Model
             }
         }
         private bool _IsEnabledDeclineOption;
+
     }
 }

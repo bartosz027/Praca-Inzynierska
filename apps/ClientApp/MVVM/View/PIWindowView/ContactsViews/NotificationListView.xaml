@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:ClientApp.MVVM.View.PIWindowView.ContactsViews"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -20,9 +23,11 @@
         </Border>
 
         <Border Grid.Row="1"
-                x:Name="NotificationSector">
-            <ListView ItemsSource="{Binding Messages}"
-                      Style="{DynamicResource ContactsListbox}">
+                x:Name="NotificationSector"
+                Margin="10">
+            <ListView ItemsSource="{Binding CurrentList}"
+                      Style="{DynamicResource ContactsListbox}"
+                      x:Name="NotificationList">
 
                 <ListView.ItemContainerStyle>
 
@@ -42,14 +47,52 @@
 
                     <DataTemplate>
 
-                        <Grid Width="{Binding ActualWidth, ElementName=NotificationSector}">
+                        <Grid Width="{Binding ActualWidth, ElementName=NotificationSector}"
+                              Height="40">
 
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
                             
+                            <Border Grid.Column="0">
+                                <TextBlock Text="{Binding Username}"
+                                           Style="{DynamicResource ChatTextBlock}"
+                                           FontWeight="Bold"/>
+                            </Border>
+                            
+                            <Border Grid.Column="1">
+                                <TextBlock Text="{Binding ItemInfo}"
+                                           Style="{DynamicResource ChatTextBlock}"
+                                           HorizontalAlignment="Left"
+                                           Padding="10"/>
+                            </Border>
+
+                            <Border Grid.Column="2">
+                                <Button Style="{DynamicResource NavigationButton}"
+                                        Padding="20"
+                                        Command="{Binding ElementName=NotificationList, Path=DataContext.AcceptButtonCommand}"
+                                        CommandParameter="{Binding}"
+                                        Visibility="{Binding IsEnabledAcceptOption, 
+                                                             Converter={StaticResource BoolToVis}}">
+
+                                    <Image Source="/ClientApp;component/Images/Icons/Shared/AcceptIcon.png"/>
+                                </Button>
+                            </Border>
+
+                            <Border Grid.Column="3">
+                                <Button Style="{DynamicResource NavigationButton}"
+                                        Padding="20"
+                                        Command="{Binding ElementName=NotificationList, Path=DataContext.DeclineButtonCommand}"
+                                        CommandParameter="{Binding}"
+                                        Visibility="{Binding IsEnabledDeclineOption, 
+                                                             Converter={StaticResource BoolToVis}}">
+
+                                    <Image Source="/ClientApp;component/Images/Icons/Shared/DeclineIcon.png"/>
+                                </Button>
+                            </Border>
                         </Grid>
 
                     </DataTemplate>

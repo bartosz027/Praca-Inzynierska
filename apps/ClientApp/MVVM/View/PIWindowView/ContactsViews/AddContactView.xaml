@@ -19,6 +19,7 @@
         <Border Grid.Row="0"
                 Style="{DynamicResource PIWinodwNavigationBar}">
             <TextBox Style="{DynamicResource ChatTextBox}"
+                     Text="{Binding ContactName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Margin="10,5"
                      Padding="5"
                      TextWrapping="NoWrap"/>
@@ -27,8 +28,13 @@
                 Grid.Column="1">
             <Button Content="Wyślij zaproszenie"
                     Style="{DynamicResource LoginWindowButton}"
+                    Command="{Binding SendInvitatationButtonCommand}"
                     Height="40"
                     Margin="0,0,10,0"/>
+        </Border>
+
+        <Border Grid.Row="1">
+            
         </Border>
 
         
