@@ -36,5 +36,16 @@ namespace ClientApp.MVVM.Model
             }
         }
         private string _Sender;
+
+        public bool IsMyMessage
+        {
+            get { return _IsMyMessage; }
+            set
+            {
+                _IsMyMessage = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _IsMyMessage;
     }
 }

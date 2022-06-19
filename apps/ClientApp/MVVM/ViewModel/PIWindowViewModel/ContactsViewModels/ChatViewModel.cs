@@ -30,7 +30,7 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
                 if (RichBoxContent.Length > 1)
                 {
                     var current_time = DateTime.Now;
-                    Messages.Add(new MessageModel { Date = current_time.ToString("HH:mm"), Content = RichBoxContent, Sender = Client.Data.Username});
+                    Messages.Add(new MessageModel { Date = current_time.ToString("HH:mm"), Content = RichBoxContent, Sender = Client.Data.Username, IsMyMessage = true});
                     
                     Client.Instance.SendRequest(new SendMessageRequest()
                     {
@@ -44,9 +44,15 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
                 }
             });
 
-            TestoweUsuwanie = new RelayCommand(o => 
+            RemoveMessageCommand = new RelayCommand(o => 
             {
-                MessageBox.Show("TEST");
+                var message = o as MessageModel;
+                Messages.Remove(message);
+            });
+            CopyMessageCommand = new RelayCommand(o =>
+            {
+                var message = o as MessageModel;
+                Clipboard.SetText(message.Content);
             });
         }
 
@@ -64,7 +70,8 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
 
         // Commands
         public RelayCommand SendMessageCommand { get; set; }
-        public RelayCommand TestoweUsuwanie { get; set; }
+        public RelayCommand RemoveMessageCommand { get; set; }
+        public RelayCommand CopyMessageCommand { get; set; }
 
         // Common properties
         public bool Initialized { get; private set; }
@@ -122,9 +129,16 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
                     var message = new MessageModel();
                     message.Content = message_info.Content;
 
-                    var username = (message_info.SenderID == Friend.UserID) ? Friend.Username : Client.Data.Username;
-                    message.Sender = username;
-
+                    if (message_info.SenderID == Friend.UserID)
+                    {
+                        message.Sender = Friend.Username;
+                    }
+                    else
+                    {
+                        message.Sender = Client.Data.Username;
+                        message.IsMyMessage = true;
+                    }
+                    
                     message.Date = message_info.SendDate.ToString("HH:mm");
                     Messages.Add(message);
                 }
