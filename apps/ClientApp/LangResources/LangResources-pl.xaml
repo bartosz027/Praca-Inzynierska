@@ -49,7 +49,7 @@
     <system:String x:Key="CopyMessageButton_String">Kopiuj</system:String>
 
     <!-- Języki -->
-    <system:String x:Key="LangResources-pl_String">polski</system:String>
-    <system:String x:Key="LangResources-fr_String">français</system:String>
+    <system:String x:Key="LangResources-pl">polski</system:String>
+    <system:String x:Key="LangResources-fr">français</system:String>
 
 </ResourceDictionary>

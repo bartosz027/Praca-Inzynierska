@@ -7,6 +7,7 @@ using Simple.Wpf.Themes;
 using Simple.Wpf.Themes.Common;
 
 using Network.Client;
+using ClientApp.Core;
 
 namespace ClientApp
 {
@@ -20,13 +21,15 @@ namespace ClientApp
             base.OnStartup(e);
             Client.Instance.Connect("127.0.0.1", 65535);
 
+            var themeName = ConfigManager.GetSetting("Theme");
             var themes = new Themes();
             themes.ItemsSource = _Themes;
-            themes.SelectedItem = _Themes.First(p => p.Name == "Dark theme");
+            themes.SelectedItem = _Themes.First(p => p.Name == themeName);
 
+
+            var language = ConfigManager.GetSetting("LanguageResource");
             ResourceDictionary resourceDictionary = new ResourceDictionary();
-            resourceDictionary.Source = new Uri("/ClientApp;component/LangResources/LangResources-fr.xaml", UriKind.Relative);
-
+            resourceDictionary.Source = new Uri("/ClientApp;component/LangResources/" + language + ".xaml", UriKind.Relative);
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 

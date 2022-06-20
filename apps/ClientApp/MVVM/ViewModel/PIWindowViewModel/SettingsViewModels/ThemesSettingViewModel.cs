@@ -25,12 +25,14 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels
             {
                 themes.ItemsSource = ThemesList;
                 themes.SelectedItem = ThemesList.First(p=>p.Name == "Light theme");
+                ConfigManager.SetSetting("Theme", "Light theme");
             });
 
             DarkThemeButtonCommand = new RelayCommand(o =>
             {
                 themes.ItemsSource = ThemesList;
                 themes.SelectedItem = ThemesList.First(p => p.Name == "Dark theme");
+                ConfigManager.SetSetting("Theme", "Dark theme");
             });
         }
 

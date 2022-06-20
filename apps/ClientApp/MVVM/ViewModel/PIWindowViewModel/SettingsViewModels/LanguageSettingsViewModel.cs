@@ -15,9 +15,10 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels
     {
         public LanguageSettingsViewModel()
         {
-            LanguageList = new ObservableCollection<LangResourcesModel> { new LangResourcesModel { LangResourcesName = "LangResources-pl", Language =  Application.Current.Resources["LangResources-pl"].ToString()},
-                                                                          new LangResourcesModel { LangResourcesName = "LangResources-fr", Language =  Application.Current.Resources["LangResources-fr"].ToString()}
-                                                                        };
+            LanguageList = new ObservableCollection<LangResourcesModel> 
+            { 
+                new LangResourcesModel { LangResourcesName = "LangResources-pl", Language =  Application.Current.Resources["LangResources-pl"].ToString()},
+                new LangResourcesModel { LangResourcesName = "LangResources-fr", Language =  Application.Current.Resources["LangResources-fr"].ToString()}};
             
         }
         // Obserable properties
@@ -44,6 +45,7 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels
             resourceDictionary.Source = new Uri("/ClientApp;component/LangResources/" + SelectedLanguage.LangResourcesName + ".xaml", UriKind.Relative);
 
             Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
+            ConfigManager.SetSetting("LanguageResource", SelectedLanguage.LangResourcesName);
         }
     }
 }
