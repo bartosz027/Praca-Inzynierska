@@ -4,6 +4,17 @@ namespace ClientApp.MVVM.Model
 {
     internal class MessageModel : ObservableObject
     {
+        public int ID 
+        {
+            get { return _ID; }
+            set 
+            {
+                _ID = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _ID;
+
         public string Content
         {
             get { return _Content; }

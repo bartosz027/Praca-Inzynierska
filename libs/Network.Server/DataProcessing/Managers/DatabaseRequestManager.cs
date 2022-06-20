@@ -51,6 +51,7 @@ namespace Network.Server.DataProcessing.Managers {
 
                 foreach (var message in messages) {
                     var message_info = new MessageInfo() {
+                        ID = message.ID,
                         SenderID = message.SenderID,
                         Content = message.Content,
                         SendDate = message.SendDate

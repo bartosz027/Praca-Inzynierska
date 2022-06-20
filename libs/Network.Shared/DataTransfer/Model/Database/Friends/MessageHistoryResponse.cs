@@ -6,6 +6,7 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends {
 
     [Serializable]
     public class MessageInfo { 
+        public int ID { get; set; }
         public int SenderID { get; set; }
         public string Content { get; set; }
         public DateTime SendDate { get; set; }

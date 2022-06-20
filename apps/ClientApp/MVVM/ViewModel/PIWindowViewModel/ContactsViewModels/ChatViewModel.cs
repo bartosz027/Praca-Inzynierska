@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 
 using ClientApp.Core;
@@ -11,6 +12,7 @@ using Network.Client.DataProcessing;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Database.Friends;
+using Network.Shared.DataTransfer.Model.Friends.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.SendMessage;
 
 namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
@@ -48,7 +50,13 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             {
                 var message = o as MessageModel;
                 Messages.Remove(message);
+
+                Client.Instance.SendRequest(new DeleteMessageRequest() {
+                    FriendID = friend.UserID,
+                    MessageID = message.ID
+                });
             });
+
             CopyMessageCommand = new RelayCommand(o =>
             {
                 var message = o as MessageModel;
@@ -127,7 +135,10 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
                 foreach(var message_info in response.Messages) 
                 {
                     var message = new MessageModel();
+
+                    message.ID = message_info.ID;
                     message.Content = message_info.Content;
+                    message.Date = message_info.SendDate.ToString("HH:mm");
 
                     if (message_info.SenderID == Friend.UserID)
                     {
@@ -139,7 +150,6 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
                         message.IsMyMessage = true;
                     }
                     
-                    message.Date = message_info.SendDate.ToString("HH:mm");
                     Messages.Add(message);
                 }
             }
@@ -151,15 +161,30 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             var dispatcher = new NotificationDispatcher(notification);
 
             App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<DeleteMessageNotification>(OnDeleteMessageNotification);
                 dispatcher.Dispatch<SendMessageNotification>(OnSendMessageNotification);
             });
+        }
+
+        private void OnDeleteMessageNotification(DeleteMessageNotification notification) 
+        {
+            if (notification.FriendID == Friend.UserID) 
+            {
+                var message = Messages.Where(p => p.ID == notification.MessageID).Single();
+                Messages.Remove(message);
+            }
         }
 
         private void OnSendMessageNotification(SendMessageNotification notification)
         {
             if(notification.SenderID == Friend.UserID)
             {
-                Messages.Add(new MessageModel { Date = DateTime.Now.ToString("HH:mm"), Content = notification.Content, Sender = Friend.Username });
+                Messages.Add(new MessageModel { 
+                    ID = notification.MessageID,
+                    Date = DateTime.Now.ToString("HH:mm"), 
+                    Content = notification.Content, 
+                    Sender = Friend.Username }
+                );
             }
         }
     }

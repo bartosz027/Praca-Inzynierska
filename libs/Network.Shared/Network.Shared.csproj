@@ -69,6 +69,8 @@
     <Compile Include="DataTransfer\Model\Database\Friends\MessageHistoryRequest.cs" />
     <Compile Include="DataTransfer\Model\Database\Guild\MessageHistoryResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\MessageHistoryResponse.cs" />
+    <Compile Include="DataTransfer\Model\Friends\DeleteMessage\DeleteMessageNotification.cs" />
+    <Compile Include="DataTransfer\Model\Friends\DeleteMessage\DeleteMessageRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\SendMessage\SendMessageNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\SendMessage\SendMessageRequest.cs" />
     <Compile Include="DataTransfer\Model\Guild\SendMessage\SendMessageNotification.cs" />

@@ -118,7 +118,6 @@
     <Compile Include="MVVM\Model\FriendModel.cs" />
     <Compile Include="MVVM\Model\LangResourcesModel.cs" />
     <Compile Include="MVVM\Model\MessageModel.cs" />
-    <Compile Include="MVVM\Model\ObesrvableCollection.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\AddContactViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\ChatViewModel.cs" />
