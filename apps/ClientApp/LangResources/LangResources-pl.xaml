@@ -15,7 +15,7 @@
 
     <!-- Rejestracja -->
     <system:String x:Key="EnterUsername_String">Wprowadź pseudonim artystyczny:</system:String>
-    <system:String x:Key="NextButton_String">Dalej:</system:String>
+    <system:String x:Key="NextButton_String">Dalej</system:String>
     
     <system:String x:Key="E-mailCode_String">Wprowadź kod wysłany na e-mail:</system:String>
     <system:String x:Key="CodeNextButton_String">Wyślij</system:String>
@@ -51,5 +51,15 @@
     <!-- Języki -->
     <system:String x:Key="LangResources-pl">polski</system:String>
     <system:String x:Key="LangResources-fr">français</system:String>
+    
+    <!-- Komunikaty -->
+    <system:String x:Key="PendingInfo_String"> wysłałeś mu zaproszenie.</system:String>
+    <system:String x:Key="InvitationsInfo_String"> wysłał ci zaproszenie.</system:String>
+    <system:String x:Key="BlockedInfo_String">jest zablokowany.</system:String>
+
+    <!-- Okrzyki walidacyjne -->
+    <system:String x:Key="IncorrectRegister_String">Dane rejestracji są nieprawidłowe lub konto z podanym adresem e-mail istnieje.</system:String>
+    <system:String x:Key="IncorrectLogin_String">Błędne dane logowania.</system:String>
+    <system:String x:Key="IncorrectCode_String">Kod nieprawidłowy.</system:String>
 
 </ResourceDictionary>

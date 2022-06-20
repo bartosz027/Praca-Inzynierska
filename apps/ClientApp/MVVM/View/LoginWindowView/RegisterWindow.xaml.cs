@@ -31,22 +31,37 @@ namespace ClientApp.MVVM.View.LoginWindowView
         // Click
         private void SendCode_Click(object sender, RoutedEventArgs e)
         {
-            Client.Instance.SendRequest(new RegisterRequest() {
-                Email = EmailBox.Text,
-                Password = PasswordBox.Password,
+            if (EmailBox.Text != String.Empty && PasswordBox.Password != String.Empty && UsernameBox.Text != String.Empty)
+            {
+                Client.Instance.SendRequest(new RegisterRequest()
+                {
+                    Email = EmailBox.Text,
+                    Password = PasswordBox.Password,
 
-                Username = UsernameBox.Text,
-                DateOfBirth = DateTime.Now
-            });
+                    Username = UsernameBox.Text,
+                    DateOfBirth = DateTime.Now
+                });
+            }
+            else 
+            {
+                ValidatorMessage.Visibility = Visibility.Visible;
+            }
         }
 
         private void VerifyCode_Click(object sender, RoutedEventArgs e)
         {
-            Client.Instance.SendRequest(new VerifyEmailRequest()
+            if (CodeBox.Text != String.Empty)
             {
-                Email = EmailBox.Text,
-                Code = CodeBox.Text
-            });
+                Client.Instance.SendRequest(new VerifyEmailRequest()
+                {
+                    Email = EmailBox.Text,
+                    Code = CodeBox.Text
+                });
+            }
+            else 
+            {
+                ValidatorMessageCode.Visibility = Visibility.Visible;
+            }
         }
 
         // Response Event Handling
@@ -71,7 +86,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
                 }
                 case STATUS.FAILURE: 
                 {
-                    MessageBox.Show("TODO: LUX powiadomienie");
+                    ValidatorMessage.Visibility = Visibility.Visible;
                     break;
                 }
             }
@@ -94,7 +109,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
                 }
                 case STATUS.FAILURE: 
                 {
-                    MessageBox.Show("TODO: LUX powiadomienie");
+                    ValidatorMessageCode.Visibility = Visibility.Visible;
                     break;
                 }
             }

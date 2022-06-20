@@ -43,11 +43,21 @@
     <system:String x:Key="SendIvitation_String">Ajouter un ami</system:String>
 
     <!-- Menu kontekstowe -->
-
     <system:String x:Key="DeleteMessageButton_String">Effacer</system:String>
     <system:String x:Key="CopyMessageButton_String">Copie</system:String>
 
     <!-- Języki -->
     <system:String x:Key="LangResources-pl">polski</system:String>
     <system:String x:Key="LangResources-fr">français</system:String>
+
+    <!-- Komunikaty -->
+    <system:String x:Key="PendingInfo_String">tu lui as envoyé une invitation</system:String>
+    <system:String x:Key="InvitationsInfo_String">il vous a envoyé une invitation.</system:String>
+    <system:String x:Key="BlockedInfo_String">Il est bloqué.</system:String>
+
+    <!-- Okrzyki walidacyjne -->
+    <system:String x:Key="IncorrectRegister_String">Des données d'enregistrement incorrectes ou un compte avec l'e-mail indiqué existent.</system:String>
+    <system:String x:Key="IncorrectLogin_String">Informations de connexion incorrectes.</system:String>
+    <system:String x:Key="IncorrectCode_String">Code invalide.</system:String>
+    
 </ResourceDictionary>

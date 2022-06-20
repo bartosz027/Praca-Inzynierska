@@ -41,23 +41,40 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
+                <TextBlock x:Name="ValidatorMessage"
+                           Grid.Row="0" 
+                           Grid.ColumnSpan="2"
+                           Text="{DynamicResource IncorrectRegister_String}"
+                           
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Center"
+                           Margin="0,20"
+                           Visibility="Collapsed"
+                           
+                           Style="{DynamicResource LoginWindowTextBlock}"
+                           Foreground="#CB1919"
+                           FontSize="12"/>
+
                 <Border Grid.Column="0"
                         Grid.Row="0">
                     
                     <Grid>
                         
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="40"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="90"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" 
+                        
+
+                        <TextBlock Grid.Row="1" 
                                    Text="{DynamicResource EnterEmail_String}"
                                    
                                    VerticalAlignment="Center"
@@ -67,7 +84,7 @@
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <TextBox x:Name="EmailBox"
-                                 Grid.Row="1"
+                                 Grid.Row="2"
                                  
                                  Width="300" 
                                  Margin="10,0,0,0"
@@ -75,7 +92,7 @@
                                  
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
-                        <TextBlock Grid.Row="2"
+                        <TextBlock Grid.Row="3"
                                    Text="{DynamicResource EnterUsername_String}"
                                    
                                    VerticalAlignment="Center"
@@ -85,7 +102,7 @@
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <TextBox x:Name="UsernameBox" 
-                                 Grid.Row="3"
+                                 Grid.Row="4"
                                  
                                  Width="300"
                                  Margin="10,0,0,0"
@@ -93,7 +110,7 @@
                                  
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
-                        <TextBlock Grid.Row="4"
+                        <TextBlock Grid.Row="5"
                                    Text="{DynamicResource EnterPassword_String}"
                                    
                                    VerticalAlignment="Center"
@@ -103,7 +120,7 @@
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
                         <PasswordBox x:Name="PasswordBox"
-                                     Grid.Row="5"
+                                     Grid.Row="6"
                                      
                                      Width="300"
                                      Margin="10,0,0,0"
@@ -111,10 +128,10 @@
                                      
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>
                         
-                        <TextBlock Grid.Row="6"
-                                   Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+                        <TextBlock Grid.Row="7"
+                                   Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
                                    
-                                   VerticalAlignment="Center"
+                                   VerticalAlignment="Top"
                                    HorizontalAlignment="Left"
                                    
                                    FontSize="11"
@@ -123,7 +140,7 @@
                                    
                                    Style="{DynamicResource LoginWindowTextBlock}"/>
 
-                        <CheckBox Grid.Row="7"
+                        <CheckBox Grid.Row="8"
                                   Margin="10,0,0,0"
                                   
                                   VerticalAlignment="Center"
@@ -171,22 +188,35 @@
                 <Grid>
                     
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
                         <RowDefinition Height="80"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
+                    
+                    <TextBlock x:Name="ValidatorMessageCode"
+                           Grid.Row="0" 
+                           Text="{DynamicResource IncorrectCode_String}"
+                           
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Margin="0,20"
+                           Visibility="Collapsed"
+                           
+                           Style="{DynamicResource LoginWindowTextBlock}"
+                           Foreground="#CB1919"
+                           FontSize="12"/>
 
-                    <TextBlock Grid.Row="0" 
+                    <TextBlock Grid.Row="1" 
                                Text="{DynamicResource E-mailCode_String}"
                                
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Center"
                                
-                               Margin="10"
                                Style="{DynamicResource LoginWindowTextBlock}"/>
 
                     <TextBox x:Name="CodeBox"
-                             Grid.Row="1"
+                             Grid.Row="2"
                              
                              HorizontalAlignment="Center"
                              HorizontalContentAlignment="Center"
@@ -194,7 +224,7 @@
                              Width="150" Padding="0"
                              Style="{DynamicResource RoundCornerTextBox}"/>
 
-                    <Button Grid.Row="2" 
+                    <Button Grid.Row="3" 
                             Width="100" Height="30"
                             
                             Margin="10"

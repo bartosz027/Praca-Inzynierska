@@ -134,6 +134,24 @@
 
     </Style>
 
+    <!-- TextBlock komunikaty -->
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ChatTextBlock}"
+           x:Key="NotificationInfo">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ItemInfo}" Value="Pending">
+                <Setter Property="TextBlock.Text" Value="{DynamicResource PendingInfo_String}"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding ItemInfo}" Value="Invitations">
+                <Setter Property="TextBlock.Text" Value="{DynamicResource InvitationsInfo_String}"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding ItemInfo}" Value="Blocked">
+                <Setter Property="TextBlock.Text" Value="{DynamicResource BlockedInfo_String}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- Textbox Chat-->
     <Style TargetType="{x:Type TextBox}" BasedOn="{x:Null}"
            x:Key="ChatTextBox">

@@ -64,10 +64,9 @@
                             </Border>
                             
                             <Border Grid.Column="1">
-                                <TextBlock Text="{Binding ItemInfo}"
-                                           Style="{DynamicResource ChatTextBlock}"
+                                <TextBlock Style="{DynamicResource NotificationInfo}"
                                            HorizontalAlignment="Left"
-                                           Padding="10"/>
+                                           Padding="5"/>
                             </Border>
 
                             <Border Grid.Column="2">
