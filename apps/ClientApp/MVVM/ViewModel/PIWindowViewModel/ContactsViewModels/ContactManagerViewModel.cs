@@ -1,5 +1,9 @@
 ﻿using ClientApp.Core;
 using ClientApp.MVVM.Model;
+using Network.Client;
+using Network.Client.DataProcessing;
+using Network.Shared.DataTransfer.Base;
+using Network.Shared.DataTransfer.Model.Friends.AddFriend;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,16 +17,18 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
     {
         public ContactManagerViewModel()
         {
-            NotificationListVM = new NotificationListViewModel();
-            AddContactVM = new AddContactViewModel();
+            Client.Instance.NotificationReceived += OnNotificationReceived;
 
-            PendingInvitations = new ObservableCollection<ContactManagerItemModel> {new ContactManagerItemModel { Username = "Mleko", IsEnabledDeclineOption = true, ItemInfo="Wysłałeś tej kurwie zaproszenie"} };
-            Invitations = new ObservableCollection<ContactManagerItemModel> { new ContactManagerItemModel { Username = "Kakało", IsEnabledAcceptOption = true, IsEnabledDeclineOption = true, ItemInfo = "Ta kurwa wysłała ci zaproszenie" } };
-            Blocked = new ObservableCollection<ContactManagerItemModel> { new ContactManagerItemModel { Username = "Herbapol", IsEnabledDeclineOption = true, ItemInfo = "Ta kurwa jest zablokowana" } };
+            PendingInvitations = new ObservableCollection<ContactManagerItemModel>();
+            Invitations = new ObservableCollection<ContactManagerItemModel>();
+            Blocked = new ObservableCollection<ContactManagerItemModel>();
+
+            NotificationListVM = new NotificationListViewModel();
+            AddContactVM = new AddContactViewModel(PendingInvitations);
 
             CurrentView = NotificationListVM;
 
-            AddContactViewButtonCommand = new RelayCommand(o=>
+            AddContactViewButtonCommand = new RelayCommand(o =>
             {
                 CurrentView = AddContactVM;
             });
@@ -44,8 +50,8 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
         }
 
         // VM' s
-        NotificationListViewModel NotificationListVM { get; set; }
         AddContactViewModel AddContactVM { get; set; }
+        NotificationListViewModel NotificationListVM { get; set; }
 
         // Observable properties
         public ObservableCollection<ContactManagerItemModel> PendingInvitations
@@ -99,5 +105,25 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels
             }
         }
         private object _CurrentView;
+
+        // Notification event handling
+        private void OnNotificationReceived(object sender, Notification notification) {
+            var dispatcher = new NotificationDispatcher(notification);
+
+            App.Current.Dispatcher.Invoke(delegate {
+                dispatcher.Dispatch<AddFriendNotification>(OnAddFriendNotification);
+            });
+        }
+
+        private void OnAddFriendNotification(AddFriendNotification notification) {
+            var item = new ContactManagerItemModel { 
+                Username = notification.Username, 
+                IsEnabledAcceptOption = true, 
+                IsEnabledDeclineOption = true, 
+                ItemInfo = "Invitation" 
+            };
+
+            Invitations.Add(item);
+        }
     }
 }

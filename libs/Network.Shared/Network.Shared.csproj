@@ -69,6 +69,12 @@
     <Compile Include="DataTransfer\Model\Database\Friends\MessageHistoryRequest.cs" />
     <Compile Include="DataTransfer\Model\Database\Guild\MessageHistoryResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\MessageHistoryResponse.cs" />
+    <Compile Include="DataTransfer\Model\Friends\AcceptFriendInvitation\AcceptFriendInvitationNotification.cs" />
+    <Compile Include="DataTransfer\Model\Friends\AcceptFriendInvitation\AcceptFriendInvitationRequest.cs" />
+    <Compile Include="DataTransfer\Model\Friends\AcceptFriendInvitation\AcceptFriendInvitationResponse.cs" />
+    <Compile Include="DataTransfer\Model\Friends\AddFriend\AddFriendNotification.cs" />
+    <Compile Include="DataTransfer\Model\Friends\AddFriend\AddFriendRequest.cs" />
+    <Compile Include="DataTransfer\Model\Friends\AddFriend\AddFriendResponse.cs" />
     <Compile Include="DataTransfer\Model\Friends\DeleteMessage\DeleteMessageNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\DeleteMessage\DeleteMessageRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\SendMessage\SendMessageNotification.cs" />
