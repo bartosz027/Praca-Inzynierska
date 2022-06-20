@@ -20,7 +20,7 @@ namespace Network.Server.Core {
         public static void SendMail(string receiver, string subject, string body) {
             if(_Initialized) {
                 var smtp = new SmtpClient {
-                    Host = "smtp.gmail.com",
+                    Host = "smtp-mail.outlook.com",
                     Port = 587,
 
                     EnableSsl = true,

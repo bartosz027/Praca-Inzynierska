@@ -33,7 +33,7 @@ namespace Network.Server {
             Console.SetOut(new TimestampTextWriter());
 
             // TODO: Move this to config file
-            SMTP.Init("noreplyteampi@gmail.com", "Qwerty123.");
+            SMTP.Init("twojastaratudududu@outlook.com", "dobredziala997");
         }
 
         public static Server Instance {
