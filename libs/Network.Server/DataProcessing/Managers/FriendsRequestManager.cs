@@ -35,6 +35,7 @@ namespace Network.Server.DataProcessing.Managers {
             }
             else {
                 response.Status = STATUS.FAILURE;
+                return null;
             }
 
             var receiver = Server.Data.Clients.Find(p => p.UserID == user.ID);
