@@ -54,7 +54,7 @@
                         </Grid.RowDefinitions>
                         
                         <TextBlock Grid.Row="0"
-                                   Text="Wprowadź e-mail:"
+                                   Text="{DynamicResource EnterEmail_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
@@ -71,7 +71,7 @@
                                  Style="{DynamicResource RoundCornerTextBox}"/>
     
                         <TextBlock Grid.Row="2"
-                                   Text="Wprowadź hasło:"
+                                   Text="{DynamicResource EnterPassword_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
@@ -93,7 +93,7 @@
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Left"
                                   
-                                  Content="Zaloguj automatycznie"
+                                  Content="{DynamicResource AutoLog_String}"
                                   Style="{DynamicResource LoginWindowCheckBox}"/>
 
                         <Button Grid.Row="5"
@@ -103,7 +103,7 @@
                                 HorizontalAlignment="Center"
                                 
                                 Margin="10"
-                                Content="Zaloguj"
+                                Content="{DynamicResource LoginButton_String}"
                                 
                                 IsDefault="True"
                                 Click="Login_Click"
@@ -131,7 +131,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <TextBlock Grid.Row="0"
-                                   Text="Nie pamiętasz hasła?"
+                                   Text="{DynamicResource ResetPassword_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
@@ -146,13 +146,13 @@
                                 HorizontalAlignment="Left"
                                 
                                 Margin="10,0,0,0"
-                                Content="Resetuj hasło"
+                                Content="{DynamicResource ResetPasswordButton_String}"
                                 
                                 Click="ForgotPassword_Click"
                                 Style="{DynamicResource LoginWindowButton}"/>
 
                         <TextBlock Grid.Row="1"
-                                   Text="Nie masz jescze konta?"
+                                   Text="{DynamicResource NewAccount_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right"
@@ -167,7 +167,8 @@
                                 HorizontalAlignment="Left"
                                 
                                 Margin="10,0,0,0"
-                                Content="Utwórz nowe konto"
+                                Content="{DynamicResource NewAccountButton_String}"
+                                
                                 
                                 Click="Register_Click"
                                 Style="{DynamicResource LoginWindowButton}"/>

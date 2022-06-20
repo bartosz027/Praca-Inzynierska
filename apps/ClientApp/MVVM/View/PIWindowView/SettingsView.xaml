@@ -20,28 +20,29 @@
 
             <StackPanel>
 
-                <RadioButton Content="Ustawienia konta" 
+                <RadioButton Content="{DynamicResource AccountSettings_String}" 
                              Margin="0,10,0,0" IsEnabled="False"
                              Style="{DynamicResource PIWindowRadioButon}"/>
 
-                <RadioButton Content="Dane profilu" Height="40"
+                <RadioButton Content="{DynamicResource ProfileDataButton_String}" Height="40"
                              Style="{DynamicResource PIWindowRadioButon}"/>
 
-                <RadioButton Content="Dane konta" Height="40"
+                <RadioButton Content="{DynamicResource AccountDataButton_String}" Height="40"
                              Style="{DynamicResource PIWindowRadioButon}"/>
 
-                <RadioButton Content="Ustawienia aplikacji"
+                <RadioButton Content="{DynamicResource AppSettings_String}"
                              Margin="0,20,0,0" IsEnabled="False"
                              Style="{DynamicResource PIWindowRadioButon}"/>
 
-                <RadioButton Content="Motyw" Height="40"
+                <RadioButton Content="{DynamicResource ThemeButton_String}" Height="40"
                              Command="{Binding ThemesSettingCommand}"
                              Style="{DynamicResource PIWindowRadioButon}"/>
 
-                <RadioButton Content="Język" Height="40"
+                <RadioButton Content="{DynamicResource LanguageDataButton_String}" Height="40"
+                             Command="{Binding LanguageSettingCommand}"
                              Style="{DynamicResource PIWindowRadioButon}"/>
 
-                <RadioButton Content="Wyloguj" Height="40" Margin="0,40,0,0"
+                <RadioButton Content="{DynamicResource LogOutButton_String}" Height="40" Margin="0,40,0,0"
                              Style="{DynamicResource PIWindowRadioButon}"/>
                 
             </StackPanel>

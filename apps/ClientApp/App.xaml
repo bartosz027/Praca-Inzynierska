@@ -44,6 +44,10 @@
                 <SettingsView:ThemesSettingsView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type SettingsViewModel:LanguageSettingsViewModel}">
+                <SettingsView:LanguageSettingsView/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 

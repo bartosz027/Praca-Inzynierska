@@ -7,19 +7,26 @@ namespace ClientApp.MVVM.ViewModel.PIWindowViewModel
     {
         public SettingsViewModel()
         {
-            ThemesSettingViewModel = new ThemesSettingViewModel();
+            ThemesSettingVM = new ThemesSettingViewModel();
+            LanguageSettingsVM = new LanguageSettingsViewModel();
+
             ThemesSettingCommand = new RelayCommand(o => 
             {
-                CurrentView = ThemesSettingViewModel;
+                CurrentView = ThemesSettingVM;
+            });
+            LanguageSettingCommand = new RelayCommand(o => 
+            {
+                CurrentView = LanguageSettingsVM;
             });
         }
 
         // VM's
-        public ThemesSettingViewModel ThemesSettingViewModel { get; set; }
+        public ThemesSettingViewModel ThemesSettingVM { get; set; }
+        public LanguageSettingsViewModel LanguageSettingsVM { get; set; }
 
         // Commands
         public RelayCommand ThemesSettingCommand { get; set; }
-
+        public RelayCommand LanguageSettingCommand { get; set; }
         // Current view
         public object CurrentView
         {

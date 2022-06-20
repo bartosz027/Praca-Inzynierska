@@ -23,6 +23,11 @@ namespace ClientApp
             var themes = new Themes();
             themes.ItemsSource = _Themes;
             themes.SelectedItem = _Themes.First(p => p.Name == "Dark theme");
+
+            ResourceDictionary resourceDictionary = new ResourceDictionary();
+            resourceDictionary.Source = new Uri("/ClientApp;component/LangResources/LangResources-fr.xaml", UriKind.Relative);
+
+            this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
         static IEnumerable<Theme> _Themes = new[] 

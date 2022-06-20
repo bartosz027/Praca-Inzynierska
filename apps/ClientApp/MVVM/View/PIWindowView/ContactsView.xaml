@@ -36,7 +36,8 @@
                 </Border>
 
                 <ListBox Grid.Row="1"
-                         Background="Yellow"/>
+                         Background="Transparent"
+                         BorderBrush="Transparent"/>
 
                 <ListBox Grid.Row="2"
                          x:Name="ContactList" 

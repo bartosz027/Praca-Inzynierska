@@ -97,11 +97,11 @@
                                 
                                 <TextBox.ContextMenu>
                                     <ContextMenu Style="{DynamicResource PIContextMenu}">
-                                        <MenuItem Header="Usuń" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveMessageCommand}"
+                                        <MenuItem Header="{DynamicResource DeleteMessageButton_String}" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveMessageCommand}"
                                               CommandParameter="{Binding}"
                                               Visibility="{Binding IsMyMessage, 
                                                              Converter={StaticResource BoolToVis}}"/>
-                                        <MenuItem Header="Kopiuj" Command="{Binding Source={StaticResource Proxy}, Path=Data.CopyMessageCommand}"
+                                        <MenuItem Header="{DynamicResource CopyMessageButton_String}" Command="{Binding Source={StaticResource Proxy}, Path=Data.CopyMessageCommand}"
                                               CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </TextBox.ContextMenu>
@@ -109,11 +109,11 @@
                             
                             <Grid.ContextMenu>
                                 <ContextMenu Style="{DynamicResource PIContextMenu}">
-                                    <MenuItem Header="Usuń" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveMessageCommand}"
+                                    <MenuItem Header="{DynamicResource DeleteMessageButton_String}" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveMessageCommand}"
                                               CommandParameter="{Binding}"
                                               Visibility="{Binding IsMyMessage, 
                                                              Converter={StaticResource BoolToVis}}"/>
-                                    <MenuItem Header="Kopiuj" Command="{Binding Source={StaticResource Proxy}, Path=Data.CopyMessageCommand}"
+                                    <MenuItem Header="{DynamicResource CopyMessageButton_String}" Command="{Binding Source={StaticResource Proxy}, Path=Data.CopyMessageCommand}"
                                               CommandParameter="{Binding}"/>
                                 </ContextMenu>
                             </Grid.ContextMenu>

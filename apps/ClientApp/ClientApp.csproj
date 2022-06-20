@@ -97,6 +97,7 @@
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\Model\ContactManagerItemModel.cs" />
     <Compile Include="MVVM\Model\FriendModel.cs" />
+    <Compile Include="MVVM\Model\LangResourcesModel.cs" />
     <Compile Include="MVVM\Model\MessageModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\AddContactViewModel.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\NotificationListViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\PIWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModels\LanguageSettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModels\ThemesSettingViewModel.cs" />
     <Compile Include="MVVM\View\LoginWindowView\ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
@@ -138,6 +140,9 @@
     </Compile>
     <Compile Include="MVVM\View\PIWindowView\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PIWindowView\SettingsViews\LanguageSettingsView.xaml.cs">
+      <DependentUpon>LanguageSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\PIWindowView\SettingsViews\ThemesSettingsView.xaml.cs">
       <DependentUpon>ThemesSettingsView.xaml</DependentUpon>
@@ -193,6 +198,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LangResources\LangResources-fr.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LangResources\LangResources-pl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\LoginWindowView\ForgotPasswordWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -234,6 +247,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\PIWindowView\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\PIWindowView\SettingsViews\LanguageSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

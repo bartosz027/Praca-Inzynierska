@@ -18,27 +18,27 @@
                 <StackPanel Orientation="Horizontal"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center">
-                    <RadioButton Content="Menadżer kontaktów" Height="40"
+                    <RadioButton Content="{DynamicResource ContactsManagerDescription_String}" Height="40"
                                  Style="{DynamicResource PIWindowRadioButon}"
                                  Padding="10,0"
                                  IsEnabled="False"/>
 
-                    <RadioButton Content="Oczekujące" Height="40"
+                    <RadioButton Content="{DynamicResource PendingInvitationsButton_String}" Height="40"
                                  Style="{DynamicResource PIWindowRadioButon}"
                                  Padding="10,0"
                                  Command="{Binding PendingInvitationsButtonCommand}"/>
 
-                    <RadioButton Content="Zaproszenia" Height="40"
+                    <RadioButton Content="{DynamicResource InvitationsButton_String}" Height="40"
                                  Style="{DynamicResource PIWindowRadioButon}"
                                  Padding="10,0"
                                  Command="{Binding InvitationsButtonCommand}"/>
 
-                    <RadioButton Content="Zablokowani" Height="40"
+                    <RadioButton Content="{DynamicResource BlockedButton_String}" Height="40"
                                  Style="{DynamicResource PIWindowRadioButon}"
                                  Padding="10,0"
                                  Command="{Binding BlockedButtonCommand}"/>
-                    
-                    <RadioButton Content="Dodaj znajomego " Height="40"
+
+                    <RadioButton Content="{DynamicResource SendIvitation_String}" Height="40"
                                  Style="{DynamicResource PIWindowRadioButon}"
                                  Padding="10,0"
                                  Command="{Binding AddContactViewButtonCommand}"/>

@@ -58,7 +58,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" 
-                                   Text="Wprowadź e-mail:"
+                                   Text="{DynamicResource EnterEmail_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
@@ -76,7 +76,7 @@
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
                         <TextBlock Grid.Row="2"
-                                   Text="Pseudonim artystyczny:"
+                                   Text="{DynamicResource EnterUsername_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
@@ -94,7 +94,7 @@
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
                         <TextBlock Grid.Row="4"
-                                   Text="Wprowadź hasło ponownie:"
+                                   Text="{DynamicResource EnterPassword_String}"
                                    
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
@@ -139,7 +139,7 @@
                 <Border Grid.Row="1"
                         Grid.ColumnSpan="2">
 
-                    <Button Content="Dalej"
+                    <Button Content="{DynamicResource NextButton_String}"
                             
                             Width="100" Height="30"
                             Margin="10"
@@ -177,7 +177,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" 
-                               Text="Wprowadź kod wysłany na e-mail:"
+                               Text="{DynamicResource E-mailCode_String}"
                                
                                VerticalAlignment="Bottom"
                                HorizontalAlignment="Center"
@@ -198,7 +198,7 @@
                             Width="100" Height="30"
                             
                             Margin="10"
-                            Content="Wyślij"
+                            Content="{DynamicResource CodeNextButton_String}"
                             
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
