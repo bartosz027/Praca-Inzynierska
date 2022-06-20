@@ -26,7 +26,7 @@ namespace Network.Server.DataProcessing.Managers {
 
         private static RequestResult OnAddFriendRequest(AddFriendRequest request, ClientInfo client) {
             using var db = new PiDbContext();
-           
+
             var user = db.Accounts.Where(p => p.Username == request.Username).SingleOrDefault();
             var response = new AddFriendResponse();
 
@@ -35,22 +35,23 @@ namespace Network.Server.DataProcessing.Managers {
             }
             else {
                 response.Status = STATUS.FAILURE;
-                return null;
             }
 
-            var receiver = Server.Data.Clients.Find(p => p.UserID == user.ID);
-            var notification = new AddFriendNotification();
+            if (user != null) {
+                var receiver = Server.Data.Clients.Find(p => p.UserID == user.ID);
+                var notification = new AddFriendNotification();
 
-            if(receiver != null) {
-                notification.Username = client.Username;
+                if (receiver != null) {
+                    notification.Username = client.Username;
 
-                return new RequestResult() {
-                    ResponseReceiver = client,
-                    ResponseData = response,
+                    return new RequestResult() {
+                        ResponseReceiver = client,
+                        ResponseData = response,
 
-                    NotificationReceivers = new List<ClientInfo>() { receiver },
-                    NotificationData = notification
-                };
+                        NotificationReceivers = new List<ClientInfo>() { receiver },
+                        NotificationData = notification
+                    };
+                }
             }
 
             return new RequestResult() {

@@ -40,7 +40,8 @@
     <system:String x:Key="PendingInvitationsButton_String">Attendre</system:String>
     <system:String x:Key="InvitationsButton_String">Invitations</system:String>
     <system:String x:Key="BlockedButton_String">Bloqué</system:String>
-    <system:String x:Key="SendIvitation_String">Ajouter un ami</system:String>
+    <system:String x:Key="AddFriendButton_String">Ajouter un ami</system:String>
+    <system:String x:Key="SendInvitation_String">Envoyer une invitation</system:String>
 
     <!-- Menu kontekstowe -->
     <system:String x:Key="DeleteMessageButton_String">Effacer</system:String>
@@ -51,7 +52,7 @@
     <system:String x:Key="LangResources-fr">français</system:String>
 
     <!-- Komunikaty -->
-    <system:String x:Key="PendingInfo_String">tu lui as envoyé une invitation</system:String>
+    <system:String x:Key="PendingInfo_String">tu lui as envoyé une invitation.</system:String>
     <system:String x:Key="InvitationsInfo_String">il vous a envoyé une invitation.</system:String>
     <system:String x:Key="BlockedInfo_String">Il est bloqué.</system:String>
 
@@ -59,5 +60,9 @@
     <system:String x:Key="IncorrectRegister_String">Des données d'enregistrement incorrectes ou un compte avec l'e-mail indiqué existent.</system:String>
     <system:String x:Key="IncorrectLogin_String">Informations de connexion incorrectes.</system:String>
     <system:String x:Key="IncorrectCode_String">Code invalide.</system:String>
-    
+
+    <system:String x:Key="InvalidAddUsername_String">Nom d'utilisateur mal saisi!</system:String>
+    <system:String x:Key="FailureAddUsername_String">Gros problème, nous n'avons pas réussi à envoyer l'invitation, peut-être que vous êtes déjà amis.</system:String>
+    <system:String x:Key="SuccessAddUsername_String">Vous avez trouvé un ami, félicitations!</system:String>
+
 </ResourceDictionary>

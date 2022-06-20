@@ -41,7 +41,8 @@
     <system:String x:Key="PendingInvitationsButton_String">Oczekujące</system:String>
     <system:String x:Key="InvitationsButton_String">Zaproszenia</system:String>
     <system:String x:Key="BlockedButton_String">Zablokowani</system:String>
-    <system:String x:Key="SendIvitation_String">Dodaj znajomego</system:String>
+    <system:String x:Key="AddFriendButton_String">Dodaj znajomego</system:String>
+    <system:String x:Key="SendInvitation_String">Wyślij zaproszenie</system:String>
 
     <!-- Menu kontekstowe -->
 
@@ -61,5 +62,9 @@
     <system:String x:Key="IncorrectRegister_String">Dane rejestracji są nieprawidłowe lub konto z podanym adresem e-mail istnieje.</system:String>
     <system:String x:Key="IncorrectLogin_String">Błędne dane logowania.</system:String>
     <system:String x:Key="IncorrectCode_String">Kod nieprawidłowy.</system:String>
+
+    <system:String x:Key="InvalidAddUsername_String">Błędnie wpisana nazwa użytkownika!</system:String>
+    <system:String x:Key="FailureAddUsername_String">Wielka bieda, nie udało się wysłać zaproszenia może już jesteście przyjaciółmi.</system:String>
+    <system:String x:Key="SuccessAddUsername_String">Udało ci się znaleźć przyjaciela, gratuluje!</system:String>
 
 </ResourceDictionary>

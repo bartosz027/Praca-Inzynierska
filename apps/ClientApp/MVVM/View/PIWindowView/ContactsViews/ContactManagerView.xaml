@@ -38,7 +38,7 @@
                                  Padding="10,0"
                                  Command="{Binding BlockedButtonCommand}"/>
 
-                    <RadioButton Content="{DynamicResource SendIvitation_String}" Height="40"
+                    <RadioButton Content="{DynamicResource SendInvitation_String}" Height="40"
                                  Style="{DynamicResource PIWindowRadioButon}"
                                  Padding="10,0"
                                  Command="{Binding AddContactViewButtonCommand}"/>
