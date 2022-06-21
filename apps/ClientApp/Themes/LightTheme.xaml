@@ -300,7 +300,54 @@
         </Setter>
 
     </Style>
-    
+
+    <!--Guziki Okna -->
+    <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
+           x:Key="WindowButton">
+
+        <Setter Property="Background" Value="Blue" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type Button}">
+                    <Border x:Name="border" CornerRadius="8" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#e8e7e7"/>
+                            <Setter Property="Foreground" Value="#212D40"/>
+                            <Setter Property="BorderBrush" Value="#e8e7e7"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#8A4FFF"/>
+                            <Setter Property="BorderBrush" Value="#00afdd"></Setter>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#C3BEF7"/>
+                            <Setter Property="BorderBrush" Value="#254c8e"></Setter>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#C3BEF7"/>
+                            <Setter Property="Foreground" Value="#EFFFFA"/>
+                        </Trigger>
+                        <Trigger Property="ToggleButton.IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
     <!--Guziki Okna Logowania-->
     <Style TargetType="{x:Type Button}" BasedOn="{x:Null}"
            x:Key="LoginWindowButton">

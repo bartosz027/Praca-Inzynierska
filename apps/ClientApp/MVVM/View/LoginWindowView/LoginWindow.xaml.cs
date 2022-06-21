@@ -7,13 +7,14 @@ using Network.Shared.DataTransfer.Model.Account.Login;
 using Network.Shared.DataTransfer.Base;
 using Network.Client.DataProcessing;
 using System;
+using ClientApp.Core;
 
 namespace ClientApp.MVVM.View.LoginWindowView
 {
     /// <summary>
     /// Logika interakcji dla klasy LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : WindowBase
     {
         public LoginWindow()
         {
@@ -27,13 +28,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
             #endif
         }
 
-        private void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
+     
 
         // Click
         private void Register_Click(object sender, RoutedEventArgs e)
@@ -43,7 +38,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
 
             // Close current window
             Client.Instance.ResponseReceived -= OnResponseReceived;
-            Application.Current.Windows[0].Close();
+            Application.Current.Windows[0].Hide();
         }
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
@@ -53,7 +48,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
 
             // Close current window
             Client.Instance.ResponseReceived -= OnResponseReceived;
-            Application.Current.Windows[0].Close();
+            Application.Current.Windows[0].Hide();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)

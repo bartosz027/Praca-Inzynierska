@@ -1,14 +1,15 @@
-﻿<Window x:Class="ClientApp.MVVM.View.LoginWindowView.LoginWindow"
+﻿<src:WindowBase x:Class="ClientApp.MVVM.View.LoginWindowView.LoginWindow"
         
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        
-        Title="LoginWindow" Height="440" Width="700"
-        WindowStyle="None" ResizeMode="NoResize">
+            xmlns:src="clr-namespace:ClientApp.Core"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            
+            Title="LoginWindow" Height="440" Width="700"
+            WindowStyle="None" ResizeMode="NoResize">
     
     <Grid Style="{DynamicResource LoginWindowMainBackground}">
         
@@ -23,7 +24,19 @@
                Source="/ClientApp;component/Images/Pictures/TestLoginBackground.png"/>
 
         <Border MouseDown="ResizeWindow_MouseDown"
-                Style="{DynamicResource ToolBarStyle}"/>
+                Style="{DynamicResource ToolBarStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1"
+                        Style="{DynamicResource WindowButton}"
+                        Content="✕"
+                        Click="CloseWindowButton_Click"/>
+            </Grid>
+        </Border>
 
         
 
@@ -216,4 +229,4 @@
         
     </Grid>
     
-</Window>
+</src:WindowBase>

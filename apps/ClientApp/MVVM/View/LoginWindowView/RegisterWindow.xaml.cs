@@ -1,4 +1,5 @@
-﻿using Network.Client;
+﻿using ClientApp.Core;
+using Network.Client;
 using Network.Client.DataProcessing;
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Account.Register;
@@ -12,7 +13,7 @@ namespace ClientApp.MVVM.View.LoginWindowView
     /// Logika interakcji dla klasy RegisterWindow.xaml
     /// </summary>
     ///
-    public partial class RegisterWindow : Window
+    public partial class RegisterWindow : WindowBase
     {
         public RegisterWindow()
         {
@@ -48,6 +49,12 @@ namespace ClientApp.MVVM.View.LoginWindowView
             }
         }
 
+        private new void CloseWindowButton_Click(object sender, RoutedEventArgs e) 
+        {
+            var test = Application.Current.Windows;
+            this.Close();
+            Application.Current.Windows[0].Show();
+        }
         private void VerifyCode_Click(object sender, RoutedEventArgs e)
         {
             if (CodeBox.Text != String.Empty)
@@ -98,12 +105,10 @@ namespace ClientApp.MVVM.View.LoginWindowView
             {
                 case STATUS.SUCCESS:
                 {
-                    var window = new LoginWindow();
-                    window.Show();
-
                     // Close current window
                     Client.Instance.ResponseReceived -= OnResponseReceived;
-                    Application.Current.Windows[0].Close();
+                    Application.Current.Windows[1].Hide();
+                    Application.Current.Windows[0].Show();
 
                     break;
                 }
