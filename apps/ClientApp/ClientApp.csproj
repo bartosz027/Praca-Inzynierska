@@ -114,6 +114,7 @@
     <Compile Include="Core\ConfigManager.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Core\WindowBase.cs" />
     <Compile Include="MVVM\Model\ContactManagerItemModel.cs" />
     <Compile Include="MVVM\Model\FriendModel.cs" />
     <Compile Include="MVVM\Model\LangResourcesModel.cs" />

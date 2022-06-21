@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace ClientApp.Core
 {
-    public class WindowBase : Window
+    public abstract class WindowBase : Window
     {
         public void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -13,6 +13,8 @@ namespace ClientApp.Core
                 DragMove();
             }
         }
+
+
         public void MinimizeWindowButton_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -36,7 +38,5 @@ namespace ClientApp.Core
         {
             Application.Current.Shutdown();
         }
-
-        
     }
 }
