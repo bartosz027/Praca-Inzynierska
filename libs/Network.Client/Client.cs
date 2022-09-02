@@ -76,7 +76,7 @@ namespace Network.Client {
                             received_data_queue.Add(obj);
                         }
                     }
-                    catch (Exception e) {
+                    catch {
                         if(Client.Data.TCP.Connected == false) {
                             // TODO: Write to log file
 
@@ -125,7 +125,7 @@ namespace Network.Client {
                 byte[] request_bytes = Serializer.Serialize(request);
                 Client.Data.Stream.Write(request_bytes, 0, request_bytes.Length);
             }
-            catch (Exception e) {
+            catch {
                 // TODO: Write to log file
             }
         }

@@ -3,52 +3,66 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              
-             xmlns:PIWindowView="clr-namespace:ClientApp.MVVM.View.PIWindowView"
-             xmlns:SettingsView="clr-namespace:ClientApp.MVVM.View.PIWindowView.SettingsViews"
-             xmlns:ContactsView="clr-namespace:ClientApp.MVVM.View.PIWindowView.ContactsViews"
+             xmlns:ContactsView="clr-namespace:ClientApp.MVVM.View.Contacts"
+             xmlns:ContactsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Contacts"
              
-             xmlns:PIWindowViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel"
-             xmlns:SettingsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel.SettingsViewModels"
-             xmlns:ContactsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.PIWindowViewModel.ContactsViewModels"
+             xmlns:ChatView="clr-namespace:ClientApp.MVVM.View.Contacts.Chat"
+             xmlns:ChatViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Contacts.Chat"
              
-             StartupUri="MVVM/View/LoginWindowView/LoginWindow.xaml">
+             xmlns:ContactManagerView="clr-namespace:ClientApp.MVVM.View.Contacts.Manager"
+             xmlns:ContactManagerViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Contacts.Manager"
+             
+             xmlns:SettingsView="clr-namespace:ClientApp.MVVM.View.Settings"
+             xmlns:SettingsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Settings"
+             
+             xmlns:OptionsView="clr-namespace:ClientApp.MVVM.View.Settings.Options"
+             xmlns:OptionsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Settings.Options"
+             
+             StartupUri="MVVM/View/Startup/LoginWindow.xaml">
 
     <Application.Resources>
+        
         <ResourceDictionary>
 
-            <DataTemplate DataType="{x:Type PIWindowViewModel:ContactsViewModel}">
-                <PIWindowView:ContactsView/>
+            <!-->Contacts</!-->
+            <DataTemplate DataType="{x:Type ContactsViewModel:ContactsViewModel}">
+                <ContactsView:ContactsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type ContactsViewModel:ChatViewModel}">
-                <ContactsView:ChatView/>
+            <!-->Contacts -> Chat</!-->
+            <DataTemplate DataType="{x:Type ChatViewModel:ChatViewModel}">
+                <ChatView:ChatView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type ContactsViewModel:ContactManagerViewModel}">
-                <ContactsView:ContactManagerView/>
+            <!-->Contacts -> Manager</!-->
+            <DataTemplate DataType="{x:Type ContactManagerViewModel:ManagerViewModel}">
+                <ContactManagerView:ManagerView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type ContactManagerViewModel:AddContactViewModel}">
+                <ContactManagerView:AddContactView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type ContactManagerViewModel:InvitationsViewModel}">
+                <ContactManagerView:InvitationsView/>
+            </DataTemplate>
+
+            <!-->Settings</!-->
+            <DataTemplate DataType="{x:Type SettingsViewModel:SettingsViewModel}">
+                <SettingsView:SettingsView/>
+            </DataTemplate>
+
+            <!-->Settings -> Options</!-->
+            <DataTemplate DataType="{x:Type OptionsViewModel:ThemesSettingViewModel}">
+                <OptionsView:ThemesSettingsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type OptionsViewModel:LanguageSettingsViewModel}">
+                <OptionsView:LanguageSettingsView/>
             </DataTemplate>
             
-            <DataTemplate DataType="{x:Type ContactsViewModel:NotificationListViewModel}">
-                <ContactsView:NotificationListView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type ContactsViewModel:AddContactViewModel}">
-                <ContactsView:AddContactView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type PIWindowViewModel:SettingsViewModel}">
-                <PIWindowView:SettingsView/>
-            </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type SettingsViewModel:ThemesSettingViewModel}">
-                <SettingsView:ThemesSettingsView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type SettingsViewModel:LanguageSettingsViewModel}">
-                <SettingsView:LanguageSettingsView/>
-            </DataTemplate>
-
         </ResourceDictionary>
+        
     </Application.Resources>
 
 </Application>

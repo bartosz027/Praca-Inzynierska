@@ -2,8 +2,8 @@ USE PI_DB;
 
 CREATE TABLE Account (
     ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
-    Username            VARCHAR(64)         NOT NULL,
-
+	Username            VARCHAR(64)         NOT NULL,
+	
     Email               VARCHAR(128)        NOT NULL,
     Password            VARCHAR(1024)       NOT NULL,
 	
@@ -13,8 +13,11 @@ CREATE TABLE Account (
 	-- NP:Friendships  -> remove_property()
 	-- NP:Friendships1 -> rename_to("Friends")
 	
-	-- NP:Messages  -> rename_to("MessagesReceived")
-	-- NP:Messages1 -> rename_to("MessagesSent")
+	-- NP:Messages  -> remove_property()
+	-- NP:Messages1 -> remove_property()
+	
+	-- NP:FriendInvitations  -> remove_property()
+	-- NP:FriendInvitations1 -> remove_property()
 );
 
 CREATE TABLE Friendship (
@@ -23,8 +26,8 @@ CREATE TABLE Friendship (
     UserID              INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
     FriendID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
 	
-	-- NP:Account  -> rename_to("Friend")
 	-- NP:Account1 -> rename_to("User")
+	-- NP:Account  -> rename_to("Friend")
 );
 
 CREATE TABLE Message (
@@ -36,8 +39,18 @@ CREATE TABLE Message (
     SenderID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
     ReceiverID          INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
 	
-	-- NP:Account  -> rename_to("Receiver")
 	-- NP:Account1 -> rename_to("Sender")
+	-- NP:Account  -> rename_to("Receiver")
+);
+
+CREATE TABLE FriendInvitation (
+	ID 					INT					NOT NULL		PRIMARY KEY IDENTITY,
+
+    SenderID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
+    ReceiverID          INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
+	
+	-- NP:Account1 -> rename_to("Sender")
+	-- NP:Account  -> rename_to("Receiver")
 );
 
 CREATE TABLE Verification (

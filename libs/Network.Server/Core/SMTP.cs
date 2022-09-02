@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Net;
 using System.Net.Mail;
 
@@ -6,20 +7,15 @@ namespace Network.Server.Core {
 
     internal static class SMTP {
         public static void Init(string email, string password) {
-            if(!String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(password)) {
+            if (!String.IsNullOrEmpty(email) && !String.IsNullOrEmpty(password)) {
                 _Email = email;
                 _Password = password;
             }
-            else {
-                throw new ArgumentException("[SMTP]: Invalid \'email\' or \'password\'!");
-            }
-
-            _Initialized = true;
         }
 
         public static void SendMail(string receiver, string subject, string body) {
-            if(_Initialized) {
-                var smtp = new SmtpClient {
+            if (_SMTP == null) {
+                _SMTP = new SmtpClient {
                     Host = "smtp-mail.outlook.com",
                     Port = 587,
 
@@ -29,23 +25,25 @@ namespace Network.Server.Core {
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(_Email, _Password)
                 };
+            }
 
+            if (_SMTP != null) {
                 var message = new MailMessage(_Email, receiver) {
                     Subject = subject,
                     Body = body
                 };
 
-                smtp.Send(message);
+                _SMTP.Send(message);
             }
             else {
                 throw new Exception("[SMTP]: Not initialized!");
             }
         }
 
-        // Flags
-        private static bool _Initialized;
+        // SMTP
+        private static SmtpClient _SMTP;
 
-        // Login data
+        // Credentials
         private static string _Email;
         private static string _Password;
     }

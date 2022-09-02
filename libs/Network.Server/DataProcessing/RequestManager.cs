@@ -24,7 +24,6 @@ namespace Network.Server.DataProcessing {
             AccountRequestManager.Dispatch(dispatcher, client);
             DatabaseRequestManager.Dispatch(dispatcher, client);
             FriendsRequestManager.Dispatch(dispatcher, client);
-            GuildRequestManager.Dispatch(dispatcher, client);
 
             return dispatcher.Result;
         }

@@ -18,8 +18,9 @@ using Network.Shared.DataTransfer.Base;
 namespace Network.Server {
 
     internal class ClientInfo {
+        public int ID { get; set; }
+
         // User data
-        public int UserID { get; set; }
         public string Username { get; set; }
         public string AccessToken { get; set; }
 
@@ -30,10 +31,8 @@ namespace Network.Server {
 
     public class Server {
         private Server() {
+            SMTP.Init(ConfigManager.GetValue("SMTP_Email"), ConfigManager.GetValue("SMTP_Password"));
             Console.SetOut(new TimestampTextWriter());
-
-            // TODO: Move this to config file
-            SMTP.Init("twojastaratudududu@outlook.com", "dobredziala997");
         }
 
         public static Server Instance {
@@ -114,7 +113,7 @@ namespace Network.Server {
                             var client_info = Server.Data.Clients.Find(p => (p.TCP == client.TCP));
 
                             if (client_info != null) {
-                                Console.WriteLine("Client [id={0}, username={1}] disconnected!", client_info.UserID, client_info.Username);
+                                Console.WriteLine("Client [id={0}, username={1}] disconnected!", client_info.ID, client_info.Username);
                                 Server.Data.Clients.Remove(client_info);
                             }
 

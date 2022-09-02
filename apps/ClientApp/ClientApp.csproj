@@ -12,8 +12,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,10 +28,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,9 +55,6 @@
     <IntermediateOutputPath>$(SolutionDir)build\Release\obj\apps\$(AssemblyName)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emoji.Wpf, Version=0.3.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Emoji.Wpf.0.3.3\lib\net40\Emoji.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="Simple.Wpf.Themes, Version=2.3.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Simple.Wpf.Themes.2.3.15\lib\net48\Simple.Wpf.Themes.dll</HintPath>
     </Reference>
@@ -66,27 +63,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.ConfigurationManager, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Configuration.ConfigurationManager.6.0.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Net" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Permissions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.Permissions.6.0.0\lib\net461\System.Security.Permissions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -96,12 +79,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Typography.GlyphLayout, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Emoji.Wpf.0.3.3\lib\net40\Typography.GlyphLayout.dll</HintPath>
-    </Reference>
-    <Reference Include="Typography.OpenFont, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Emoji.Wpf.0.3.3\lib\net40\Typography.OpenFont.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -110,62 +87,55 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\BaseViewModel.cs" />
+    <Compile Include="Core\BaseWindow.cs" />
     <Compile Include="Core\BindingProxy.cs" />
-    <Compile Include="Core\ConfigManager.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="Core\WindowBase.cs" />
-    <Compile Include="MVVM\Model\ContactManagerItemModel.cs" />
-    <Compile Include="MVVM\Model\FriendModel.cs" />
-    <Compile Include="MVVM\Model\LangResourcesModel.cs" />
-    <Compile Include="MVVM\Model\MessageModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\AddContactViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\ChatViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\ContactManagerViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\ContactsViewModels\NotificationListViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\PIWindowViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModels\LanguageSettingsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PIWindowViewModel\SettingsViewModels\ThemesSettingViewModel.cs" />
-    <Compile Include="MVVM\View\LoginWindowView\ForgotPasswordWindow.xaml.cs">
-      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\LoginWindowView\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\LoginWindowView\NewPasswordWindow.xaml.cs">
-      <DependentUpon>NewPasswordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\LoginWindowView\RegisterWindow.xaml.cs">
-      <DependentUpon>RegisterWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\PIWindowView\ContactsView.xaml.cs">
-      <DependentUpon>ContactsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\PIWindowView\ContactsViews\AddContactView.xaml.cs">
+    <Compile Include="MVVM\ViewModel\Contacts\Chat\ChatViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Contacts\ContactsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Contacts\Manager\AddContactViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Contacts\Manager\InvitationsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Settings\Options\LanguageSettingsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Settings\Options\ThemesSettingViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Settings\SettingsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Contacts\Manager\ManagerViewModel.cs" />
+    <Compile Include="MVVM\View\Contacts\Manager\AddContactView.xaml.cs">
       <DependentUpon>AddContactView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PIWindowView\ContactsViews\ChatView.xaml.cs">
+    <Compile Include="MVVM\View\Contacts\Manager\ManagerView.xaml.cs">
+      <DependentUpon>ManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Contacts\Manager\InvitationsView.xaml.cs">
+      <DependentUpon>InvitationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Startup\ForgotPasswordWindow.xaml.cs">
+      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Startup\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Startup\RegisterWindow.xaml.cs">
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Contacts\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PIWindowView\ContactsViews\ContactManagerView.xaml.cs">
-      <DependentUpon>ContactManagerView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\Contacts\ContactsView.xaml.cs">
+      <DependentUpon>ContactsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PIWindowView\ContactsViews\NotificationListView.xaml.cs">
-      <DependentUpon>NotificationListView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PIWindowView\PIWindow.xaml.cs">
-      <DependentUpon>PIWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\PIWindowView\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\PIWindowView\SettingsViews\LanguageSettingsView.xaml.cs">
+    <Compile Include="MVVM\View\Settings\Options\LanguageSettingsView.xaml.cs">
       <DependentUpon>LanguageSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PIWindowView\SettingsViews\ThemesSettingsView.xaml.cs">
+    <Compile Include="MVVM\View\Settings\Options\ThemesSettingsView.xaml.cs">
       <DependentUpon>ThemesSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -218,135 +188,98 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="LangResources\LangResources-fr.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LangResources\LangResources-pl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\LoginWindowView\ForgotPasswordWindow.xaml">
+    <Page Include="MVVM\View\Contacts\Manager\AddContactView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\LoginWindowView\LoginWindow.xaml">
+    <Page Include="MVVM\View\Contacts\Manager\ManagerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\LoginWindowView\NewPasswordWindow.xaml">
+    <Page Include="MVVM\View\Contacts\Manager\InvitationsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\LoginWindowView\RegisterWindow.xaml">
+    <Page Include="MVVM\View\Startup\ForgotPasswordWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\PIWindowView\ContactsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\ContactsViews\AddContactView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\ContactsViews\ChatView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\ContactsViews\ContactManagerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\ContactsViews\NotificationListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\PIWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\SettingsViews\LanguageSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\PIWindowView\SettingsViews\ThemesSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\DarkTheme.xaml">
+    <Page Include="MVVM\View\Startup\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\LightTheme.xaml">
+    <Page Include="MVVM\View\Startup\RegisterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\Contacts\Chat\ChatView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\Contacts\ContactsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\Settings\Options\LanguageSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\Settings\Options\ThemesSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\Settings\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Languages\Lang-fr.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Languages\Lang-pl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\LightTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Pictures\TestLoginBackground.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\AddFriendIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\FriendsListIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\FriendsListSearchIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\HeadphonesIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\MicrophoneIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\MutedHeadphonesIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\MutedMicrophoneIcon.png" />
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\SettingsIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\AddFriendIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\FriendsListIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\FriendsListSearchIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\HeadphonesIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\MicrophoneIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\MutedHeadphonesIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\MutedMicrophoneIcon.png" />
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\SettingsIcon.png" />
+    <Resource Include="Resources\Images\Icons\Shared\AcceptIcon.png" />
+    <Resource Include="Resources\Images\Icons\Shared\DeclineIcon.png" />
+    <Resource Include="Resources\Images\Pictures\DarkThemeButton.png" />
+    <Resource Include="Resources\Images\Pictures\LightThemeButton.png" />
+    <Resource Include="Resources\Images\Pictures\LoginBackground.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\SettingsIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\AddFriendIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\AddFriendIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\HeadphonesIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\HeadphonesIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\MutedHeadphonesIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\MutedHeadphonesIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\MicrophoneIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\MicrophoneIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\MutedMicrophoneIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\MutedMicrophoneIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\FriendsListIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\FriendsListIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\DarkThemeIcons\FriendsListSearchIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\FriendsListSearchIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\LightThemeIcons\SettingsIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Pictures\DarkThemeButton.PNG" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Pictures\LightThemeButton.PNG" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icons\Shared\AcceptIcon.png" />
-    <Resource Include="Images\Icons\Shared\DeclineIcon.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

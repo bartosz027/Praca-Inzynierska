@@ -1,0 +1,70 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- Logowanie -->
+    <system:String x:Key="EnterEmail_String">Wprowadź e-mail:</system:String>
+    <system:String x:Key="EnterPassword_String">Wprowadź hasło:</system:String>
+    <system:String x:Key="AutoLog_String">Zaloguj automatycznie:</system:String>
+    <system:String x:Key="LoginButton_String">Zaloguj</system:String>
+
+    <system:String x:Key="ResetPassword_String">Nie pamiętasz hasła?</system:String>
+    <system:String x:Key="ResetPasswordButton_String">Resetuj hasło</system:String>
+    
+    <system:String x:Key="NewAccount_String">Nie masz jeszcze konta?</system:String>
+    <system:String x:Key="NewAccountButton_String">Utwórz nowe konto</system:String>
+
+    <!-- Rejestracja -->
+    <system:String x:Key="EnterUsername_String">Wprowadź pseudonim artystyczny:</system:String>
+    <system:String x:Key="NextButton_String">Dalej</system:String>
+    
+    <system:String x:Key="E-mailCode_String">Wprowadź kod wysłany na e-mail:</system:String>
+    <system:String x:Key="CodeNextButton_String">Wyślij</system:String>
+
+    <!-- Aplikacja -->
+    <system:String x:Key="AccountSettings_String">Ustawienia konta</system:String>
+    <system:String x:Key="ProfileDataButton_String">Dane profilu</system:String>
+    <system:String x:Key="AccountDataButton_String">Dane konta</system:String>
+
+    <system:String x:Key="AppSettings_String">Ustawienia aplikacji</system:String>
+    
+    <system:String x:Key="ThemeButton_String">Motyw</system:String>
+    <system:String x:Key="ThemeSettingDescription_String">Wygląd</system:String>
+    <system:String x:Key="LigthThemeButton_String">Motyw Jasny</system:String>
+    <system:String x:Key="DarkThemeButton_String">Motyw Ciemny</system:String>
+    
+    <system:String x:Key="LanguageDataButton_String">Język</system:String>
+
+    <system:String x:Key="LogOutButton_String">Wyloguj</system:String>
+
+    <system:String x:Key="ContactsManagerDescription_String">Menadżer kontaktów</system:String>
+
+    <system:String x:Key="PendingInvitationsButton_String">Oczekujące</system:String>
+    <system:String x:Key="InvitationsButton_String">Zaproszenia</system:String>
+    <system:String x:Key="BlockedButton_String">Zablokowani</system:String>
+    <system:String x:Key="AddFriendButton_String">Dodaj znajomego</system:String>
+    <system:String x:Key="SendInvitation_String">Wyślij zaproszenie</system:String>
+
+    <!-- Menu kontekstowe -->
+    <system:String x:Key="DeleteMessageButton_String">Usuń</system:String>
+    <system:String x:Key="CopyMessageButton_String">Kopiuj</system:String>
+
+    <!-- Języki -->
+    <system:String x:Key="LangResources-pl">polski</system:String>
+    <system:String x:Key="LangResources-fr">français</system:String>
+    
+    <!-- Komunikaty -->
+    <system:String x:Key="PendingInfo_String"> wysłałeś mu zaproszenie.</system:String>
+    <system:String x:Key="InvitationsInfo_String"> wysłał ci zaproszenie.</system:String>
+    <system:String x:Key="BlockedInfo_String">jest zablokowany.</system:String>
+
+    <!-- Okrzyki walidacyjne -->
+    <system:String x:Key="IncorrectRegister_String">Dane rejestracji są nieprawidłowe lub konto z podanym adresem e-mail istnieje.</system:String>
+    <system:String x:Key="IncorrectLogin_String">Błędne dane logowania.</system:String>
+    <system:String x:Key="IncorrectCode_String">Kod nieprawidłowy.</system:String>
+
+    <system:String x:Key="InvalidAddUsername_String">Błędnie wpisana nazwa użytkownika!</system:String>
+    <system:String x:Key="FailureAddUsername_String">Wielka bieda, nie udało się wysłać zaproszenia może już jesteście przyjaciółmi.</system:String>
+    <system:String x:Key="SuccessAddUsername_String">Udało ci się znaleźć przyjaciela, gratuluje!</system:String>
+
+</ResourceDictionary>

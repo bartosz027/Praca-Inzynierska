@@ -18,8 +18,6 @@ namespace Network.Server.Database
         public Account()
         {
             this.Friends = new HashSet<Friendship>();
-            this.MessagesReceived = new HashSet<Message>();
-            this.MessagesSent = new HashSet<Message>();
         }
     
         public int ID { get; set; }
@@ -31,9 +29,5 @@ namespace Network.Server.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friendship> Friends { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Message> MessagesReceived { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Message> MessagesSent { get; set; }
     }
 }

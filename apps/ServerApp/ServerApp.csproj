@@ -11,7 +11,7 @@
     <AssemblyName>ServerApp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -67,6 +67,10 @@
     <ProjectReference Include="..\..\libs\Network.Server\Network.Server.csproj">
       <Project>{cc51b578-bbb9-4601-9057-6415428a3df6}</Project>
       <Name>Network.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libs\Network.Shared\Network.Shared.csproj">
+      <Project>{1699265f-9187-4a50-bb3d-3dc3e6d48161}</Project>
+      <Name>Network.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
+using System.Linq;
 using Network.Server.Database;
+
+using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Database.Friends;
 
 namespace Network.Server.DataProcessing.Managers {
@@ -10,19 +11,22 @@ namespace Network.Server.DataProcessing.Managers {
     internal static class DatabaseRequestManager {
         public static void Dispatch(RequestDispatcher dispatcher, ClientInfo client) {
             if (dispatcher.Request.AccessToken == client.AccessToken) {
-                dispatcher.Dispatch<FriendListRequest>(OnFriendListRequest, client);
-                dispatcher.Dispatch<MessageHistoryRequest>(OnMessageHistoryRequest, client);
+                dispatcher.Dispatch<GetFriendListRequest>(OnGetFriendListRequest, client);
+                dispatcher.Dispatch<GetInvitationsRequest>(OnGetInvitationsRequest, client);
+                dispatcher.Dispatch<GetMessageHistoryRequest>(OnGetMessageHistoryRequest, client);
             }
+
+            // TODO: Access denied
         }
 
-        private static RequestResult OnFriendListRequest(FriendListRequest request, ClientInfo client) {
-            var response = new FriendListResponse() {
+        private static RequestResult OnGetFriendListRequest(GetFriendListRequest request, ClientInfo client) {
+            var response = new GetFriendListResponse() {
                 FriendList = new List<FriendInfo>()
             };
             
             using (var db = new PiDbContext()) {
-                var user_account = db.Accounts.Where(p => p.ID == client.UserID).SingleOrDefault();
-                var user_friend_list = user_account.Friends;
+                var user_account = db.Accounts.Single(p => p.ID == client.ID);
+                var user_friend_list = user_account.Friends.ToList();
 
                 foreach (var account in user_friend_list) {
                     var friend_info = new FriendInfo() {
@@ -32,6 +36,8 @@ namespace Network.Server.DataProcessing.Managers {
 
                     response.FriendList.Add(friend_info);
                 }
+
+                response.Result = Result.Success;
             }
 
             return new RequestResult() {
@@ -40,25 +46,66 @@ namespace Network.Server.DataProcessing.Managers {
             };
         }
 
-        private static RequestResult OnMessageHistoryRequest(MessageHistoryRequest request, ClientInfo client) {
-            var response = new MessageHistoryResponse() {
+        private static RequestResult OnGetInvitationsRequest(GetInvitationsRequest request, ClientInfo client) {
+            var response = new GetInvitationsResponse() {
+                PendingInvitations = new List<FriendInvitationInfo>(),
+                ReceivedInvitations = new List<FriendInvitationInfo>()
+            };
+
+            using (var db = new PiDbContext()) {
+                var invitations = db.FriendInvitations.Where(p => p.SenderID == client.ID || p.ReceiverID == client.ID);
+
+                foreach (var invitation in invitations) {
+                    if (invitation.SenderID == client.ID) {
+                        var invitation_info = new FriendInvitationInfo() {
+                            UserID = invitation.Receiver.ID,
+                            Username = invitation.Receiver.Username
+                        };
+
+                        response.PendingInvitations.Add(invitation_info);
+                    }
+
+                    if (invitation.ReceiverID == client.ID) {
+                        var invitation_info = new FriendInvitationInfo() {
+                            UserID = invitation.Sender.ID,
+                            Username = invitation.Sender.Username
+                        };
+
+                        response.ReceivedInvitations.Add(invitation_info);
+                    }
+                }
+
+                response.Result = Result.Success;
+            }
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
+        private static RequestResult OnGetMessageHistoryRequest(GetMessageHistoryRequest request, ClientInfo client) {
+            var response = new GetMessageHistoryResponse() {
                 FriendID = request.FriendID,
                 Messages = new List<MessageInfo>()
             };
 
             using (var db = new PiDbContext()) {
-                var messages = db.Messages.Where(p => (p.SenderID == client.UserID && p.ReceiverID == request.FriendID) || (p.SenderID == request.FriendID && p.ReceiverID == client.UserID));
+                var messages = db.Messages.Where(p => (p.SenderID == client.ID && p.ReceiverID == request.FriendID) || (p.SenderID == request.FriendID && p.ReceiverID == client.ID));
 
                 foreach (var message in messages) {
                     var message_info = new MessageInfo() {
                         ID = message.ID,
                         SenderID = message.SenderID,
+
                         Content = message.Content,
                         SendDate = message.SendDate
                     };
 
                     response.Messages.Add(message_info);
                 }
+
+                response.Result = Result.Success;
             }
 
             return new RequestResult() {

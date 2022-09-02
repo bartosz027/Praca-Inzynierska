@@ -116,6 +116,7 @@ namespace EDMX {
             for (int i = 0; i < edmx.Length; i++) {
                 if (edmx[i].Contains("<!-- CSDL content -->")) {
                     csdl_content = true;
+                    entity_type = false;
                 }
 
                 if (edmx[i].Contains("<EntityType Name=\"" + current_table + "\">")) {
@@ -139,6 +140,7 @@ namespace EDMX {
             for (int i = 0; i < edmx.Length; i++) {
                 if (edmx[i].Contains("<!-- CSDL content -->")) {
                     csdl_content = true;
+                    entity_type = false;
                 }
 
                 if (edmx[i].Contains("<EntityType Name=\"" + current_table + "\">")) {

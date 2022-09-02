@@ -61,11 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\TokenGenerator.cs" />
     <Compile Include="Core\SMTP.cs" />
+    <Compile Include="Core\TokenGenerator.cs" />
     <Compile Include="Core\ThreadSafeList.cs" />
     <Compile Include="Core\TimestampTextWriter.cs" />
     <Compile Include="Database\Account.cs">
+      <DependentUpon>PiDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\FriendInvitation.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Friendship.cs">
@@ -90,19 +93,16 @@
     <Compile Include="DataProcessing\Managers\AccountRequestManager.cs" />
     <Compile Include="DataProcessing\Managers\FriendsRequestManager.cs" />
     <Compile Include="DataProcessing\Managers\DatabaseRequestManager.cs" />
-    <Compile Include="DataProcessing\Managers\GuildRequestManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProcessing\RequestManager.cs" />
     <Compile Include="DataProcessing\RequestDispatcher.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <EntityDeploy Include="Database\PiDbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PiDbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Network.Shared\Network.Shared.csproj">

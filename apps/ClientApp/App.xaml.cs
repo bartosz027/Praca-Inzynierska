@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Windows;
 
@@ -7,36 +8,42 @@ using Simple.Wpf.Themes;
 using Simple.Wpf.Themes.Common;
 
 using Network.Client;
-using ClientApp.Core;
+using Network.Shared.Core;
 
-namespace ClientApp
-{
+namespace ClientApp {
+
     /// <summary>
     /// Logika interakcji dla klasy App.xaml
     /// </summary>
-    public partial class App : Application
-    {
-        protected override void OnStartup(StartupEventArgs e)
-        {
+    public partial class App : Application {
+        protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
-            Client.Instance.Connect("127.0.0.1", 65535);
 
-            var themeName = ConfigManager.GetSetting("Theme");
-            var themes = new Themes();
-            themes.ItemsSource = _Themes;
-            themes.SelectedItem = _Themes.First(p => p.Name == themeName);
+            // Connect to server
+            var ip = ConfigManager.GetValue("Server_IP");
+            var port = int.Parse(ConfigManager.GetValue("Server_PORT"));
 
+            Client.Instance.Connect(ip, port);
 
-            var language = ConfigManager.GetSetting("LanguageResource");
-            ResourceDictionary resourceDictionary = new ResourceDictionary();
-            resourceDictionary.Source = new Uri("/ClientApp;component/LangResources/" + language + ".xaml", UriKind.Relative);
-            this.Resources.MergedDictionaries.Add(resourceDictionary);
+            // Settings
+            var theme = ConfigManager.GetValue("Theme");
+            var language = ConfigManager.GetValue("Language");
+
+            var themes = new Themes {
+                ItemsSource = Themes,
+                SelectedItem = Themes.FirstOrDefault(p => p.Name == theme)
+            };
+
+            var dictionary = new ResourceDictionary();
+            dictionary.Source = new Uri("/ClientApp;component/Resources/Languages/" + language + ".xaml", UriKind.Relative);
+
+            this.Resources.MergedDictionaries.Add(dictionary);
         }
 
-        static IEnumerable<Theme> _Themes = new[] 
-        {
-            new Theme("Light theme", new Uri("/ClientApp;component/Themes/LightTheme.xaml", UriKind.Relative)),
-            new Theme("Dark theme", new Uri("/ClientApp;component/Themes/DarkTheme.xaml", UriKind.Relative))
+        public static IEnumerable<Theme> Themes = new[] {
+            new Theme("LightTheme", new Uri("/ClientApp;component/Resources/Themes/LightTheme.xaml", UriKind.Relative)),
+            new Theme("DarkTheme", new Uri("/ClientApp;component/Resources/Themes/DarkTheme.xaml", UriKind.Relative))
         };
     }
+
 }

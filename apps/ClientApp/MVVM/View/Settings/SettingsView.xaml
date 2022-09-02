@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="ClientApp.MVVM.View.Settings.SettingsView"
+             
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="d" 
+             
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Style="{DynamicResource PIWinodwBottomSector}">
+
+            <StackPanel>
+
+                <RadioButton Content="{DynamicResource AccountSettings_String}" 
+                             Style="{DynamicResource PIWindowRadioButon}"
+                             Margin="0,10,0,0" IsEnabled="False"/>
+
+                <RadioButton Content="{DynamicResource ProfileDataButton_String}"
+                             Style="{DynamicResource PIWindowRadioButon}" Height="40"/>
+
+                <RadioButton Content="{DynamicResource AccountDataButton_String}" 
+                             Style="{DynamicResource PIWindowRadioButon}" Height="40"/>
+
+                <RadioButton Content="{DynamicResource AppSettings_String}"
+                             Style="{DynamicResource PIWindowRadioButon}"
+                             Margin="0,20,0,0" IsEnabled="False"/>
+
+                <RadioButton Content="{DynamicResource ThemeButton_String}" 
+                             Command="{Binding ThemesSettingCommand}" Height="40"
+                             Style="{DynamicResource PIWindowRadioButon}"/>
+
+                <RadioButton Content="{DynamicResource LanguageDataButton_String}" 
+                             Command="{Binding LanguageSettingCommand}" Height="40"
+                             Style="{DynamicResource PIWindowRadioButon}"/>
+
+                <RadioButton Content="{DynamicResource LogOutButton_String}" 
+                             Style="{DynamicResource PIWindowRadioButon}"
+                             Margin="0,40,0,0" Height="40"/>
+                
+            </StackPanel>
+
+        </Border>
+
+        <Border Grid.Column="1" Margin="10,0,0,0"
+                Style="{DynamicResource PIWinodwBottomSector}">
+
+            <ContentControl Content="{Binding CurrentView}"/>
+        </Border>
+        
+    </Grid>
+    
+</UserControl>

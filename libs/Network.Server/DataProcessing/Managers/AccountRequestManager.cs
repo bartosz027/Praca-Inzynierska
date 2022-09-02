@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Data.SqlTypes;
 using System.Linq;
 
 using Network.Server.Core;
 using Network.Server.Database;
 
+using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Account.Login;
@@ -26,12 +28,13 @@ namespace Network.Server.DataProcessing.Managers {
         // Login
         private static RequestResult OnLoginRequest(LoginRequest request, ClientInfo client) {
             using var db = new PiDbContext();
-            
-            var user_account = db.Accounts.Where(p => p.Email == request.Email).SingleOrDefault();
+            var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
+
             var response = new LoginResponse();
+            response.Result = Result.Success;
 
             if (user_account != null && user_account.Password == request.Password) {
-                var client_info = Server.Data.Clients.Find(p => p.UserID == user_account.ID);
+                var client_info = Server.Data.Clients.Find(p => p.ID == user_account.ID);
 
                 if (client_info == null) {
                     var token = TokenGenerator.Next();
@@ -40,11 +43,10 @@ namespace Network.Server.DataProcessing.Managers {
                     user_account.AccessToken = token;
                     db.SaveChanges();
 
-                    response.AccessToken = token;
                     response.Username = user_account.Username;
-                    response.Status = STATUS.SUCCESS;
+                    response.AccessToken = token;
 
-                    client.UserID = user_account.ID;
+                    client.ID = user_account.ID;
                     client.Username = user_account.Username;
 
                     client.AccessToken = token;
@@ -56,7 +58,7 @@ namespace Network.Server.DataProcessing.Managers {
                 }
             }
             else {
-                response.Status = STATUS.FAILURE;
+                response.Result = Result.Failure;
             }
 
             return new RequestResult() {
@@ -68,35 +70,32 @@ namespace Network.Server.DataProcessing.Managers {
         // Register
         private static RequestResult OnRegisterRequest(RegisterRequest request, ClientInfo client) {
             using var db = new PiDbContext();
+            var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
 
-            var user_account = db.Accounts.Where(p => p.Email == request.Email).SingleOrDefault();
             var response = new RegisterResponse();
+            response.Result = Result.Success;
 
             if (user_account == null || user_account.Verified == false) {
-                response.Status = STATUS.SUCCESS;
-
-                if(user_account != null) {
-                    db.Accounts.Remove(user_account);
-                }
-
                 var code = TokenGenerator.Next().Substring(0, 6);
                 var time = DateTime.Now.AddMinutes(15);
 
                 var verification = new Verification() {
                     Email = request.Email,
-                    Code = code,
 
+                    Code = code,
                     ExpireDate = time
                 };
 
-                var account = new Database.Account() {
-                    Username = request.Username,
-
+                var account = new Account() {
                     Email = request.Email,
+                    Username = request.Username,
                     Password = request.Password,
-
                     Verified = false
                 };
+
+                if (user_account != null) {
+                    db.Accounts.Remove(user_account);
+                }
 
                 db.Verifications.Add(verification);
                 db.Accounts.Add(account);
@@ -105,7 +104,7 @@ namespace Network.Server.DataProcessing.Managers {
                 db.SaveChanges();
             }
             else {
-                response.Status = STATUS.FAILURE;
+                response.Result = Result.Failure;
             }
 
             return new RequestResult() {
@@ -116,28 +115,30 @@ namespace Network.Server.DataProcessing.Managers {
 
         private static RequestResult OnVerifyEmailRequest(VerifyEmailRequest request, ClientInfo client) {
             using var db = new PiDbContext();
-            var response = new VerifyEmailResponse();
 
-            var user_account = db.Accounts.Where(p => p.Email == request.Email).SingleOrDefault();
+            var user_account = db.Accounts.Single(p => p.Email == request.Email);
             var verification = db.Verifications.Where(p => p.Email == request.Email).OrderByDescending(t => t.ExpireDate).First();
 
-            if(request.Code == verification.Code) {
+            var response = new VerifyEmailResponse();
+            response.Result = Result.Success;
+
+            if (request.Code == verification.Code) {
                 var time = (verification.ExpireDate - DateTime.Now).TotalSeconds;
 
                 if (time > 0) {
-                    response.Status = STATUS.SUCCESS;
-
                     user_account.Verified = true;
+                    verification.ExpireDate = SqlDateTime.MinValue.Value;
+
                     db.SaveChanges();
                 }
                 else {
-                    // TODO: ErrorCode -> kod wygasł
-                    response.Status = STATUS.FAILURE;
+                    response.Result = Result.Failure;
+                    response.ErrorCode = ErrorCode.ExpiredVerificationCode;
                 }
             }
             else {
-                // TODO: ErrorCode -> niepoprawny kod
-                response.Status = STATUS.FAILURE;
+                response.Result = Result.Failure;
+                response.ErrorCode = ErrorCode.InvalidVerificationCode;
             }
 
             return new RequestResult() {
