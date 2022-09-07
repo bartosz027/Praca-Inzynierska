@@ -2,7 +2,7 @@
 using System.Windows;
 
 using ClientApp.Core;
-
+using ClientApp.Resources.Languages;
 using Network.Client;
 using Network.Client.DataProcessing;
 
@@ -27,28 +27,56 @@ namespace ClientApp.MVVM.View.Startup {
 
         private void RegisterAccount_Click(object sender, RoutedEventArgs e) {
             if (!String.IsNullOrEmpty(EmailBox.Text) && !String.IsNullOrEmpty(PasswordBox.Password) && !String.IsNullOrEmpty(UsernameBox.Text)) {
-                Client.Instance.SendRequest(new RegisterRequest() {
-                    Email = EmailBox.Text,
-                    Password = PasswordBox.Password,
 
-                    Username = UsernameBox.Text,
-                    DateOfBirth = DateTime.UtcNow
-                });
+                if (!EmailBox.Text.Contains("@")) // DEV ONLY
+                {
+                    ShowErrorMessage(ValidatorMessage, ResourcesDictionary.NotValidEmail);
+                }
+                else if(UsernameBox.Text.Length < 3) // DEV ONLY
+                {
+                    ShowErrorMessage(ValidatorMessage, ResourcesDictionary.RegisterUsernameTooShort);
+                }
+                else if (PasswordBox.Password.Length < 8) // DEV ONLY
+                {
+                    ShowErrorMessage(ValidatorMessage, ResourcesDictionary.RegisterWeekPassword);
+                }
+                else
+                {
+                    Client.Instance.SendRequest(new RegisterRequest()
+                    {
+                        Email = EmailBox.Text,
+                        Password = PasswordBox.Password,
+
+                        Username = UsernameBox.Text,
+                        DateOfBirth = DateTime.UtcNow
+                    });
+                    VerifyCodeForm.Visibility = Visibility.Visible;// DEV ONLY
+                }
+                
             }
             else {
+                ValidatorMessage.Text = ResourcesManager.GetValue(ResourcesDictionary.RegisterNotAllData);
                 ValidatorMessage.Visibility = Visibility.Visible;
             }
         }
 
-        private void VerifyEmail_Click(object sender, RoutedEventArgs e) {
+        private void VerifyCode_Click(object sender, RoutedEventArgs e) {
             if (!String.IsNullOrEmpty(CodeBox.Text)) {
+                if(CodeBox.Text == "CHUJ") // DEV ONLY
+                {
+                    ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.IncorrectCode);
+                }
+                else if (CodeBox.Text == "CIPA") // DEV ONLY
+                {
+                    ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.ExpiredCode);
+                }
                 Client.Instance.SendRequest(new VerifyEmailRequest() {
                     Email = EmailBox.Text,
                     Code = CodeBox.Text
                 });
             }
             else {
-                ValidatorMessageCode.Visibility = Visibility.Visible;
+                ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.EmptyCode);
             }
         }
 
@@ -61,7 +89,7 @@ namespace ClientApp.MVVM.View.Startup {
         private void OnRegisterResponse(RegisterResponse response) {
             switch (response.Result) {
                 case Result.Success: {
-                    VerifyEmailForm.Visibility = Visibility.Visible;
+                    VerifyCodeForm.Visibility = Visibility.Visible;
                     break;
                 }
                 case Result.Failure: {

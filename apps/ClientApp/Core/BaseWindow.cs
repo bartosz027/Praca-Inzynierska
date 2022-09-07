@@ -1,8 +1,9 @@
 ﻿using System;
 
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-
+using ClientApp.Resources.Languages;
 using Network.Client;
 using Network.Client.DataProcessing;
 
@@ -60,6 +61,11 @@ namespace ClientApp.Core {
                 ResizeMode = ResizeMode.CanResizeWithGrip;
                 WindowState = WindowState.Normal;
             }
+        }
+        protected virtual void ShowErrorMessage(TextBlock textBlock ,string Content)
+        {
+            textBlock.Text = ResourcesManager.GetValue(Content);
+            textBlock.Visibility = Visibility.Visible;
         }
     }
 

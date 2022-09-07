@@ -58,10 +58,24 @@
     <system:String x:Key="InvitationsInfo_String"> wysłał ci zaproszenie.</system:String>
     <system:String x:Key="BlockedInfo_String">jest zablokowany.</system:String>
 
-    <!-- Okrzyki walidacyjne -->
-    <system:String x:Key="IncorrectRegister_String">Dane rejestracji są nieprawidłowe lub konto z podanym adresem e-mail istnieje.</system:String>
-    <system:String x:Key="IncorrectLogin_String">Błędne dane logowania.</system:String>
+    <!-- Okrzyki walidacyjne rejestracja -->
+    <system:String x:Key="NotValidEmail_String">Niepoprawny format e-mail.</system:String>
+    <system:String x:Key="RegisterNotAllData_String">Wszystkie pola muszą być uzupełnione.</system:String>
+    <system:String x:Key="RegisterEmailExist_String">Konto o podanym adresie e-mail istnieje.</system:String>
+    <system:String x:Key="RegisterUsernameTooShort_String">Nazwa użytkownika musi składać się z co najmniej 3 znaków.</system:String>
+    <system:String x:Key="RegisterWeekPassword_String">Hasło musi składać się z co najmniej 8 znaków.</system:String>
+
+    <!-- Okrzyki walidacyjne nowe haslo -->
+    <system:String x:Key="NotSamePassword_String">Hasła muszą być identyczne.</system:String>
+    
+    <!-- Okrzyki walidacyjne kod -->
     <system:String x:Key="IncorrectCode_String">Kod nieprawidłowy.</system:String>
+    <system:String x:Key="ExpiredCode_String">Kod wygasł.</system:String>
+    <system:String x:Key="EmptyCode_String">Wprowadz kod.</system:String>
+    
+    <!-- Okrzyki walidacyjne -->
+    <system:String x:Key="IncorrectLogin_String">Błędne dane logowania.</system:String>
+    
 
     <system:String x:Key="InvalidAddUsername_String">Błędnie wpisana nazwa użytkownika!</system:String>
     <system:String x:Key="FailureAddUsername_String">Wielka bieda, nie udało się wysłać zaproszenia może już jesteście przyjaciółmi.</system:String>
