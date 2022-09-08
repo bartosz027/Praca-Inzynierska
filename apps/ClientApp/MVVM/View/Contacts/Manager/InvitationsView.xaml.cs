@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApp.MVVM.View.Contacts.Manager
-{
+namespace ClientApp.MVVM.View.Contacts.Manager {
+
     /// <summary>
     /// Logika interakcji dla klasy NotificationListView.xaml
     /// </summary>
-    public partial class InvitationsView : UserControl
-    {
-        public InvitationsView()
-        {
+    public partial class InvitationsView : UserControl {
+        public InvitationsView() {
             InitializeComponent();
         }
     }
+
 }

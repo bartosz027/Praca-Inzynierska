@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace ClientApp.Core {
 
-    internal class BindingProxy : Freezable {
+    public class BindingProxy : Freezable {
         protected override Freezable CreateInstanceCore() {
             return new BindingProxy();
         }

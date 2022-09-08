@@ -38,10 +38,26 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="K4os.Compression.LZ4, Version=1.2.16.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\K4os.Compression.LZ4.1.2.16\lib\net46\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -53,23 +69,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ConfigManager.cs" />
+    <Compile Include="Core\Values.cs" />
+    <Compile Include="Core\EncryptionAES.cs" />
+    <Compile Include="Core\EncryptionRSA.cs" />
     <Compile Include="Core\ErrorCode.cs" />
+    <Compile Include="Core\CompressionLZ4.cs" />
     <Compile Include="Core\Serializer.cs" />
     <Compile Include="DataTransfer\Model\Account\Login\LoginRequest.cs" />
     <Compile Include="DataTransfer\Base\Notification.cs" />
     <Compile Include="DataTransfer\Base\Request.cs" />
     <Compile Include="DataTransfer\Base\Response.cs" />
     <Compile Include="DataTransfer\Model\Account\Login\LoginResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\Logout\LogoutRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\Logout\LogoutResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailResponse.cs" />
-    <Compile Include="DataTransfer\Model\Database\Friends\GetInvitationsResponse.cs" />
-    <Compile Include="DataTransfer\Model\Database\Friends\GetInvitationsRequest.cs" />
-    <Compile Include="DataTransfer\Model\Database\Friends\GetFriendListRequest.cs" />
-    <Compile Include="DataTransfer\Model\Database\Friends\GetFriendListResponse.cs" />
-    <Compile Include="DataTransfer\Model\Database\Friends\GetMessageHistoryRequest.cs" />
-    <Compile Include="DataTransfer\Model\Database\Friends\GetMessageHistoryResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetFriendList\GetFriendListRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetFriendList\GetFriendListResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetMessageHistory\GetMessageHistoryRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetMessageHistory\GetMessageHistoryResponse.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\AcceptFriendInvitation\AcceptFriendInvitationNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\AcceptFriendInvitation\AcceptFriendInvitationRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\AcceptFriendInvitation\AcceptFriendInvitationResponse.cs" />
@@ -78,14 +100,22 @@
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\SendFriendInvitation\SendFriendInvitationResponse.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\DeleteMessage\DeleteMessageNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\DeleteMessage\DeleteMessageRequest.cs" />
+    <Compile Include="DataTransfer\Model\Friends\ManageMessages\DeleteMessage\DeleteMessageResponse.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\SendMessage\SendMessageNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\SendMessage\SendMessageRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\SendMessage\SendMessageResponse.cs" />
+    <Compile Include="DataTransfer\Security\ExchangeAESKeys\ExchangeAESKeysRequest.cs" />
+    <Compile Include="DataTransfer\Security\ExchangeAESKeys\ExchangeAESKeysResponse.cs" />
+    <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysRequest.cs" />
+    <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

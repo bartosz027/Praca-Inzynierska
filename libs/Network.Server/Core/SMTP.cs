@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Net;
 using System.Net.Mail;
 
@@ -40,12 +39,8 @@ namespace Network.Server.Core {
             }
         }
 
-        // SMTP
         private static SmtpClient _SMTP;
-
-        // Credentials
-        private static string _Email;
-        private static string _Password;
+        private static string _Email, _Password;
     }
 
 }

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using ClientApp.Core;
 using System.Collections.ObjectModel;
-
-using ClientApp.Core;
 
 using Network.Client;
 using Network.Client.DataProcessing;
@@ -11,8 +9,10 @@ using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvi
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
 
-    internal class AddContactViewModel : BaseViewModel {
+    internal class AddContactViewModel : BaseVM {
         public AddContactViewModel(ObservableCollection<ContactManagerItem> invitations) {
+            EnableResponseListener();
+
             SendInvitatationButtonCommand = new RelayCommand(o => {
                 var digits_only = true;
                 var greater_than_zero = false;
@@ -44,7 +44,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         }
 
         // Commands
-        public RelayCommand SendInvitatationButtonCommand { get; set; }
+        public RelayCommand SendInvitatationButtonCommand { get; private set; }
 
         // Properties
         public string ContactID {
@@ -81,13 +81,15 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         private ObservableCollection<ContactManagerItem> _PendingInvitations;
 
         // Response events
-        protected override void ResponseReceived(ResponseDispatcher dispatcher) {
+        protected override void OnResponseReceived(ResponseDispatcher dispatcher) {
             dispatcher.Dispatch<SendFriendInvitationResponse>(OnSendFriendInvitationResponse);
         }
 
         private void OnSendFriendInvitationResponse(SendFriendInvitationResponse response) {
+            // TODO: Implement error codes
+
             switch (response.Result) {
-                case Result.Success: {
+                case ResponseResult.Success: {
                     PendingInvitations.Add(new ContactManagerItem() {
                         UserID = response.UserID,
                         Username = response.Username,
@@ -101,8 +103,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                     ErrorMessage = "InvitationSent";
                     break;
                 }
-                case Result.Failure: {
-                    // TODO: Implement error codes
+                case ResponseResult.Failure: {
                     ErrorMessage = "Failure";
                     break;
                 }

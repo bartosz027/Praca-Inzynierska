@@ -35,8 +35,8 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options {
         }
 
         // Commands
-        public RelayCommand LightThemeButtonCommand { get; set; }
-        public RelayCommand DarkThemeButtonCommand { get; set; }
+        public RelayCommand LightThemeButtonCommand { get; private set; }
+        public RelayCommand DarkThemeButtonCommand { get; private set; }
 
         // Themes
         public IEnumerable<Theme> ThemesList { get; private set; }

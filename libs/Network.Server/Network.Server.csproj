@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\PasswordHasher.cs" />
     <Compile Include="Core\SMTP.cs" />
     <Compile Include="Core\TokenGenerator.cs" />
     <Compile Include="Core\ThreadSafeList.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="DataProcessing\Managers\AccountRequestManager.cs" />
     <Compile Include="DataProcessing\Managers\FriendsRequestManager.cs" />
     <Compile Include="DataProcessing\Managers\DatabaseRequestManager.cs" />
+    <Compile Include="DataProcessing\Managers\SecurityRequestManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProcessing\RequestManager.cs" />
     <Compile Include="DataProcessing\RequestDispatcher.cs" />
@@ -125,7 +127,9 @@
       <LastGenOutput>PiDbModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

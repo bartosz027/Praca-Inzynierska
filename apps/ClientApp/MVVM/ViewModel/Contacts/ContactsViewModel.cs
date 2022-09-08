@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ClientApp.Core;
+
 using System.Collections.ObjectModel;
 using System.Linq;
-
-using ClientApp.Core;
 
 using ClientApp.MVVM.ViewModel.Contacts.Chat;
 using ClientApp.MVVM.ViewModel.Contacts.Manager;
@@ -10,7 +9,7 @@ using ClientApp.MVVM.ViewModel.Contacts.Manager;
 using Network.Client;
 using Network.Client.DataProcessing;
 
-using Network.Shared.DataTransfer.Model.Database.Friends;
+using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
@@ -41,25 +40,28 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         private bool _Status;
     }
 
-    internal class ContactsViewModel : BaseViewModel {
+    internal class ContactsViewModel : BaseVM {
         public ContactsViewModel() {
-            ContactManagerVM = new ManagerViewModel();
+            EnableResponseListener();
+            EnableNotificationListener();
 
+            ContactManagerVM = new ManagerViewModel();
             FriendList = new ObservableCollection<ChatViewModel>();
-            Client.Instance.SendRequest(new GetFriendListRequest());
 
             ContactManagerButtonCommand = new RelayCommand(o => {
                 SelectedFriend = null;
                 CurrentView = ContactManagerVM;
             });
+
+            Client.Instance.SendRequest(new GetFriendListRequest());
         }
 
         // VM's
-        public ManagerViewModel ContactManagerVM { get; set; }
-        public ObservableCollection<ChatViewModel> FriendList { get; set; }
+        public ManagerViewModel ContactManagerVM { get; private set; }
+        public ObservableCollection<ChatViewModel> FriendList { get; private set; }
 
         // Commands
-        public RelayCommand ContactManagerButtonCommand { get; set; }
+        public RelayCommand ContactManagerButtonCommand { get; private set; }
 
         // Properties
         public ChatViewModel SelectedFriend {
@@ -69,7 +71,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             set {
                 _SelectedFriend = value;
 
-                if (_SelectedFriend != null && !_SelectedFriend.Initialized) {
+                if (_SelectedFriend != null && _SelectedFriend.Initialized == false) {
                     _SelectedFriend.Init();
                 }
 
@@ -92,7 +94,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         private object _CurrentView;
 
         // Response events
-        protected override void ResponseReceived(ResponseDispatcher dispatcher) {
+        protected override void OnResponseReceived(ResponseDispatcher dispatcher) {
             dispatcher.Dispatch<GetFriendListResponse>(OnGetFriendListResponse);
             dispatcher.Dispatch<AcceptFriendInvitationResponse>(OnAcceptFriendInvitationResponse);
         }
@@ -117,7 +119,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var friend = new FriendInfo() {
                 ID = response.UserID,
                 Username = response.Username,
-                Status = true // TODO: Receive "status" from server
+                Status = true 
+
+                // TODO: Receive "status" from server
             };
 
             var invitation = ContactManagerVM.ReceivedInvitations.Single(p => p.UserID == response.UserID);
@@ -127,7 +131,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         }
 
         // Notification events
-        protected override void NotificationReceived(NotificationDispatcher dispatcher) {
+        protected override void OnNotificationReceived(NotificationDispatcher dispatcher) {
             dispatcher.Dispatch<AcceptFriendInvitationNotification>(OnAcceptFriendInvitationNotification);
         }
 
@@ -135,7 +139,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var friend = new FriendInfo() {
                 ID = notification.UserID,
                 Username = notification.Username,
-                Status = true // TODO: Receive "status" from server
+                Status = true 
+                
+                // TODO: Receive "status" from server
             };
 
             var invitation = ContactManagerVM.PendingInvitations.Single(p => p.UserID == notification.UserID);

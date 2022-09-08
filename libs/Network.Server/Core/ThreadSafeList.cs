@@ -12,7 +12,6 @@ namespace Network.Server.Core {
             _Locker = new ReaderWriterLockSlim();
         }
 
-
         public void Add(T item) {
             _Locker.EnterWriteLock();
             
@@ -35,7 +34,6 @@ namespace Network.Server.Core {
             }
         }
 
-
         public T? Find(Predicate<T> match) {
             _Locker.EnterReadLock();
 
@@ -46,7 +44,6 @@ namespace Network.Server.Core {
                 _Locker.ExitReadLock();
             }
         }
-
 
         private readonly List<T> _List;
         private readonly ReaderWriterLockSlim _Locker;

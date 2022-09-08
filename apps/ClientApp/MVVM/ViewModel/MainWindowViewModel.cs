@@ -1,11 +1,10 @@
 ﻿using ClientApp.Core;
-
 using ClientApp.MVVM.ViewModel.Contacts;
 using ClientApp.MVVM.ViewModel.Settings;
 
 namespace ClientApp.MVVM.ViewModel {
 
-    internal class MainWindowViewModel : BaseViewModel {
+    internal class MainWindowViewModel : BaseVM {
         public MainWindowViewModel() {
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
@@ -22,12 +21,12 @@ namespace ClientApp.MVVM.ViewModel {
         }
 
         // VM's
-        public ContactsViewModel ContactsVM { get; set; }
-        public SettingsViewModel SettingsVM { get; set; }
+        public ContactsViewModel ContactsVM { get; private set; }
+        public SettingsViewModel SettingsVM { get; private set; }
 
         // Commands
-        public RelayCommand ContactsButtonCommand { get; set; }
-        public RelayCommand SettingsButtonCommand { get; set; }
+        public RelayCommand ContactsButtonCommand { get; private set; }
+        public RelayCommand SettingsButtonCommand { get; private set; }
 
         // Current view
         public object CurrentView {

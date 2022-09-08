@@ -4,7 +4,8 @@
     <!-- Logowanie -->
     <system:String x:Key="EnterEmail_String">Entrer l'adresse e-mail:</system:String>
     <system:String x:Key="EnterPassword_String">Tapez votre mot de passe:</system:String>
-    <system:String x:Key="AutoLog_String">Connectez-vous automatiquement:</system:String>
+    
+    <system:String x:Key="AutoLog_String">Souviens-toi de moi</system:String>
     <system:String x:Key="LoginButton_String">Connexion</system:String>
 
     <system:String x:Key="ResetPassword_String">Mot de passe oublié?</system:String>
@@ -14,7 +15,7 @@
     <system:String x:Key="NewAccountButton_String">Nouveau compte</system:String>
 
     <!-- Rejestracja -->
-    <system:String x:Key="EnterUsername_String">Saisissez votre pseudo artistique :</system:String>
+    <system:String x:Key="EnterUsername_String">Entrez votre nom d'utilisateur:</system:String>
     <system:String x:Key="NextButton_String">Prochain</system:String>
 
     <system:String x:Key="E-mailCode_String">Entrez le code envoyé à l'e-mail:</system:String>
@@ -22,22 +23,21 @@
 
     <!-- Aplikacja -->
     <system:String x:Key="AccountSettings_String">Paramètres du compte</system:String>
+    <system:String x:Key="AppSettings_String">Paramètres de l'application</system:String>
+    
     <system:String x:Key="ProfileDataButton_String">Données de profil</system:String>
     <system:String x:Key="AccountDataButton_String">Information sur le compte</system:String>
 
-    <system:String x:Key="AppSettings_String">Paramètres de l'application</system:String>
-
     <system:String x:Key="ThemeButton_String">Thème</system:String>
     <system:String x:Key="ThemeSettingDescription_String">Apparence</system:String>
+    
     <system:String x:Key="LigthThemeButton_String">Thème lumineux</system:String>
     <system:String x:Key="DarkThemeButton_String">Thème sombre</system:String>
 
     <system:String x:Key="LanguageDataButton_String">Langue</system:String>
-
-    <system:String x:Key="LogOutButton_String">Se déconnecter</system:String>
+    <system:String x:Key="LogoutButton_String">Se déconnecter</system:String>
 
     <system:String x:Key="ContactsManagerDescription_String">Gestionnaire de contacts</system:String>
-
     <system:String x:Key="PendingInvitationsButton_String">Attendre</system:String>
     <system:String x:Key="InvitationsButton_String">Invitations</system:String>
     <system:String x:Key="BlockedButton_String">Bloqué</system:String>

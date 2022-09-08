@@ -5,7 +5,8 @@ using System.Linq;
 using System.Windows;
 
 using ClientApp.Core;
-using ClientApp.Resources.Languages;
+using ClientApp.Resources;
+
 using Network.Shared.Core;
 
 namespace ClientApp.MVVM.ViewModel.Settings.Options  {
@@ -18,8 +19,8 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options  {
     internal class LanguageSettingsViewModel : ObservableObject {
         public LanguageSettingsViewModel() {
             LanguageList = new ObservableCollection<LanguageInfo> {
-                new LanguageInfo { Filename = "Lang-pl", ResourceName = ResourcesManager.GetValue(ResourcesDictionary.LANGUAGE_PL)},
-                new LanguageInfo { Filename = "Lang-fr", ResourceName = ResourcesManager.GetValue(ResourcesDictionary.LANGUAGE_FR)}
+                new LanguageInfo { Filename = "Lang-pl", ResourceName = ResourceManager.GetValue(ResourcesDictionary.LANGUAGE_PL)},
+                new LanguageInfo { Filename = "Lang-fr", ResourceName = ResourceManager.GetValue(ResourcesDictionary.LANGUAGE_FR)}
             };
 
             var language = ConfigManager.GetValue("Language");

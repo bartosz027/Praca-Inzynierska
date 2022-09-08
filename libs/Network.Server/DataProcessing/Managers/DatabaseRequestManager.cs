@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
-
 using System.Linq;
-using Network.Server.Database;
 
+using Network.Server.Database;
 using Network.Shared.DataTransfer.Base;
-using Network.Shared.DataTransfer.Model.Database.Friends;
+
+using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
+using Network.Shared.DataTransfer.Model.Database.Friends.GetInvitations;
+using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
 namespace Network.Server.DataProcessing.Managers {
 
@@ -15,17 +17,19 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<GetInvitationsRequest>(OnGetInvitationsRequest, client);
                 dispatcher.Dispatch<GetMessageHistoryRequest>(OnGetMessageHistoryRequest, client);
             }
-
-            // TODO: Access denied
+            else {
+                // TODO: Access denied
+            }
         }
 
         private static RequestResult OnGetFriendListRequest(GetFriendListRequest request, ClientInfo client) {
             var response = new GetFriendListResponse() {
-                FriendList = new List<FriendInfo>()
+                FriendList = new List<FriendInfo>(),
+                Result = ResponseResult.Success
             };
             
             using (var db = new PiDbContext()) {
-                var user_account = db.Accounts.Single(p => p.ID == client.ID);
+                var user_account = db.Accounts.Find(client.ID);
                 var user_friend_list = user_account.Friends.ToList();
 
                 foreach (var account in user_friend_list) {
@@ -36,8 +40,6 @@ namespace Network.Server.DataProcessing.Managers {
 
                     response.FriendList.Add(friend_info);
                 }
-
-                response.Result = Result.Success;
             }
 
             return new RequestResult() {
@@ -54,6 +56,7 @@ namespace Network.Server.DataProcessing.Managers {
 
             using (var db = new PiDbContext()) {
                 var invitations = db.FriendInvitations.Where(p => p.SenderID == client.ID || p.ReceiverID == client.ID);
+                response.Result = ResponseResult.Success;
 
                 foreach (var invitation in invitations) {
                     if (invitation.SenderID == client.ID) {
@@ -74,8 +77,6 @@ namespace Network.Server.DataProcessing.Managers {
                         response.ReceivedInvitations.Add(invitation_info);
                     }
                 }
-
-                response.Result = Result.Success;
             }
 
             return new RequestResult() {
@@ -92,6 +93,7 @@ namespace Network.Server.DataProcessing.Managers {
 
             using (var db = new PiDbContext()) {
                 var messages = db.Messages.Where(p => (p.SenderID == client.ID && p.ReceiverID == request.FriendID) || (p.SenderID == request.FriendID && p.ReceiverID == client.ID));
+                response.Result = ResponseResult.Success;
 
                 foreach (var message in messages) {
                     var message_info = new MessageInfo() {
@@ -104,8 +106,6 @@ namespace Network.Server.DataProcessing.Managers {
 
                     response.Messages.Add(message_info);
                 }
-
-                response.Result = Result.Success;
             }
 
             return new RequestResult() {

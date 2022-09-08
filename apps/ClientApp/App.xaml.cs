@@ -19,13 +19,13 @@ namespace ClientApp {
         protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
 
-            // Connect to server
             var ip = ConfigManager.GetValue("Server_IP");
-            var port = int.Parse(ConfigManager.GetValue("Server_PORT"));
+            var port = ConfigManager.GetValue("Server_PORT");
 
-            Client.Instance.Connect(ip, port);
+            Client.Instance.Connect(ip, int.Parse(port));
+            Client.Instance.EnableSecureConnection();
 
-            // Settings
+            // Load application settings
             var theme = ConfigManager.GetValue("Theme");
             var language = ConfigManager.GetValue("Language");
 

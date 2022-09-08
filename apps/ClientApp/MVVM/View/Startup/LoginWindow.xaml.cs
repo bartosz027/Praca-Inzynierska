@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows;
 
+using ClientApp.Core;
+
 using Network.Client;
 using Network.Client.DataProcessing;
 
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Account.Login;
-
-using ClientApp.Core;
 
 namespace ClientApp.MVVM.View.Startup {
 
@@ -17,6 +17,7 @@ namespace ClientApp.MVVM.View.Startup {
     public partial class LoginWindow : BaseWindow {
         public LoginWindow() {
             InitializeComponent();
+            EnableResponseListener();
 
             #if DEBUG
                 AutoLoginButtons.Visibility = Visibility.Visible;
@@ -33,13 +34,13 @@ namespace ClientApp.MVVM.View.Startup {
             });
         }
 
-        private void Register_Click(object sender, RoutedEventArgs e) {
-            var window = new RegisterWindow();
+        private void ResetPassword_Click(object sender, RoutedEventArgs e) {
+            var window = new ForgotPasswordWindow();
             window.ShowDialog();
         }
 
-        private void ResetPassword_Click(object sender, RoutedEventArgs e) {
-            var window = new ForgotPasswordWindow();
+        private void Register_Click(object sender, RoutedEventArgs e) {
+            var window = new RegisterWindow();
             window.ShowDialog();
         }
 
@@ -66,25 +67,25 @@ namespace ClientApp.MVVM.View.Startup {
         }
 
         // Response events
-        protected override void ResponseReceived(ResponseDispatcher dispatcher) {
+        protected override void OnResponseReceived(ResponseDispatcher dispatcher) {
             dispatcher.Dispatch<LoginResponse>(OnLoginResponse);
         }
 
         private void OnLoginResponse(LoginResponse response) {
             switch (response.Result) {
-                case Result.Success: {
-                    Client.Data.Username = response.Username;
+                case ResponseResult.Success: {
                     Client.Data.AccessToken = response.AccessToken;
+                    Client.Data.Username = response.Username;
 
                     var window = new MainWindow();
                     window.Show();
 
-                    this.Dispose();
+                    DisableResponseListener();
                     this.Close();
 
                     break;
                 }
-                case Result.Failure: {
+                case ResponseResult.Failure: {
                     ValidatorMessage.Visibility = Visibility.Visible;
                     break;
                 }

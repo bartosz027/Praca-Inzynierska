@@ -2,10 +2,9 @@ USE PI_DB;
 
 -- Account
 SET IDENTITY_INSERT [dbo].[Account] ON
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (1, N'pudzian028', N'test1@gmail.com', N'okon1', 1)
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (2, N'karmelek17', N'test2@gmail.com', N'okon2', 1)
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (3, N'pawelek216', N'test3@gmail.com', N'okon3', 1)
-	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (4, N'marian2000', N'test4@gmail.com', N'okon4', 1)
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (1, N'pudzian028', N'test1@gmail.com', N'0i3K10Z2H2oW73LrX5Iue+nQejTFtN/z7okKE3CETnzwTJnv5Hv/MZ9h14/pA+iK', 1)
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (2, N'karmelek17', N'test2@gmail.com', N'RsB/nj4y4VzaB2jyv1e0h+StcErraDKiv4X++w7v7m91vlEIll4MGYl3yO7r39e+', 1)
+	INSERT INTO [dbo].[Account] ([ID], [Username], [Email], [Password], [Verified]) VALUES (3, N'pawelek216', N'test3@gmail.com', N'8pI1L1HWIJhcjVF5OoMbQ72BuUtiIe3wj5RxyAwZiTJ4epSB4SdkOyePIu9EVjsw', 1)
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 -- Friendship

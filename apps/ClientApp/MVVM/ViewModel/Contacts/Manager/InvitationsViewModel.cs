@@ -1,12 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using ClientApp.Core;
+﻿using ClientApp.Core;
+using System.Collections.ObjectModel;
 
 using Network.Client;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
 
-    internal class InvitationsViewModel : BaseViewModel {
+    internal class InvitationsViewModel : BaseVM {
         public InvitationsViewModel() {
             AcceptButtonCommand = new RelayCommand(o => {
                 var item = o as ContactManagerItem;
@@ -22,8 +22,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         }
 
         // Commands
-        public RelayCommand AcceptButtonCommand { get; set; }
-        public RelayCommand DeclineButtonCommand { get; set; }
+        public RelayCommand AcceptButtonCommand { get; private set; }
+        public RelayCommand DeclineButtonCommand { get; private set; }
 
         // Properties
         public string ContactName {

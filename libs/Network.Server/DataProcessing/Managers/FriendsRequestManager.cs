@@ -26,55 +26,60 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<DeleteMessageRequest>(OnDeleteMessageRequest, client);
                 dispatcher.Dispatch<SendMessageRequest>(OnSendMessageRequest, client);
             }
-
-            // TODO: Access denied
+            else {
+                // TODO: Access denied
+            }
         }
 
         // Manage invitations
         private static RequestResult OnSendFriendInvitationRequest(SendFriendInvitationRequest request, ClientInfo client) {
+            var response = new SendFriendInvitationResponse() {
+                Result = ResponseResult.Success
+            };
+
             using var db = new PiDbContext();
+            var user_account = db.Accounts.SingleOrDefault(p => p.ID == request.UserID);
 
-            var user = db.Accounts.SingleOrDefault(p => p.ID == request.UserID);
-            var response = new SendFriendInvitationResponse();
-
-            if (user != null) {
-                var receiver = Server.Data.Clients.Find(p => p.ID == user.ID);
-
-                response.UserID = user.ID;
-                response.Username = user.Username;
+            if (user_account == null) {
+                response.Result = ResponseResult.Failure;
+                response.Errors.Add(ErrorCode.AccountNotFound);
+            }
+            else {
+                var receiver = Server.Data.Clients.Find(p => p.ID == user_account.ID);
 
                 // SELF INVITE
-                if (user.ID == client.ID) {
-                    response.Result = Result.Failure;
-                    response.ErrorCode = ErrorCode.FriendInvitationSelfInvite;
+                if (user_account.ID == client.ID) {
+                    response.Result = ResponseResult.Failure;
+                    response.Errors.Add(ErrorCode.InvitationSelfInvite);
                 }
 
                 // ALREADY ON FRIEND LIST
-                else if (user.Friends.SingleOrDefault(p => p.FriendID == client.ID) != null) {
-                    response.Result = Result.Failure;
-                    response.ErrorCode = ErrorCode.FriendInvitationAlreadyFriends;
+                else if (user_account.Friends.SingleOrDefault(p => p.FriendID == client.ID) != null) {
+                    response.Result = ResponseResult.Failure;
+                    response.Errors.Add(ErrorCode.InvitationAlreadyFriends);
                 }
 
                 // INVITATION DUPLICATE
-                else if (db.FriendInvitations.SingleOrDefault(p => (p.SenderID == user.ID && p.ReceiverID == client.ID) || (p.SenderID == client.ID && p.ReceiverID == user.ID)) != null) {
-                    response.Result = Result.Failure;
-                    response.ErrorCode = ErrorCode.FriendInvitationDuplicate;
+                else if (db.FriendInvitations.SingleOrDefault(p => (p.SenderID == user_account.ID && p.ReceiverID == client.ID) || (p.SenderID == client.ID && p.ReceiverID == user_account.ID)) != null) {
+                    response.Result = ResponseResult.Failure;
+                    response.Errors.Add(ErrorCode.InvitationDuplicate);
                 }
 
                 // NO ERRORS
                 else {
-                    response.Result = Result.Success;
+                    response.UserID = user_account.ID;
+                    response.Username = user_account.Username;
 
                     db.FriendInvitations.Add(new FriendInvitation() {
                         SenderID = client.ID,
-                        ReceiverID = user.ID
+                        ReceiverID = user_account.ID
                     });
 
                     db.SaveChanges();
                     db.Dispose();
                 }
 
-                if (receiver != null && response.Result != Result.Failure) {
+                if (receiver != null && response.Result == ResponseResult.Success) {
                     var notification = new SendFriendInvitationNotification() {
                         UserID = client.ID,
                         Username = client.Username
@@ -89,10 +94,6 @@ namespace Network.Server.DataProcessing.Managers {
                     };
                 }
             }
-            else {
-                response.Result = Result.Failure;
-                response.ErrorCode = ErrorCode.FriendInvitationUserNotExist;
-            }
 
             return new RequestResult() {
                 ResponseReceiver = client,
@@ -101,41 +102,47 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         private static RequestResult OnAcceptFriendInvitationRequest(AcceptFriendInvitationRequest request, ClientInfo client) {
-            using var db = new PiDbContext();
-
-            var user = db.Accounts.Single(p => p.ID == request.UserID);
-            var receiver = Server.Data.Clients.Find(p => p.ID == user.ID);
-
-            db.Friendships.Add(new Friendship() { UserID = client.ID, FriendID = user.ID });
-            db.Friendships.Add(new Friendship() { UserID = user.ID, FriendID = client.ID });
-
-            var invitation = db.FriendInvitations.Single(p => p.SenderID == user.ID && p.ReceiverID == client.ID);
-            db.FriendInvitations.Remove(invitation);
-
-            db.SaveChanges();
-            db.Dispose();
-
             var response = new AcceptFriendInvitationResponse() {
-                UserID = user.ID,
-                Username = user.Username,
-
-                Result = Result.Success,
-                ErrorCode = ErrorCode.None
+                Result = ResponseResult.Success
             };
 
-            if (receiver != null) {
-                var notification = new AcceptFriendInvitationNotification() {
-                    UserID = client.ID,
-                    Username = client.Username
-                };
+            using (var db = new PiDbContext()) {
+                var user_account = db.Accounts.SingleOrDefault(p => p.ID == request.UserID);
 
-                return new RequestResult() {
-                    ResponseReceiver = client,
-                    ResponseData = response,
+                if (user_account == null) {
+                    throw new ArgumentException();
+                }
 
-                    NotificationReceivers = new List<ClientInfo>() { receiver },
-                    NotificationData = notification
-                };
+                var invitation = db.FriendInvitations.SingleOrDefault(p => p.SenderID == user_account.ID && p.ReceiverID == client.ID);
+                var receiver = Server.Data.Clients.Find(p => p.ID == user_account.ID);
+
+                if (invitation == null) {
+                    throw new ArgumentException();
+                }
+
+                response.UserID = user_account.ID;
+                response.Username = user_account.Username;
+
+                db.Friendships.Add(new Friendship() { UserID = client.ID, FriendID = user_account.ID });
+                db.Friendships.Add(new Friendship() { UserID = user_account.ID, FriendID = client.ID });
+
+                db.FriendInvitations.Remove(invitation);
+                db.SaveChanges();
+
+                if (receiver != null) {
+                    var notification = new AcceptFriendInvitationNotification() {
+                        UserID = client.ID,
+                        Username = client.Username
+                    };
+
+                    return new RequestResult() {
+                        ResponseReceiver = client,
+                        ResponseData = response,
+
+                        NotificationReceivers = new List<ClientInfo>() { receiver },
+                        NotificationData = notification
+                    };
+                }
             }
 
             return new RequestResult() {
@@ -146,74 +153,95 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Manage messages
         private static RequestResult OnDeleteMessageRequest(DeleteMessageRequest request, ClientInfo client) {
-            var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
+            var response = new DeleteMessageResponse() {
+                Result = ResponseResult.Success
+            };
 
             using (var db = new PiDbContext()) {
                 var message = db.Messages.Find(request.MessageID);
+                var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
+
+                if (message == null || message.SenderID != client.ID || message.ReceiverID != request.FriendID) {
+                    throw new ArgumentException();
+                }
+
+                response.FriendID = request.FriendID;
+                response.MessageID = request.MessageID;
+
                 db.Messages.Remove(message);
                 db.SaveChanges();
+
+                if (receiver != null) {
+                    var notification = new DeleteMessageNotification() {
+                        FriendID = client.ID,
+                        MessageID = request.MessageID
+                    };
+
+                    return new RequestResult() {
+                        ResponseReceiver = client,
+                        ResponseData = response,
+
+                        NotificationReceivers = new List<ClientInfo>() { receiver },
+                        NotificationData = notification
+                    };
+                }
             }
 
-            if (receiver != null) {
-                var notification = new DeleteMessageNotification() {
-                    FriendID = client.ID,
-                    MessageID = request.MessageID
-                };
-
-                return new RequestResult() {
-                    NotificationReceivers = new List<ClientInfo>() { receiver },
-                    NotificationData = notification
-                };
-            }
-
-            return null;
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
         }
 
         private static RequestResult OnSendMessageRequest(SendMessageRequest request, ClientInfo client) {
-            var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
-
-            var time = DateTime.UtcNow;
-            var message = new Message();
+            var response = new SendMessageResponse() {
+                Result = ResponseResult.Success
+            };
 
             using (var db = new PiDbContext()) {
-                message = db.Messages.Add(new Message() {
+                var friendship = db.Friendships.SingleOrDefault(p => p.UserID == client.ID && p.FriendID == request.FriendID);
+
+                if (friendship == null || String.IsNullOrEmpty(request.Content)) {
+                    throw new ArgumentException();
+                }
+
+                var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
+                var current_time = DateTime.UtcNow;
+
+                var message = db.Messages.Add(new Message() {
                     SenderID = client.ID,
                     ReceiverID = request.FriendID,
 
                     Content = request.Content,
-                    SendDate = time
+                    SendDate = current_time
                 });
 
                 db.SaveChanges();
-            }
+                db.Dispose();
 
-            var response = new SendMessageResponse() {
-                FriendID = request.FriendID,
-                MessageID = message.ID,
+                response.FriendID = request.FriendID;
+                response.MessageID = message.ID;
 
-                Content = request.Content,
-                SendDate = time,
+                response.Content = request.Content;
+                response.SendDate = current_time;
 
-                Result = Result.Success,
-                ErrorCode = ErrorCode.None
-            };
+                if (receiver != null) {
+                    var notification = new SendMessageNotification() {
+                        FriendID = client.ID,
+                        MessageID = message.ID,
 
-            if (receiver != null) {
-                var notification = new SendMessageNotification() {
-                    FriendID = client.ID,
-                    MessageID = message.ID,
+                        Content = request.Content,
+                        SendDate = current_time
+                    };
 
-                    Content = request.Content,
-                    SendDate = time
-                };
+                    return new RequestResult() {
+                        ResponseReceiver = client,
+                        ResponseData = response,
 
-                return new RequestResult() {
-                    ResponseReceiver = client,
-                    ResponseData = response,
-
-                    NotificationReceivers = new List<ClientInfo>() { receiver },
-                    NotificationData = notification
-                };
+                        NotificationReceivers = new List<ClientInfo>() { receiver },
+                        NotificationData = notification
+                    };
+                }
             }
 
             return new RequestResult() {

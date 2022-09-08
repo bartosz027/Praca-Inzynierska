@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApp.MVVM.View.Settings.Options 
-{
+namespace ClientApp.MVVM.View.Settings.Options  {
+
     /// <summary>
     /// Logika interakcji dla klasy LanguageSettingsView.xaml
     /// </summary>
-    public partial class LanguageSettingsView : UserControl
-    {
-        public LanguageSettingsView()
-        {
+    public partial class LanguageSettingsView : UserControl {
+        public LanguageSettingsView() {
             InitializeComponent();
         }
     }
+
 }

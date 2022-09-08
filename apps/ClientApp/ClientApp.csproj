@@ -87,7 +87,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\BaseViewModel.cs" />
+    <Compile Include="Core\BaseVM.cs" />
     <Compile Include="Core\BaseWindow.cs" />
     <Compile Include="Core\BindingProxy.cs" />
     <Compile Include="Core\ObservableObject.cs" />
@@ -150,11 +150,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Resources\Languages\ResourcesDictionary.cs" />
-    <Compile Include="Resources\Languages\ResourcesManager.cs" />
+    <Compile Include="Resources\ResourcesDictionary.cs" />
+    <Compile Include="Resources\ResourceManager.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />

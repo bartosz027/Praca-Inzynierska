@@ -1,15 +1,20 @@
 ﻿namespace Network.Shared.Core {
 
     public enum ErrorCode {
-        None = 0,
+        AccountNotFound,
+
+        InvalidUsername,
+        InvalidPassword,
+
+        EmailAddressTaken,
+        InvalidEmailAddress,
 
         InvalidVerificationCode,
         ExpiredVerificationCode,
 
-        FriendInvitationAlreadyFriends,
-        FriendInvitationUserNotExist,
-        FriendInvitationSelfInvite,
-        FriendInvitationDuplicate
+        InvitationAlreadyFriends,
+        InvitationSelfInvite,
+        InvitationDuplicate
     }
 
 }

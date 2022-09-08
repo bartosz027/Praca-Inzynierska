@@ -61,10 +61,10 @@
                                 </Grid.ColumnDefinitions>
                                 
                                 <Ellipse Style="{DynamicResource StatusBalls}"
-                                         IsEnabled="{Binding Friend.Status}"/>
+                                         IsEnabled="{Binding FriendInfo.Status}"/>
 
                                 <RadioButton Grid.Column="1"
-                                             Content="{Binding Friend.Username}"
+                                             Content="{Binding FriendInfo.Username}"
                                              Style="{DynamicResource UserView}"/>
                                 
                             </Grid>

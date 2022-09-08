@@ -1,12 +1,10 @@
-﻿using System;
+﻿using ClientApp.Core;
 using System.Collections.ObjectModel;
-
-using ClientApp.Core;
 
 using Network.Client;
 using Network.Client.DataProcessing;
 
-using Network.Shared.DataTransfer.Model.Database.Friends;
+using Network.Shared.DataTransfer.Model.Database.Friends.GetInvitations;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvitation;
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
@@ -40,8 +38,11 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         public bool IsEnabledDeclineOption { get; set; }
     }
 
-    internal class ManagerViewModel : BaseViewModel {
+    internal class ManagerViewModel : BaseVM {
         public ManagerViewModel() {
+            EnableResponseListener();
+            EnableNotificationListener();
+
             PendingInvitations = new ObservableCollection<ContactManagerItem>();
             ReceivedInvitations = new ObservableCollection<ContactManagerItem>();
 
@@ -70,14 +71,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         }
 
         // VM's
-        public AddContactViewModel AddContactVM { get; set; }
-        public InvitationsViewModel InvitationsVM { get; set; }
+        public AddContactViewModel AddContactVM { get; private set; }
+        public InvitationsViewModel InvitationsVM { get; private set; }
 
         // Commands
-        public RelayCommand AddContactViewButtonCommand { get; set; }
-        public RelayCommand PendingInvitationsButtonCommand  { get; set; }
-        public RelayCommand ReceivedInvitationsButtonCommand { get; set; }
-        public RelayCommand BlockedButtonCommand { get; set; }
+        public RelayCommand AddContactViewButtonCommand { get; private set; }
+        public RelayCommand PendingInvitationsButtonCommand  { get; private set; }
+        public RelayCommand ReceivedInvitationsButtonCommand { get; private set; }
+        public RelayCommand BlockedButtonCommand { get; private set; }
 
         // Properties
         public ObservableCollection<ContactManagerItem> PendingInvitations {
@@ -115,7 +116,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         private object _CurrentView;
 
         // Response events
-        protected override void ResponseReceived(ResponseDispatcher dispatcher) {
+        protected override void OnResponseReceived(ResponseDispatcher dispatcher) {
             dispatcher.Dispatch<GetInvitationsResponse>(OnGetInvitationsResponse);
         }
 
@@ -150,7 +151,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         }
 
         // Notification events
-        protected override void NotificationReceived(NotificationDispatcher dispatcher) {
+        protected override void OnNotificationReceived(NotificationDispatcher dispatcher) {
             dispatcher.Dispatch<SendFriendInvitationNotification>(OnSendFriendInvitationNotification);
         }
 

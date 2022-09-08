@@ -1,40 +1,29 @@
 ﻿using System;
-
 using System.Windows;
+
 using System.Windows.Controls;
 using System.Windows.Input;
-using ClientApp.Resources.Languages;
+
 using Network.Client;
 using Network.Client.DataProcessing;
 
+using ClientApp.Resources;
 using Network.Shared.DataTransfer.Base;
 
 namespace ClientApp.Core {
 
     public abstract class BaseWindow : Window {
-        public BaseWindow() {
-            Client.Instance.ResponseReceived += OnResponseReceived;
+        public void EnableResponseListener() {
+            Client.Instance.ResponseReceived += OnResponseReceivedEvent;
         }
 
-        public void Dispose() {
-            Client.Instance.ResponseReceived -= OnResponseReceived;
+        public void DisableResponseListener() {
+            Client.Instance.ResponseReceived -= OnResponseReceivedEvent;
         }
 
-        // Response events
-        protected void OnResponseReceived(object sender, Response response) {
-            App.Current.Dispatcher.Invoke(delegate {
-                var dispatcher = new ResponseDispatcher(response);
-
-                if (response.Result == Result.None) {
-                    throw new NotImplementedException();
-                }
-
-                ResponseReceived(dispatcher);
-            });
-        }
-
-        protected virtual void ResponseReceived(ResponseDispatcher dispatcher) { 
-        
+        protected virtual void ShowErrorMessage(TextBlock textBlock, string content) {
+            textBlock.Text = ResourceManager.GetValue(content);
+            textBlock.Visibility = Visibility.Visible;
         }
 
         // Window events
@@ -62,11 +51,22 @@ namespace ClientApp.Core {
                 WindowState = WindowState.Normal;
             }
         }
-        protected virtual void ShowErrorMessage(TextBlock textBlock ,string Content)
-        {
-            textBlock.Text = ResourcesManager.GetValue(Content);
-            textBlock.Visibility = Visibility.Visible;
+
+        // Response events
+        protected void OnResponseReceivedEvent(object sender, Response response) {
+            App.Current.Dispatcher.Invoke(delegate {
+                var dispatcher = new ResponseDispatcher(response);
+
+                if (response.Result == ResponseResult.None) {
+                    throw new NotImplementedException();
+                }
+
+                OnResponseReceived(dispatcher);
+            });
         }
+
+        // Template method pattern
+        protected virtual void OnResponseReceived(ResponseDispatcher dispatcher) { }
     }
 
 }

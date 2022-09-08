@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApp.MVVM.View.Contacts.Manager 
-{
+namespace ClientApp.MVVM.View.Contacts.Manager  {
+
     /// <summary>
     /// Logika interakcji dla klasy ContactManagerView.xaml
     /// </summary>
-    public partial class ManagerView : UserControl
-    {
-        public ManagerView()
-        {
+    public partial class ManagerView : UserControl {
+        public ManagerView() {
             InitializeComponent();
         }
     }
+
 }

@@ -25,26 +25,39 @@
                              Margin="0,10,0,0" IsEnabled="False"/>
 
                 <RadioButton Content="{DynamicResource ProfileDataButton_String}"
-                             Style="{DynamicResource PIWindowRadioButon}" Height="40"/>
+                             Style="{DynamicResource PIWindowRadioButon}"
+                             Command="{Binding ProfileOptionCommand}"
+                             Height="40"/>
 
                 <RadioButton Content="{DynamicResource AccountDataButton_String}" 
-                             Style="{DynamicResource PIWindowRadioButon}" Height="40"/>
+                             Style="{DynamicResource PIWindowRadioButon}" 
+                             Command="{Binding AccountOptionCommand}" 
+                             Height="40"/>
 
+                
                 <RadioButton Content="{DynamicResource AppSettings_String}"
                              Style="{DynamicResource PIWindowRadioButon}"
                              Margin="0,20,0,0" IsEnabled="False"/>
 
                 <RadioButton Content="{DynamicResource ThemeButton_String}" 
-                             Command="{Binding ThemesSettingCommand}" Height="40"
-                             Style="{DynamicResource PIWindowRadioButon}"/>
+                             Style="{DynamicResource PIWindowRadioButon}" 
+                             Command="{Binding ThemeOptionCommand}" 
+                             Height="40"/>
 
                 <RadioButton Content="{DynamicResource LanguageDataButton_String}" 
-                             Command="{Binding LanguageSettingCommand}" Height="40"
-                             Style="{DynamicResource PIWindowRadioButon}"/>
+                             Style="{DynamicResource PIWindowRadioButon}" 
+                             Command="{Binding LanguageOptionCommand}" 
+                             Height="40"/>
 
-                <RadioButton Content="{DynamicResource LogOutButton_String}" 
+
+                <RadioButton Content="PLACEHOLDER"
                              Style="{DynamicResource PIWindowRadioButon}"
-                             Margin="0,40,0,0" Height="40"/>
+                             Margin="0,20,0,0" IsEnabled="False"/>
+
+                <RadioButton Content="{DynamicResource LogoutButton_String}" 
+                             Style="{DynamicResource PIWindowRadioButon}" 
+                             Command="{Binding LogoutOptionCommand}" 
+                             Height="40"/>
                 
             </StackPanel>
 
