@@ -20,7 +20,7 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options  {
         public LanguageSettingsViewModel() {
             LanguageList = new ObservableCollection<LanguageInfo> {
                 new LanguageInfo { Filename = "Lang-pl", ResourceName = ResourceManager.GetValue(ResourcesDictionary.LANGUAGE_PL)},
-                new LanguageInfo { Filename = "Lang-fr", ResourceName = ResourceManager.GetValue(ResourcesDictionary.LANGUAGE_FR)}
+                new LanguageInfo { Filename = "Lang-en", ResourceName = ResourceManager.GetValue(ResourcesDictionary.LANGUAGE_EN)},
             };
 
             var language = ConfigManager.GetValue("Language");

@@ -89,7 +89,7 @@
                                        VerticalAlignment="Top"
                                        Style="{DynamicResource ChatTextBlock}"/>
 
-                            <TextBox Text="{Binding Content, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            <TextBox Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                      Grid.Column="2"
                                      
                                      Padding="5,5,20,0"

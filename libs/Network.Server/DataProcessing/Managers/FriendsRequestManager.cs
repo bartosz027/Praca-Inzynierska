@@ -76,7 +76,6 @@ namespace Network.Server.DataProcessing.Managers {
                     });
 
                     db.SaveChanges();
-                    db.Dispose();
                 }
 
                 if (receiver != null && response.Result == ResponseResult.Success) {

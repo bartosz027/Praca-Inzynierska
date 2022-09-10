@@ -110,13 +110,13 @@
     <Compile Include="MVVM\View\Contacts\Manager\InvitationsView.xaml.cs">
       <DependentUpon>InvitationsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Startup\ForgotPasswordWindow.xaml.cs">
-      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
+    <Compile Include="MVVM\View\AppStartup\ResetPasswordWindow.xaml.cs">
+      <DependentUpon>ResetPasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Startup\LoginWindow.xaml.cs">
+    <Compile Include="MVVM\View\AppStartup\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Startup\RegisterWindow.xaml.cs">
+    <Compile Include="MVVM\View\AppStartup\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Contacts\Chat\ChatView.xaml.cs">
@@ -203,15 +203,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\Startup\ForgotPasswordWindow.xaml">
+    <Page Include="MVVM\View\AppStartup\ResetPasswordWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\Startup\LoginWindow.xaml">
+    <Page Include="MVVM\View\AppStartup\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\Startup\RegisterWindow.xaml">
+    <Page Include="MVVM\View\AppStartup\RegisterWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -239,9 +239,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Languages\Lang-fr.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Resources\Languages\Lang-en.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Languages\Lang-pl.xaml">
       <Generator>MSBuild:Compile</Generator>

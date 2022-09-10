@@ -1,4 +1,4 @@
-﻿<src:BaseWindow x:Class="ClientApp.MVVM.View.Startup.LoginWindow"
+﻿<src:BaseWindow x:Class="ClientApp.MVVM.View.AppStartup.LoginWindow"
         
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -112,7 +112,7 @@
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Left"
                                   
-                                  Content="{DynamicResource AutoLog_String}"
+                                  Content="{DynamicResource AutoLogin_String}"
                                   Style="{DynamicResource LoginWindowCheckBox}"/>
 
                         <Button Grid.Row="5"
@@ -214,8 +214,6 @@
                            
                            Grid.Row="1"
                            Grid.Column="0"
-                           
-                           Text="{DynamicResource IncorrectLogin_String}"
                            
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Center"

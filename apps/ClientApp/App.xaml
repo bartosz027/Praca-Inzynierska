@@ -18,7 +18,7 @@
              xmlns:OptionsView="clr-namespace:ClientApp.MVVM.View.Settings.Options"
              xmlns:OptionsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Settings.Options"
              
-             StartupUri="MVVM/View/Startup/LoginWindow.xaml">
+             StartupUri="MVVM/View/AppStartup/LoginWindow.xaml">
 
     <Application.Resources>
         

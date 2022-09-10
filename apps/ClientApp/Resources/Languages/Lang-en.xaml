@@ -1,0 +1,94 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Logowanie -->
+    <system:String x:Key="EnterEmail_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EnterPassword_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="AutoLogin_String">PLACEHOLDER</system:String>
+    <system:String x:Key="LoginButton_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="ResetPassword_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ResetPasswordButton_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="NewAccount_String">PLACEHOLDER</system:String>
+    <system:String x:Key="NewAccountButton_String">PLACEHOLDER</system:String>
+
+    <!-- Okrzyki walidacyjne logowanie -->
+    <system:String x:Key="InvalidEmailOrPassword_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AccountNotVerified_String">PLACEHOLDER</system:String>
+
+    <!-- Rejestracja -->
+    <system:String x:Key="EnterUsername_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ContinueButton_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="EnterVerificationCode_String">PLACEHOLDER</system:String>
+    <system:String x:Key="SendVerificationCodeButton_String">PLACEHOLDER</system:String>
+
+    <!-- Okrzyki walidacyjne rejestracja -->
+    <system:String x:Key="FieldIsEmpty_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="EmailAddressTaken_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvalidEmailAddress_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="InvalidUsername_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvalidPassword_String">PLACEHOLDER</system:String>
+
+    <!-- Resetowanie hasła -->
+    <system:String x:Key="EnterNewPassword_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EnterNewPasswordAgain_String">PLACEHOLDER</system:String>
+
+    <!-- Okrzyki walidacyjne resetowanie hasła -->
+    <system:String x:Key="AccountNotFound_String">PLACEHOLDER</system:String>
+    <system:String x:Key="NotSamePassword_String">PLACEHOLDER</system:String>
+
+    <!-- Okrzyki walidacyjne kod weryfikacyjny -->
+    <system:String x:Key="FieldVerificationCodeIsEmpty_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvalidVerificationCode_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ExpiredVerificationCode_String">PLACEHOLDER</system:String>
+
+    <!-- Menadżer kontaktów -->
+    <system:String x:Key="ContactsManagerDescription_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AddFriendButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="SendInvitation_String">PLACEHOLDER</system:String>
+    
+    <system:String x:Key="PendingInvitationsButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvitationsButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="BlockedButton_String">PLACEHOLDER</system:String>
+
+    <!-- Okrzyki walidacyjne -->
+    <system:String x:Key="AddFriendInvalidID_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AddFriendSuccess_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AddFriendFailure_String">PLACEHOLDER</system:String>
+
+    <!-- Ustawienia -->
+    <system:String x:Key="AccountSettings_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AppSettings_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="ProfileDataButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AccountDataButton_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="ThemeButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ThemeSettingDescription_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="LigthThemeButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="DarkThemeButton_String">PLACEHOLDER</system:String>
+
+    <system:String x:Key="LanguageDataButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="LogoutButton_String">PLACEHOLDER</system:String>
+
+    <!-- Menu kontekstowe -->
+    <system:String x:Key="DeleteMessageButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="CopyMessageButton_String">PLACEHOLDER</system:String>
+
+    <!-- Języki -->
+    <system:String x:Key="LangResources-pl">polski</system:String>
+    <system:String x:Key="LangResources-en">english</system:String>
+
+    <!-- Komunikaty -->
+    <system:String x:Key="BlockedInfo_String">PLACEHOLDER</system:String>
+    <system:String x:Key="PendingInfo_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvitationsInfo_String">PLACEHOLDER</system:String>
+
+</ResourceDictionary>

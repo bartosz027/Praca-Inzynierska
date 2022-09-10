@@ -2,9 +2,9 @@ USE PI_DB;
 
 CREATE TABLE Account (
     ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
-	Username            VARCHAR(32)         NOT NULL,
+	Username            VARCHAR(128)        NOT NULL,
 	
-    Email               VARCHAR(64)         NOT NULL,
+    Email               VARCHAR(128)        NOT NULL,
     Password            VARCHAR(64)         NOT NULL,
 	
 	Verified			BIT					NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE FriendInvitation (
 CREATE TABLE Verification (
 	ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
 	
-	Email				VARCHAR(64) 		NOT NULL,
+	Email				VARCHAR(128) 		NOT NULL,
 	Code				VARCHAR(6)			NOT NULL,
 	
 	ExpireDate			DATETIME			NOT NULL,

@@ -3,6 +3,9 @@
     public enum ErrorCode {
         AccountNotFound,
 
+        AccountNotVerified,
+        InvalidEmailOrPassword,
+
         InvalidUsername,
         InvalidPassword,
 

@@ -9,9 +9,12 @@ using Network.Client.DataProcessing;
 
 using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
-using Network.Shared.DataTransfer.Model.Account.Register;
 
-namespace ClientApp.MVVM.View.Startup {
+using Network.Shared.DataTransfer.Model.Account.Register;
+using Network.Shared.DataTransfer.Model.Account.SendVerificationCode;
+using Network.Shared.DataTransfer.Model.Account.VerifyEmail;
+
+namespace ClientApp.MVVM.View.AppStartup {
 
     /// <summary>
     /// Logika interakcji dla klasy RegisterWindow.xaml
@@ -30,28 +33,34 @@ namespace ClientApp.MVVM.View.Startup {
         }
 
         private void RegisterAccount_Click(object sender, RoutedEventArgs e) {
-            if (!String.IsNullOrEmpty(EmailBox.Text) && !String.IsNullOrEmpty(UsernameBox.Text) && !String.IsNullOrEmpty(PasswordBox.Password)) {
+            if (String.IsNullOrEmpty(EmailBox.Text) || String.IsNullOrEmpty(UsernameBox.Text) || String.IsNullOrEmpty(PasswordBox.Password)) {
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.FieldIsEmpty);
+            }
+            else if (UsernameBox.Text.Length < Values.MinUsernameLength || UsernameBox.Text.Length > Values.MaxUsernameLength) {
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidUsername);
+            }
+            else if (PasswordBox.Password.Length < Values.MinPasswordLength || PasswordBox.Password.Length > Values.MaxPasswordLength) {
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword);
+            }
+            else {
                 Client.Instance.SendRequest(new RegisterRequest() {
                     Email = EmailBox.Text,
                     Username = UsernameBox.Text,
                     Password = PasswordBox.Password
                 });
-            }
-            else {
-                ValidatorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.RegisterNotAllData);
-                ValidatorMessage.Visibility = Visibility.Visible;
+
             }
         }
 
         private void VerifyCode_Click(object sender, RoutedEventArgs e) {
-            if (!String.IsNullOrEmpty(CodeBox.Text)) {
-                Client.Instance.SendRequest(new VerifyEmailRequest() {
-                    Email = EmailBox.Text,
-                    Code = CodeBox.Text
-                });
+            if (String.IsNullOrEmpty(CodeBox.Text)) {
+                ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.FieldVerificationCodeIsEmpty);
             }
             else {
-                ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.EmptyCode);
+                Client.Instance.SendRequest(new VerifyEmailRequest() {
+                    Email = EmailBox.Text,
+                    VerificationCode = CodeBox.Text
+                });
             }
         }
 
@@ -63,25 +72,21 @@ namespace ClientApp.MVVM.View.Startup {
 
         private void OnRegisterResponse(RegisterResponse response) {
             if (response.Result == ResponseResult.Success) {
+                Client.Instance.SendRequest(new SendVerificationCodeRequest() {
+                    Email = EmailBox.Text
+                });
+
                 VerifyCodeForm.Visibility = Visibility.Visible;
             }
 
             if(response.Errors.Count > 0) {
                 switch (response.Errors[0]) {
-                    case ErrorCode.InvalidEmailAddress: {
-                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.NotValidEmail);
-                        break;
-                    }
                     case ErrorCode.EmailAddressTaken: {
-                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.RegisterEmailExist);
+                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.EmailAddressTaken);
                         break;
                     }
-                    case ErrorCode.InvalidUsername: {
-                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.RegisterUsernameTooShort);
-                        break;
-                    }
-                    case ErrorCode.InvalidPassword: {
-                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.RegisterWeakPassword);
+                    case ErrorCode.InvalidEmailAddress: {
+                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidEmailAddress);
                         break;
                     }
                     default: {
@@ -100,11 +105,11 @@ namespace ClientApp.MVVM.View.Startup {
             if (response.Errors.Count > 0) {
                 switch (response.Errors[0]) {
                     case ErrorCode.InvalidVerificationCode: {
-                        ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.InvalidCode);
+                        ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.InvalidVerificationCode);
                         break;
                     }
                     case ErrorCode.ExpiredVerificationCode: {
-                        ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.ExpiredCode);
+                        ShowErrorMessage(ValidatorMessageCode, ResourcesDictionary.ExpiredVerificationCode);
                         break;
                     }
                     default: {

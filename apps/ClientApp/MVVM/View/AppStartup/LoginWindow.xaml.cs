@@ -2,14 +2,16 @@
 using System.Windows;
 
 using ClientApp.Core;
+using ClientApp.Resources;
 
 using Network.Client;
 using Network.Client.DataProcessing;
 
+using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Account.Login;
 
-namespace ClientApp.MVVM.View.Startup {
+namespace ClientApp.MVVM.View.AppStartup {
 
     /// <summary>
     /// Logika interakcji dla klasy LoginWindow.xaml
@@ -35,7 +37,7 @@ namespace ClientApp.MVVM.View.Startup {
         }
 
         private void ResetPassword_Click(object sender, RoutedEventArgs e) {
-            var window = new ForgotPasswordWindow();
+            var window = new ResetPasswordWindow();
             window.ShowDialog();
         }
 
@@ -72,22 +74,30 @@ namespace ClientApp.MVVM.View.Startup {
         }
 
         private void OnLoginResponse(LoginResponse response) {
-            switch (response.Result) {
-                case ResponseResult.Success: {
-                    Client.Data.AccessToken = response.AccessToken;
-                    Client.Data.Username = response.Username;
+            if(response.Result == ResponseResult.Success) {
+                Client.Data.AccessToken = response.AccessToken;
+                Client.Data.Username = response.Username;
 
-                    var window = new MainWindow();
-                    window.Show();
+                var window = new MainWindow();
+                window.Show();
 
-                    DisableResponseListener();
-                    this.Close();
+                DisableResponseListener();
+                this.Close();
+            }
 
-                    break;
-                }
-                case ResponseResult.Failure: {
-                    ValidatorMessage.Visibility = Visibility.Visible;
-                    break;
+            if (response.Errors.Count > 0) {
+                switch (response.Errors[0]) {
+                    case ErrorCode.InvalidEmailOrPassword: {
+                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidEmailOrPassword);
+                        break;
+                    }
+                    case ErrorCode.AccountNotVerified: {
+                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.AccountNotVerified);
+                        break;
+                    }
+                    default: {
+                        throw new NotSupportedException();
+                    }
                 }
             }
         }

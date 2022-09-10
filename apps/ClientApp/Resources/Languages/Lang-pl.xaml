@@ -6,7 +6,7 @@
     <system:String x:Key="EnterEmail_String">Wprowadź e-mail:</system:String>
     <system:String x:Key="EnterPassword_String">Wprowadź hasło:</system:String>
     
-    <system:String x:Key="AutoLog_String">Zapamiętaj mnie</system:String>
+    <system:String x:Key="AutoLogin_String">Zapamiętaj mnie</system:String>
     <system:String x:Key="LoginButton_String">Zaloguj</system:String>
 
     <system:String x:Key="ResetPassword_String">Nie pamiętasz hasła?</system:String>
@@ -15,35 +15,68 @@
     <system:String x:Key="NewAccount_String">Nie masz jeszcze konta?</system:String>
     <system:String x:Key="NewAccountButton_String">Utwórz nowe konto</system:String>
 
+    <!-- Okrzyki walidacyjne logowanie -->
+    <system:String x:Key="InvalidEmailOrPassword_String">Błędne dane logowania.</system:String>
+    <system:String x:Key="AccountNotVerified_String">Konto nie zostało zweryfikowane.</system:String>
+
     <!-- Rejestracja -->
     <system:String x:Key="EnterUsername_String">Wprowadź nazwę użytkownika:</system:String>
-    <system:String x:Key="NextButton_String">Dalej</system:String>
+    <system:String x:Key="ContinueButton_String">Dalej</system:String>
     
-    <system:String x:Key="E-mailCode_String">Wprowadź kod wysłany na e-mail:</system:String>
-    <system:String x:Key="CodeNextButton_String">Wyślij</system:String>
+    <system:String x:Key="EnterVerificationCode_String">Wprowadź kod wysłany na e-mail:</system:String>
+    <system:String x:Key="SendVerificationCodeButton_String">Wyślij</system:String>
 
-    <!-- Aplikacja -->
+    <!-- Okrzyki walidacyjne rejestracja -->
+    <system:String x:Key="FieldIsEmpty_String">Wszystkie pola muszą być uzupełnione.</system:String>
+    
+    <system:String x:Key="EmailAddressTaken_String">Konto o podanym adresie e-mail istnieje.</system:String>
+    <system:String x:Key="InvalidEmailAddress_String">Niepoprawny format e-mail.</system:String>
+    
+    <system:String x:Key="InvalidUsername_String">Nazwa użytkownika musi składać się z co najmniej 3 znaków.</system:String>
+    <system:String x:Key="InvalidPassword_String">Hasło musi składać się z co najmniej 8 znaków.</system:String>
+
+    <!-- Resetowanie hasła -->
+    <system:String x:Key="EnterNewPassword_String">Wprowadź nowe hasło:</system:String>
+    <system:String x:Key="EnterNewPasswordAgain_String">Wprowadź nowe hasło ponownie:</system:String>
+
+    <!-- Okrzyki walidacyjne resetowanie hasła -->
+    <system:String x:Key="AccountNotFound_String">Konto o podanym adresie e-mail nie istnieje.</system:String>
+    <system:String x:Key="NotSamePassword_String">Hasła muszą być identyczne.</system:String>
+
+    <!-- Okrzyki walidacyjne kod weryfikacyjny -->
+    <system:String x:Key="FieldVerificationCodeIsEmpty_String">Wprowadz kod weryfikacyjny.</system:String>
+    <system:String x:Key="InvalidVerificationCode_String">Kod nieprawidłowy.</system:String>
+    <system:String x:Key="ExpiredVerificationCode_String">Kod wygasł.</system:String>
+
+    <!-- Menadżer kontaktów -->
+    <system:String x:Key="ContactsManagerDescription_String">Menadżer kontaktów</system:String>
+    <system:String x:Key="AddFriendButton_String">Dodaj znajomego</system:String>
+    <system:String x:Key="SendInvitation_String">Wyślij zaproszenie</system:String>
+    
+    <system:String x:Key="PendingInvitationsButton_String">Oczekujące</system:String>
+    <system:String x:Key="InvitationsButton_String">Zaproszenia</system:String>
+    <system:String x:Key="BlockedButton_String">Zablokowani</system:String>
+
+    <!-- Okrzyki walidacyjne menadżer kontaktów -->
+    <system:String x:Key="AddFriendInvalidID_String">Błędnie wpisana nazwa użytkownika!</system:String>
+    <system:String x:Key="AddFriendSuccess_String">Udało ci się znaleźć przyjaciela, gratuluje!</system:String>
+    <system:String x:Key="AddFriendFailure_String">Wielka bieda, nie udało się wysłać zaproszenia może już jesteście przyjaciółmi.</system:String>
+
+    <!-- Ustawienia -->
     <system:String x:Key="AccountSettings_String">Ustawienia konta</system:String>
     <system:String x:Key="AppSettings_String">Ustawienia aplikacji</system:String>
-    
+
     <system:String x:Key="ProfileDataButton_String">Dane profilu</system:String>
     <system:String x:Key="AccountDataButton_String">Dane konta</system:String>
 
     <system:String x:Key="ThemeButton_String">Motyw</system:String>
     <system:String x:Key="ThemeSettingDescription_String">Wygląd</system:String>
-    
+
     <system:String x:Key="LigthThemeButton_String">Motyw Jasny</system:String>
     <system:String x:Key="DarkThemeButton_String">Motyw Ciemny</system:String>
 
     <system:String x:Key="LanguageDataButton_String">Język</system:String>
     <system:String x:Key="LogoutButton_String">Wyloguj</system:String>
-
-    <system:String x:Key="ContactsManagerDescription_String">Menadżer kontaktów</system:String>
-    <system:String x:Key="PendingInvitationsButton_String">Oczekujące</system:String>
-    <system:String x:Key="InvitationsButton_String">Zaproszenia</system:String>
-    <system:String x:Key="BlockedButton_String">Zablokowani</system:String>
-    <system:String x:Key="AddFriendButton_String">Dodaj znajomego</system:String>
-    <system:String x:Key="SendInvitation_String">Wyślij zaproszenie</system:String>
 
     <!-- Menu kontekstowe -->
     <system:String x:Key="DeleteMessageButton_String">Usuń</system:String>
@@ -51,32 +84,11 @@
 
     <!-- Języki -->
     <system:String x:Key="LangResources-pl">polski</system:String>
-    <system:String x:Key="LangResources-fr">français</system:String>
+    <system:String x:Key="LangResources-en">english</system:String>
     
     <!-- Komunikaty -->
-    <system:String x:Key="PendingInfo_String"> wysłałeś mu zaproszenie.</system:String>
-    <system:String x:Key="InvitationsInfo_String"> wysłał ci zaproszenie.</system:String>
     <system:String x:Key="BlockedInfo_String">jest zablokowany.</system:String>
-
-    <!-- Okrzyki walidacyjne rejestracja -->
-    <system:String x:Key="NotValidEmail_String">Niepoprawny format e-mail.</system:String>
-    <system:String x:Key="RegisterNotAllData_String">Wszystkie pola muszą być uzupełnione.</system:String>
-    <system:String x:Key="RegisterEmailExist_String">Konto o podanym adresie e-mail istnieje.</system:String>
-    <system:String x:Key="RegisterUsernameTooShort_String">Nazwa użytkownika musi składać się z co najmniej 3 znaków.</system:String>
-    <system:String x:Key="RegisterWeekPassword_String">Hasło musi składać się z co najmniej 8 znaków.</system:String>
-
-    <!-- Okrzyki walidacyjne nowe haslo -->
-    <system:String x:Key="NotSamePassword_String">Hasła muszą być identyczne.</system:String>
-    
-    <!-- Okrzyki walidacyjne kod -->
-    <system:String x:Key="IncorrectCode_String">Kod nieprawidłowy.</system:String>
-    <system:String x:Key="ExpiredCode_String">Kod wygasł.</system:String>
-    <system:String x:Key="EmptyCode_String">Wprowadz kod.</system:String>
-    
-    <!-- Okrzyki walidacyjne -->
-    <system:String x:Key="IncorrectLogin_String">Błędne dane logowania.</system:String>
-    <system:String x:Key="InvalidAddUsername_String">Błędnie wpisana nazwa użytkownika!</system:String>
-    <system:String x:Key="FailureAddUsername_String">Wielka bieda, nie udało się wysłać zaproszenia może już jesteście przyjaciółmi.</system:String>
-    <system:String x:Key="SuccessAddUsername_String">Udało ci się znaleźć przyjaciela, gratuluje!</system:String>
+    <system:String x:Key="PendingInfo_String"> wysłałeś mu zaproszenie.</system:String>
+    <system:String x:Key="InvitationsInfo_String">wysłał ci zaproszenie.</system:String>
 
 </ResourceDictionary>

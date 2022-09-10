@@ -12,7 +12,12 @@ using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Account.Login;
 using Network.Shared.DataTransfer.Model.Account.Logout;
+
 using Network.Shared.DataTransfer.Model.Account.Register;
+using Network.Shared.DataTransfer.Model.Account.ResetPassword;
+using Network.Shared.DataTransfer.Model.Account.SendVerificationCode;
+
+using Network.Shared.DataTransfer.Model.Account.VerifyEmail;
 
 namespace Network.Server.DataProcessing.Managers {
 
@@ -24,6 +29,14 @@ namespace Network.Server.DataProcessing.Managers {
 
                 // Register
                 dispatcher.Dispatch<RegisterRequest>(OnRegisterRequest, client);
+
+                // Send verification code
+                dispatcher.Dispatch<SendVerificationCodeRequest>(OnSendVerificationCodeRequest, client);
+
+                // Reset password
+                dispatcher.Dispatch<ResetPasswordRequest>(OnResetPasswordRequest, client);
+
+                // Verify email
                 dispatcher.Dispatch<VerifyEmailRequest>(OnVerifyEmailRequest, client);
             }
             else {
@@ -41,32 +54,31 @@ namespace Network.Server.DataProcessing.Managers {
             using var db = new PiDbContext();
             var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
 
-            if (user_account != null && user_account.Verified && PasswordHasher.Verify(request.Password, user_account.Password)) {
-                if (Server.Data.Clients.Find(p => p.ID == user_account.ID) == null) {
-                    Console.WriteLine("Client [id={0}, username={1}] connected!", user_account.ID, user_account.Username);
-
-                    var token = TokenGenerator.Next();
-                    user_account.AccessToken = token;
-
-                    response.AccessToken = token;
-                    response.Username = user_account.Username;
-
-                    client.ID = user_account.ID;
-                    client.Username = user_account.Username;
-
-                    client.AccessToken = token;
-                    Server.Data.Clients.Add(client);
-
-                    db.SaveChanges();
-                    db.Dispose();
-                }
-                else {
-                    // TODO: Disconnect previous instance (duplicate login)
-                    throw new NotImplementedException();
-                }
+            // TODO: Handle duplicate login
+            if (user_account == null || PasswordHasher.Verify(request.Password, user_account.Password) == false) {
+                response.Result = ResponseResult.Failure;
+                response.Errors.Add(ErrorCode.InvalidEmailOrPassword);
+            }
+            else if (user_account.Verified == false) {
+                response.Result = ResponseResult.Failure;
+                response.Errors.Add(ErrorCode.AccountNotVerified);
             }
             else {
-                response.Result = ResponseResult.Failure;
+                Console.WriteLine("Client [id={0}, username={1}] connected!", user_account.ID, user_account.Username);
+
+                var token = TokenGenerator.Next();
+                user_account.AccessToken = token;
+
+                response.AccessToken = token;
+                response.Username = user_account.Username;
+
+                client.ID = user_account.ID;
+                client.Username = user_account.Username;
+
+                client.AccessToken = token;
+                Server.Data.Clients.Add(client);
+
+                db.SaveChanges();
             }
 
             return new RequestResult() {
@@ -105,20 +117,10 @@ namespace Network.Server.DataProcessing.Managers {
                     response.Errors.Add(ErrorCode.EmailAddressTaken);
                 }
                 else {
-                    var code = TokenGenerator.Next().Substring(0, 6);
-                    var time = DateTime.Now.AddMinutes(15);
-
                     var account = new Account() {
                         Email = request.Email,
                         Username = request.Username,
-                        Password = PasswordHasher.Hash(request.Password),
-                        Verified = false
-                    };
-
-                    var verification = new Verification() {
-                        Code = code,
-                        ExpireDate = time,
-                        Email = request.Email
+                        Password = PasswordHasher.Hash(request.Password)
                     };
 
                     if (user_account != null) {
@@ -126,16 +128,103 @@ namespace Network.Server.DataProcessing.Managers {
                     }
 
                     db.Accounts.Add(account);
-                    db.Verifications.Add(verification);
-
                     db.SaveChanges();
-                    db.Dispose();
+                }
+            }
 
-                    try {
-                        SMTP.SendMail(request.Email, Values.EmailSubject, Values.EmailBody + ' ' + code);
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
+        // Send verification code
+        private static RequestResult OnSendVerificationCodeRequest(SendVerificationCodeRequest request, ClientInfo client) {
+            var response = new SendVerificationCodeResponse() {
+                Result = ResponseResult.Success
+            };
+
+            if (new EmailAddressAttribute().IsValid(request.Email) == false) {
+                response.Result = ResponseResult.Failure;
+                response.Errors.Add(ErrorCode.InvalidEmailAddress);
+            }
+
+            using var db = new PiDbContext();
+            var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
+
+            if(user_account == null) {
+                response.Result = ResponseResult.Failure;
+                response.Errors.Add(ErrorCode.AccountNotFound);
+            }
+
+            if (response.Result == ResponseResult.Success) {
+                var code = TokenGenerator.Next().Substring(0, 6);
+                var time = DateTime.Now.AddMinutes(15);
+
+                var verification = new Verification() {
+                    Code = code,
+                    ExpireDate = time,
+                    Email = request.Email
+                };
+
+                db.Verifications.Add(verification);
+                db.SaveChanges();
+
+                try {
+                    SMTP.SendMail(request.Email, Values.EmailSubject, Values.EmailBody + ' ' + code);
+                }
+                catch {
+                    // TODO: Account locked exception
+                }
+            }
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
+        // Reset password
+        private static RequestResult OnResetPasswordRequest(ResetPasswordRequest request, ClientInfo client) {
+            var response = new ResetPasswordResponse() {
+                Result = ResponseResult.Success
+            };
+
+            using (var db = new PiDbContext()) {
+                var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
+                var verification = db.Verifications.Where(p => p.Email == request.Email).OrderByDescending(t => t.ExpireDate).First();
+
+                if (user_account == null || verification == null) {
+                    throw new ArgumentException();
+                }
+                
+                if (request.VerificationCode != verification.Code) {
+                    response.Result = ResponseResult.Failure;
+                    response.Errors.Add(ErrorCode.InvalidVerificationCode);
+                }
+                else {
+                    var time = verification.ExpireDate - DateTime.Now;
+
+                    if (time.TotalSeconds > 0) {
+                        if (user_account.Verified == false) {
+                            response.Result = ResponseResult.Failure;
+                            response.Errors.Add(ErrorCode.AccountNotVerified);
+                        }
+
+                        if (request.NewPassword.Length < Values.MinPasswordLength || request.NewPassword.Length > Values.MaxPasswordLength) {
+                            response.Result = ResponseResult.Failure;
+                            response.Errors.Add(ErrorCode.InvalidPassword);
+                        }
+
+                        if(response.Result == ResponseResult.Success) {
+                            verification.ExpireDate = SqlDateTime.MinValue.Value;
+                            user_account.Password = PasswordHasher.Hash(request.NewPassword);
+                            db.SaveChanges();
+                        }
                     }
-                    catch {
-                        // TODO: Account locked exception
+                    else {
+                        response.Result = ResponseResult.Failure;
+                        response.Errors.Add(ErrorCode.ExpiredVerificationCode);
                     }
                 }
             }
@@ -146,27 +235,21 @@ namespace Network.Server.DataProcessing.Managers {
             };
         }
 
+        // Verify email
         private static RequestResult OnVerifyEmailRequest(VerifyEmailRequest request, ClientInfo client) {
             var response = new VerifyEmailResponse() {
                 Result = ResponseResult.Success
             };
 
-            if (new EmailAddressAttribute().IsValid(request.Email) == false) {
-                response.Result = ResponseResult.Failure;
-                response.Errors.Add(ErrorCode.InvalidEmailAddress);
-            }
-
-            if (response.Result == ResponseResult.Success) {
-                using var db = new PiDbContext();
-
+            using (var db = new PiDbContext()) {
                 var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
                 var verification = db.Verifications.Where(p => p.Email == request.Email).OrderByDescending(t => t.ExpireDate).First();
 
                 if (user_account == null || verification == null) {
-                    return null;
+                    throw new ArgumentException();
                 }
 
-                if (request.Code != verification.Code) {
+                if (request.VerificationCode != verification.Code) {
                     response.Result = ResponseResult.Failure;
                     response.Errors.Add(ErrorCode.InvalidVerificationCode);
                 }
@@ -174,11 +257,9 @@ namespace Network.Server.DataProcessing.Managers {
                     var time = verification.ExpireDate - DateTime.Now;
 
                     if (time.TotalSeconds > 0) {
-                        user_account.Verified = true;
                         verification.ExpireDate = SqlDateTime.MinValue.Value;
-
+                        user_account.Verified = true;
                         db.SaveChanges();
-                        db.Dispose();
                     }
                     else {
                         response.Result = ResponseResult.Failure;

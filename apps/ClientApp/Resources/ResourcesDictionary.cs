@@ -1,26 +1,31 @@
 ﻿namespace ClientApp.Resources {
 
     public static class ResourcesDictionary {
-        public static string EnterEmail = "EnterEmail_String";
-
-        // Okrzyki rejestracja
-        public static string NotValidEmail = "NotValidEmail_String";
-        public static string RegisterNotAllData = "RegisterNotAllData_String";
-        public static string RegisterEmailExist = "RegisterEmailExist_String";
-        public static string RegisterUsernameTooShort = "RegisterUsernameTooShort_String";
-        public static string RegisterWeakPassword = "RegisterWeekPassword_String";
-
-        // Okrzyki walidacyjne nowe haslo
-        public static string NotSamePassword = "NotSamePassword_String";
-
-        // Okrzyki Kod
-        public static string InvalidCode = "IncorrectCode_String";
-        public static string ExpiredCode = "ExpiredCode_String";
-        public static string EmptyCode = "EmptyCode_String";
-
         // Języki
-        public static string LANGUAGE_PL = "LangResources-pl";
-        public static string LANGUAGE_FR = "LangResources-fr";
+        public const string LANGUAGE_PL = "LangResources-pl";
+        public const string LANGUAGE_EN = "LangResources-en";
+
+        // Okrzyki walidacyjne logowanie
+        public const string AccountNotVerified = "AccountNotVerified_String";
+        public const string InvalidEmailOrPassword = "InvalidEmailOrPassword_String";
+
+        // Okrzyki walidacyjne rejestracja
+        public const string FieldIsEmpty = "FieldIsEmpty_String";
+
+        public const string EmailAddressTaken = "EmailAddressTaken_String";
+        public const string InvalidEmailAddress = "InvalidEmailAddress_String";
+
+        public const string InvalidUsername = "InvalidUsername_String";
+        public const string InvalidPassword = "InvalidPassword_String";
+
+        // Okrzyki walidacyjne resetowanie hasła
+        public const string AccountNotFound = "AccountNotFound_String";
+        public const string NotSamePassword = "NotSamePassword_String";
+
+        // Okrzyki walidacyjne kod weryfikacyjny
+        public const string FieldVerificationCodeIsEmpty = "FieldVerificationCodeIsEmpty_String";
+        public const string InvalidVerificationCode = "InvalidVerificationCode_String";
+        public const string ExpiredVerificationCode = "ExpiredVerificationCode_String";
 
         // TODO: Dodać wszystkie resources
     }

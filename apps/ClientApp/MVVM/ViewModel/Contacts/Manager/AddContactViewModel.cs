@@ -36,7 +36,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                     });
                 }
                 else {
-                    ErrorMessage = "InvalidIdentifierFormat";
+                    ErrorMessage = "InvalidID";
                 }
             });
 
@@ -100,7 +100,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                         ItemInfoType = "PendingInvitation"
                     });
 
-                    ErrorMessage = "InvitationSent";
+                    ErrorMessage = "Success";
                     break;
                 }
                 case ResponseResult.Failure: {

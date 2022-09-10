@@ -152,7 +152,7 @@ namespace Network.Client {
 
             dispatcher.Dispatch<ExchangeAESKeysResponse>((response) => {
                 Client.Data.IsConnectedViaAES = true;
-                System.Windows.MessageBox.Show("Connected via AES!");
+                //System.Windows.MessageBox.Show("Connected via AES!");
             });
 
             if (Client.Data.IsConnectedViaRSA && Client.Data.IsConnectedViaAES) {

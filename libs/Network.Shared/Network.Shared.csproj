@@ -84,8 +84,12 @@
     <Compile Include="DataTransfer\Model\Account\Logout\LogoutResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterResponse.cs" />
-    <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailRequest.cs" />
-    <Compile Include="DataTransfer\Model\Account\Register\VerifyEmailResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\ResetPassword\ResetPasswordRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\ResetPassword\ResetPasswordResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\SendVerificationCode\SendVerificationCodeRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\SendVerificationCode\SendVerificationCodeResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\VerifyEmail\VerifyEmailRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\VerifyEmail\VerifyEmailResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsRequest.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetFriendList\GetFriendListRequest.cs" />
