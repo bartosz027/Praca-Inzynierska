@@ -87,6 +87,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\BaseView.cs" />
     <Compile Include="Core\BaseVM.cs" />
     <Compile Include="Core\BaseWindow.cs" />
     <Compile Include="Core\BindingProxy.cs" />

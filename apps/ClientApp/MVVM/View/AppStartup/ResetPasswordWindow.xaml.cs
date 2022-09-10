@@ -38,7 +38,7 @@ namespace ClientApp.MVVM.View.AppStartup {
                 ShowErrorMessage(ValidatorMessage, ResourcesDictionary.NotSamePassword);
             }
             else if (NewPasswordBox1.Password.Length < Values.MinPasswordLength || NewPasswordBox1.Password.Length > Values.MaxPasswordLength) {
-                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword);
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword, Values.MinUsernameLength);
             }
             else {
                 Client.Instance.SendRequest(new SendVerificationCodeRequest() {

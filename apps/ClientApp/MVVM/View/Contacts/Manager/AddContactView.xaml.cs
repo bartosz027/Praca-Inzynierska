@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClientApp.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,8 @@ namespace ClientApp.MVVM.View.Contacts.Manager  {
     /// <summary>
     /// Logika interakcji dla klasy AddContactView.xaml
     /// </summary>
-    public partial class AddContactView : UserControl {
+    public partial class AddContactView : BaseView
+    {
         public AddContactView() {
             InitializeComponent();
         }

@@ -50,6 +50,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
             InvitationsVM = new InvitationsViewModel();
 
             AddContactViewButtonCommand = new RelayCommand(o => {
+                AddContactVM.NotificationText = null;
                 CurrentView = AddContactVM;
             });
 

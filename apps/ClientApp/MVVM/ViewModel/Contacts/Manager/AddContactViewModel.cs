@@ -6,6 +6,7 @@ using Network.Client.DataProcessing;
 
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvitation;
+using ClientApp.Resources;
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
 
@@ -36,7 +37,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                     });
                 }
                 else {
-                    ErrorMessage = "InvalidID";
+                    ErrorMessage = ResourcesDictionary.Warning;
+                    NotificationText = ResourceManager.GetValue(ResourcesDictionary.AddFriendInvalidID);
                 }
             });
 
@@ -69,6 +71,20 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         }
         private string _ErrorMessage = "";
 
+        public string NotificationText
+        {
+            get
+            {
+                return _NotificationText;
+            }
+            set
+            {
+                _NotificationText = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _NotificationText;
+
         public ObservableCollection<ContactManagerItem> PendingInvitations {
             get {
                 return _PendingInvitations;
@@ -100,11 +116,13 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                         ItemInfoType = "PendingInvitation"
                     });
 
-                    ErrorMessage = "Success";
+                    ErrorMessage = ResourcesDictionary.Info;
+                    NotificationText = ResourceManager.GetValue(ResourcesDictionary.AddFriendSuccess);
                     break;
                 }
                 case ResponseResult.Failure: {
-                    ErrorMessage = "Failure";
+                    ErrorMessage = ResourcesDictionary.Warning;
+                    NotificationText = "Set values doepend on the ErrorMessage response!!!";
                     break;
                 }
             }

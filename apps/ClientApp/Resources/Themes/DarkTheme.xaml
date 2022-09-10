@@ -158,18 +158,15 @@
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ChatTextBlock}"
            x:Key="AddNotificationInfo">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ErrorMessage}" Value="InvalidID">
-                <Setter Property="TextBlock.Text" Value="{DynamicResource AddFriendInvalidID_String}"/>
+            <DataTrigger Binding="{Binding ErrorMessage}" Value="Warning">
                 <Setter Property="TextBlock.Foreground" Value="#F0F600"/>
             </DataTrigger>
 
-            <DataTrigger Binding="{Binding ErrorMessage}" Value="Success">
-                <Setter Property="TextBlock.Text" Value="{DynamicResource AddFriendSuccess_String}"/>
+            <DataTrigger Binding="{Binding ErrorMessage}" Value="Info">
                 <Setter Property="TextBlock.Foreground" Value="#007C77"/>
             </DataTrigger>
 
-            <DataTrigger Binding="{Binding ErrorMessage}" Value="Failure">
-                <Setter Property="TextBlock.Text" Value="{DynamicResource AddFriendFailure_String}"/>
+            <DataTrigger Binding="{Binding ErrorMessage}" Value="Error">
                 <Setter Property="TextBlock.Foreground" Value="#CB1919"/>
             </DataTrigger>
         </Style.Triggers>

@@ -37,10 +37,10 @@ namespace ClientApp.MVVM.View.AppStartup {
                 ShowErrorMessage(ValidatorMessage, ResourcesDictionary.FieldIsEmpty);
             }
             else if (UsernameBox.Text.Length < Values.MinUsernameLength || UsernameBox.Text.Length > Values.MaxUsernameLength) {
-                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidUsername);
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidUsername, Values.MinUsernameLength);
             }
             else if (PasswordBox.Password.Length < Values.MinPasswordLength || PasswordBox.Password.Length > Values.MaxPasswordLength) {
-                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword);
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword, Values.MinPasswordLength);
             }
             else {
                 Client.Instance.SendRequest(new RegisterRequest() {

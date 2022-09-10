@@ -27,6 +27,20 @@
         public const string InvalidVerificationCode = "InvalidVerificationCode_String";
         public const string ExpiredVerificationCode = "ExpiredVerificationCode_String";
 
+        // Okrzyki walidacyjne menadżer kontaktów
+        public const string AddFriendSuccess = "AddFriendSuccess_String";
+        public const string AddFriendInvalidID = "AddFriendInvalidID_String";
+        public const string AddFriendSelfRequest = "AddFriendSelfRequest_String";
+        public const string AddFriendExistingRequest = "AddFriendExistingRequest_String";
+        public const string AddFriendExistingFriend = "AddFriendExistingFriend_String";
+        public const string AddFriendUserNotExist = "AddFriendUserNotExist_String";
+
+
+        // Typy powiadomien
+        public const string Error = "Error";
+        public const string Warning = "Warning";
+        public const string Info = "Info";
+
         // TODO: Dodać wszystkie resources
     }
 
