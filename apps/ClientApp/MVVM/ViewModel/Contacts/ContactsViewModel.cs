@@ -11,6 +11,9 @@ using Network.Client.DataProcessing;
 
 using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
+using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
+using System.Collections.Generic;
+using System;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -38,6 +41,20 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             }
         } 
         private bool _Status;
+
+        public bool IsANewMessage
+        {
+            get
+            {
+                return _IsANewMessage;
+            }
+            set
+            {
+                _IsANewMessage = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _IsANewMessage;
     }
 
     internal class ContactsViewModel : BaseVM {
@@ -47,6 +64,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
             ContactManagerVM = new ManagerViewModel();
             FriendList = new ObservableCollection<ChatViewModel>();
+            UnreaderdMessages = new ObservableCollection<int>();
 
             ContactManagerButtonCommand = new RelayCommand(o => {
                 SelectedFriend = null;
@@ -59,7 +77,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         // VM's
         public ManagerViewModel ContactManagerVM { get; private set; }
         public ObservableCollection<ChatViewModel> FriendList { get; private set; }
-
+        
         // Commands
         public RelayCommand ContactManagerButtonCommand { get; private set; }
 
@@ -69,16 +87,61 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 return _SelectedFriend; 
             }
             set {
-                _SelectedFriend = value;
-
-                if (_SelectedFriend != null && _SelectedFriend.Initialized == false) {
-                    _SelectedFriend.Init();
+                if (_SelectedFriend != null) 
+                {
+                    _SelectedFriend.IsSelected = false;
                 }
 
+                _SelectedFriend = value;
+
+                if (_SelectedFriend != null) {
+                    if (_SelectedFriend.FriendInfo.IsANewMessage == true)
+                    {
+                        _SelectedFriend.FriendInfo.IsANewMessage = false;
+                        _SelectedFriend.IsSelected = true;
+                        UnreaderdMessages.Remove(_SelectedFriend.FriendInfo.ID);
+                        NotificationBall = UnreaderdMessages.Count > 0;
+                    }
+                    if (_SelectedFriend.Initialized == false)
+                    {
+                        _SelectedFriend.Init();
+                    }
+                }
+
+                
                 CurrentView = _SelectedFriend;
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<int> UnreaderdMessages
+        {
+            get
+            {
+                return _UnreaderdMessages;
+            }
+            set
+            {
+                _UnreaderdMessages = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<int> _UnreaderdMessages;
+
+        public bool NotificationBall
+        {
+            get
+            {
+                return _NotificationBall;
+            }
+            set
+            {
+                _NotificationBall = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _NotificationBall;
+
         private ChatViewModel _SelectedFriend;
 
         // Current view
@@ -106,11 +169,11 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 var friend_info = new FriendInfo() {
                     ID = friend.UserID,
                     Username = friend.Username,
-                    Status = true
+                    Status = true,
                     
                     // TODO: Receive "status" from server
                 };
-
+                
                 FriendList.Add(new ChatViewModel(friend_info));
             }
         }
@@ -119,13 +182,15 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var friend = new FriendInfo() {
                 ID = response.UserID,
                 Username = response.Username,
-                Status = true 
+                Status = true,
+                IsANewMessage = true
 
                 // TODO: Receive "status" from server
             };
 
             var invitation = ContactManagerVM.ReceivedInvitations.Single(p => p.UserID == response.UserID);
             ContactManagerVM.ReceivedInvitations.Remove(invitation);
+            ContactManagerVM.UpdateNotifcationBall();
 
             FriendList.Add(new ChatViewModel(friend));
         }
@@ -133,6 +198,18 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         // Notification events
         protected override void OnNotificationReceived(NotificationDispatcher dispatcher) {
             dispatcher.Dispatch<AcceptFriendInvitationNotification>(OnAcceptFriendInvitationNotification);
+            dispatcher.Dispatch<SendMessageNotification>(OnSendMessageNotification);
+        }
+
+        private void OnSendMessageNotification(SendMessageNotification obj)
+        {
+            var id = obj.FriendID;
+            if (!UnreaderdMessages.Contains(id))
+            {
+                if(SelectedFriend == null || SelectedFriend.FriendInfo.ID != id)
+                UnreaderdMessages.Add(id);
+            }
+            NotificationBall = UnreaderdMessages.Count > 0;
         }
 
         private void OnAcceptFriendInvitationNotification(AcceptFriendInvitationNotification notification) {
@@ -149,6 +226,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
             FriendList.Add(new ChatViewModel(friend));
         }
+
+       
     }
 
 }

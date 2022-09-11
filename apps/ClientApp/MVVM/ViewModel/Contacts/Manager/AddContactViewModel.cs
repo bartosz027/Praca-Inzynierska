@@ -22,14 +22,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                     if (c >= '1' && c <= '9') {
                         greater_than_zero = true;
                     }
-
-                    if (c < '0' || c > '9') {
-                        digits_only = false;
-                        break;
-                    }
                 }
 
-                if (digits_only == true && greater_than_zero == true && ContactID.Length == 9) {
+                if (greater_than_zero == true) {
                     var id = ContactID.TrimStart('0');
 
                     Client.Instance.SendRequest(new SendFriendInvitationRequest() {

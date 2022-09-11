@@ -136,6 +136,25 @@
 
     </Style>
 
+    <!-- TextBlock UserInfo -->
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{x:Null}"
+           x:Key="UserInfoTextBlock">
+
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#212D40"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5,0"/>
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding FriendInfo.IsANewMessage}" Value="True">
+                <Setter Property="TextBlock.FontWeight" Value="UltraBold"/>
+            </DataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
     <!-- TextBlock komunikaty -->
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ChatTextBlock}"
            x:Key="NotificationInfo">
@@ -683,27 +702,38 @@
         
     </Style>
 
-    <!--Kuleczka powiadomień-->
+    <!--Kuleczka superanckosci-->
     <Style TargetType="{x:Type Ellipse}" BasedOn="{x:Null}"
-           x:Key="NotificationBalls">
+           x:Key="SuperBalls">
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Fill" Value="#D66853"/>
         <Setter Property="Margin" Value="10,0,0,0"/>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Fill" Value="Transparent"/>
-            </Trigger>
-
-        </Style.Triggers>
-
+        
     </Style>
 
     <!--Kuleczka statusu-->
-    <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource NotificationBalls}"
+    <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource SuperBalls}"
            x:Key="StatusBalls">
         <Setter Property="Fill" Value="#007C77"/>
+
+    </Style>
+
+    <!--Kuleczka notyfikacji-->
+    <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource SuperBalls}"
+           x:Key="NotificationBalls">
+        <Setter Property="Fill" Value="#212D40"/>
+        <Setter Property="Visibility" Value="Hidden"/>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ContactsVM.NotificationBall}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ContactsVM.ContactManagerVM.NotificationBall}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+
     </Style>
 
     <!-- Okno profilu -->

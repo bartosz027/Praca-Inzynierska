@@ -81,6 +81,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         public RelayCommand ReceivedInvitationsButtonCommand { get; private set; }
         public RelayCommand BlockedButtonCommand { get; private set; }
 
+        // Method
+        public void UpdateNotifcationBall() 
+        {
+            NotificationBall = ReceivedInvitations.Count > 0;
+        }
+
         // Properties
         public ObservableCollection<ContactManagerItem> PendingInvitations {
             get {
@@ -103,6 +109,20 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
             }
         }
         private ObservableCollection<ContactManagerItem> _ReceivedInvitations;
+
+        public bool NotificationBall
+        {
+            get
+            {
+                return _NotificationBall;
+            }
+            set
+            {
+                _NotificationBall = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _NotificationBall;
 
         // Current view
         public object CurrentView {
@@ -149,6 +169,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
 
                 ReceivedInvitations.Add(item);
             }
+            UpdateNotifcationBall();
         }
 
         // Notification events
@@ -168,6 +189,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
             };
 
             ReceivedInvitations.Add(item);
+            UpdateNotifcationBall();
         }
     }
 

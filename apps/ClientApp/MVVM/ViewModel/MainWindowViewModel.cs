@@ -6,8 +6,12 @@ namespace ClientApp.MVVM.ViewModel {
 
     internal class MainWindowViewModel : BaseVM {
         public MainWindowViewModel() {
+            EnableNotificationListener();
+
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
+
+
 
             ContactsButtonCommand = new RelayCommand(o => {
                 CurrentView = ContactsVM;
@@ -21,13 +25,25 @@ namespace ClientApp.MVVM.ViewModel {
         }
 
         // VM's
-        public ContactsViewModel ContactsVM { get; private set; }
+        public ContactsViewModel ContactsVM 
+        {
+            get { return _ContactsVM ; }
+            private set 
+            {
+                _ContactsVM = value;
+                OnPropertyChanged();
+            } 
+        }
+        private ContactsViewModel _ContactsVM;
         public SettingsViewModel SettingsVM { get; private set; }
+
 
         // Commands
         public RelayCommand ContactsButtonCommand { get; private set; }
         public RelayCommand SettingsButtonCommand { get; private set; }
 
+        //properties
+     
         // Current view
         public object CurrentView {
             get { 
@@ -39,6 +55,7 @@ namespace ClientApp.MVVM.ViewModel {
             }
         }
         private object _CurrentView;
+
     }
 
 }

@@ -56,16 +56,20 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
     }
 
     internal class ChatViewModel : BaseVM {
-        public ChatViewModel(FriendInfo friend_info) {
+        public ChatViewModel(FriendInfo friend_info)
+        {
             EnableResponseListener();
             EnableNotificationListener();
 
             FriendInfo = friend_info;
             Messages = new ObservableCollection<MessageInfo>();
 
-            SendMessageCommand = new RelayCommand(o => {
-                if (RichBoxContent.Length > 1) {
-                    Client.Instance.SendRequest(new SendMessageRequest() {
+            SendMessageCommand = new RelayCommand(o =>
+            {
+                if (RichBoxContent.Length > 1)
+                {
+                    Client.Instance.SendRequest(new SendMessageRequest()
+                    {
                         FriendID = FriendInfo.ID,
                         Content = RichBoxContent,
                     });
@@ -74,19 +78,23 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 }
             });
 
-            RemoveMessageCommand = new RelayCommand(o => {
+            RemoveMessageCommand = new RelayCommand(o =>
+            {
                 var message = o as MessageInfo;
 
-                Client.Instance.SendRequest(new DeleteMessageRequest() {
+                Client.Instance.SendRequest(new DeleteMessageRequest()
+                {
                     FriendID = FriendInfo.ID,
                     MessageID = message.ID
                 });
             });
 
-            CopyMessageCommand = new RelayCommand(o => {
+            CopyMessageCommand = new RelayCommand(o =>
+            {
                 var message = o as MessageInfo;
                 Clipboard.SetText(message.Content);
             });
+            
         }
 
         // Methods
@@ -124,6 +132,20 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
         private string _RichBoxContent;
+
+        public bool IsSelected
+        {
+            get
+            {
+                return _IsSelected;
+            }
+            set
+            {
+                _IsSelected = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _IsSelected;
 
         public ObservableCollection<MessageInfo> Messages {
             get { 
@@ -203,15 +225,23 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         }
 
         private void OnSendMessageNotification(SendMessageNotification notification) {
-            if (Initialized && notification.FriendID == FriendInfo.ID) {
-                Messages.Add(new MessageInfo() {
-                    ID = notification.MessageID,
-                    Date = notification.SendDate.ToLocalTime().ToString("HH:mm"),
-                    Content = notification.Content,
+            if (notification.FriendID == FriendInfo.ID) {
+                if (!IsSelected) 
+                { 
+                    FriendInfo.IsANewMessage = true;
+                }
+                if (Initialized)
+                {
+                    Messages.Add(new MessageInfo()
+                    {
+                        ID = notification.MessageID,
+                        Date = notification.SendDate.ToLocalTime().ToString("HH:mm"),
+                        Content = notification.Content,
 
-                    Sender = FriendInfo.Username,
-                    IsMyMessage = false
-                });
+                        Sender = FriendInfo.Username,
+                        IsMyMessage = false
+                    });
+                }
             }
         }
     }
