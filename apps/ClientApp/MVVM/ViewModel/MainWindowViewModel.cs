@@ -11,8 +11,6 @@ namespace ClientApp.MVVM.ViewModel {
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
 
-
-
             ContactsButtonCommand = new RelayCommand(o => {
                 CurrentView = ContactsVM;
             });
@@ -36,7 +34,6 @@ namespace ClientApp.MVVM.ViewModel {
         }
         private ContactsViewModel _ContactsVM;
         public SettingsViewModel SettingsVM { get; private set; }
-
 
         // Commands
         public RelayCommand ContactsButtonCommand { get; private set; }

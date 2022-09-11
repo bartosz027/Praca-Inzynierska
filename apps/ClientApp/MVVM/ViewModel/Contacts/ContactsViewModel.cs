@@ -108,7 +108,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                     }
                 }
 
-                
                 CurrentView = _SelectedFriend;
                 OnPropertyChanged();
             }
@@ -227,7 +226,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             FriendList.Add(new ChatViewModel(friend));
         }
 
-       
     }
 
 }
