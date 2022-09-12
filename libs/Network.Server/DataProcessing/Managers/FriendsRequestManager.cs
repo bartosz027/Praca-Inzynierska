@@ -26,9 +26,6 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<DeleteMessageRequest>(OnDeleteMessageRequest, client);
                 dispatcher.Dispatch<SendMessageRequest>(OnSendMessageRequest, client);
             }
-            else {
-                // TODO: Access denied
-            }
         }
 
         // Manage invitations

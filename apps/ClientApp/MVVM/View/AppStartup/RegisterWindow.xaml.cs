@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 
 using ClientApp.Core;
@@ -36,8 +37,11 @@ namespace ClientApp.MVVM.View.AppStartup {
             if (String.IsNullOrEmpty(EmailBox.Text) || String.IsNullOrEmpty(UsernameBox.Text) || String.IsNullOrEmpty(PasswordBox.Password)) {
                 ShowErrorMessage(ValidatorMessage, ResourcesDictionary.FieldIsEmpty);
             }
+            else if (new EmailAddressAttribute().IsValid(EmailBox.Text) == false) {
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidEmailAddress);
+            }
             else if (UsernameBox.Text.Length < Values.MinUsernameLength || UsernameBox.Text.Length > Values.MaxUsernameLength) {
-                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidUsername, Values.MinUsernameLength);
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidUsername, Values.MinUsernameLength, Values.MaxUsernameLength);
             }
             else if (PasswordBox.Password.Length < Values.MinPasswordLength || PasswordBox.Password.Length > Values.MaxPasswordLength) {
                 ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword, Values.MinPasswordLength);
@@ -48,7 +52,6 @@ namespace ClientApp.MVVM.View.AppStartup {
                     Username = UsernameBox.Text,
                     Password = PasswordBox.Password
                 });
-
             }
         }
 
@@ -83,10 +86,6 @@ namespace ClientApp.MVVM.View.AppStartup {
                 switch (response.Errors[0]) {
                     case ErrorCode.EmailAddressTaken: {
                         ShowErrorMessage(ValidatorMessage, ResourcesDictionary.EmailAddressTaken);
-                        break;
-                    }
-                    case ErrorCode.InvalidEmailAddress: {
-                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidEmailAddress);
                         break;
                     }
                     default: {

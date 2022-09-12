@@ -35,7 +35,6 @@
         public const string AddFriendExistingFriend = "AddFriendExistingFriend_String";
         public const string AddFriendUserNotExist = "AddFriendUserNotExist_String";
 
-
         // Typy powiadomien
         public const string Error = "Error";
         public const string Warning = "Warning";

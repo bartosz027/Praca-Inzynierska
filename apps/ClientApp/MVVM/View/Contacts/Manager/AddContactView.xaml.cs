@@ -19,8 +19,7 @@ namespace ClientApp.MVVM.View.Contacts.Manager  {
     /// <summary>
     /// Logika interakcji dla klasy AddContactView.xaml
     /// </summary>
-    public partial class AddContactView : BaseView
-    {
+    public partial class AddContactView : BaseView {
         public AddContactView() {
             InitializeComponent();
         }

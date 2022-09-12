@@ -714,15 +714,12 @@
     <!--Kuleczka notyfikacji-->
     <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource SuperBalls}"
            x:Key="NotificationBalls">
+        
         <Setter Property="Fill" Value="#C3BEF7"/>
         <Setter Property="Visibility" Value="Hidden"/>
 
         <Style.Triggers>
             <DataTrigger Binding="{Binding ContactsVM.NotificationBall}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-
-            <DataTrigger Binding="{Binding ContactsVM.ContactManagerVM.NotificationBall}" Value="True">
                 <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>

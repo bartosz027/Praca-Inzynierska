@@ -32,7 +32,7 @@
     <system:String x:Key="EmailAddressTaken_String">Konto o podanym adresie e-mail istnieje.</system:String>
     <system:String x:Key="InvalidEmailAddress_String">Niepoprawny format e-mail.</system:String>
 
-    <system:String x:Key="InvalidUsername_String">Nazwa użytkownika musi składać się z co najmniej {0} znaków.</system:String>
+    <system:String x:Key="InvalidUsername_String">Nazwa użytkownika musi zawierać od {0} do {1} znaków.</system:String>
     <system:String x:Key="InvalidPassword_String">Hasło musi składać się z co najmniej {0} znaków.</system:String>
 
     <!-- Resetowanie hasła -->

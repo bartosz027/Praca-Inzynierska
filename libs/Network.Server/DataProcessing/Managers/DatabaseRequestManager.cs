@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Network.Server.Database;
@@ -16,9 +17,6 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<GetFriendListRequest>(OnGetFriendListRequest, client);
                 dispatcher.Dispatch<GetInvitationsRequest>(OnGetInvitationsRequest, client);
                 dispatcher.Dispatch<GetMessageHistoryRequest>(OnGetMessageHistoryRequest, client);
-            }
-            else {
-                // TODO: Access denied
             }
         }
 

@@ -35,7 +35,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                 OnPropertyChanged();
             }
         }
-        private string _ContactName;
 
         public ObservableCollection<ContactManagerItem> CurrentList {
             get { 
@@ -46,6 +45,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                 OnPropertyChanged();
             }
         }
+
+        private string _ContactName;
         private ObservableCollection<ContactManagerItem> _CurrentList;
     }
 

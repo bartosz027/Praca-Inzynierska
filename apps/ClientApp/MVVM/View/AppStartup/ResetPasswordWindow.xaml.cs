@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 
 using ClientApp.Core;
@@ -34,11 +35,14 @@ namespace ClientApp.MVVM.View.AppStartup {
             if (String.IsNullOrEmpty(EmailBox.Text) || String.IsNullOrEmpty(NewPasswordBox1.Password) || String.IsNullOrEmpty(NewPasswordBox2.Password)) {
                 ShowErrorMessage(ValidatorMessage, ResourcesDictionary.FieldIsEmpty);
             }
+            else if (new EmailAddressAttribute().IsValid(EmailBox.Text) == false) {
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidEmailAddress);
+            }
             else if (NewPasswordBox1.Password != NewPasswordBox2.Password) {
                 ShowErrorMessage(ValidatorMessage, ResourcesDictionary.NotSamePassword);
             }
             else if (NewPasswordBox1.Password.Length < Values.MinPasswordLength || NewPasswordBox1.Password.Length > Values.MaxPasswordLength) {
-                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword, Values.MinUsernameLength);
+                ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidPassword, Values.MinPasswordLength);
             }
             else {
                 Client.Instance.SendRequest(new SendVerificationCodeRequest() {
@@ -76,10 +80,6 @@ namespace ClientApp.MVVM.View.AppStartup {
                 switch (response.Errors[0]) {
                     case ErrorCode.AccountNotFound: {
                         ShowErrorMessage(ValidatorMessage, ResourcesDictionary.AccountNotFound);
-                        break;
-                    }
-                    case ErrorCode.InvalidEmailAddress: {
-                        ShowErrorMessage(ValidatorMessage, ResourcesDictionary.InvalidEmailAddress);
                         break;
                     }
                     default: {

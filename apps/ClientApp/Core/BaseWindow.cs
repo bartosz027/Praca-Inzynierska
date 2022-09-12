@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Text.RegularExpressions;
 
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,7 +10,6 @@ using Network.Client.DataProcessing;
 
 using ClientApp.Resources;
 using Network.Shared.DataTransfer.Base;
-using System.Text.RegularExpressions;
 
 namespace ClientApp.Core {
 
@@ -26,8 +26,8 @@ namespace ClientApp.Core {
             textBlock.Text = ResourceManager.GetValue(content);
             textBlock.Visibility = Visibility.Visible;
         }
-        protected virtual void ShowErrorMessage(TextBlock textBlock, string content, params object [] values)
-        {
+
+        protected virtual void ShowErrorMessage(TextBlock textBlock, string content, params object[] values) {
             textBlock.Text = ResourceManager.GetValue(content, values);
             textBlock.Visibility = Visibility.Visible;
         }
@@ -56,11 +56,6 @@ namespace ClientApp.Core {
                 ResizeMode = ResizeMode.CanResizeWithGrip;
                 WindowState = WindowState.Normal;
             }
-        }
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
         }
 
         // Response events

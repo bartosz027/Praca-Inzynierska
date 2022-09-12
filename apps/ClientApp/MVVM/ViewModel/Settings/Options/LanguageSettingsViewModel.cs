@@ -28,16 +28,6 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options  {
         }
 
         // Properties
-        public ObservableCollection<LanguageInfo> LanguageList { 
-            get {
-                return _LanguageList;
-            }
-            set {
-                _LanguageList = value;
-            }
-        }
-        private ObservableCollection<LanguageInfo> _LanguageList;
-
         public LanguageInfo SelectedLanguage {
             get { 
                 return _SelectedLanguage; 
@@ -55,7 +45,18 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options  {
                 }
             }
         }
+
+        public ObservableCollection<LanguageInfo> LanguageList {
+            get {
+                return _LanguageList;
+            }
+            set {
+                _LanguageList = value;
+            }
+        }
+
         private LanguageInfo _SelectedLanguage;
+        private ObservableCollection<LanguageInfo> _LanguageList;
     }
 
 }
