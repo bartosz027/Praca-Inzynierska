@@ -7,6 +7,7 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList {
     [Serializable]
     public class FriendInfo {
         public int UserID { get; set; }
+        public bool Status { get; set; }
         public string Username { get; set; }
     }
 

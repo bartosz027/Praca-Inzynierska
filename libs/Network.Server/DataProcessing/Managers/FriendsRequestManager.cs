@@ -118,6 +118,7 @@ namespace Network.Server.DataProcessing.Managers {
 
                 response.UserID = user_account.ID;
                 response.Username = user_account.Username;
+                response.Status = (receiver != null) ? receiver.Status : false;
 
                 db.Friendships.Add(new Friendship() { UserID = client.ID, FriendID = user_account.ID });
                 db.Friendships.Add(new Friendship() { UserID = user_account.ID, FriendID = client.ID });
@@ -128,6 +129,7 @@ namespace Network.Server.DataProcessing.Managers {
                 if (receiver != null) {
                     var notification = new AcceptFriendInvitationNotification() {
                         UserID = client.ID,
+                        Status = client.Status,
                         Username = client.Username
                     };
 

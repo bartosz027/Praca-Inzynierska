@@ -31,11 +31,14 @@ namespace Network.Server.DataProcessing.Managers {
                 var user_friend_list = user_account.Friends.ToList();
 
                 foreach (var account in user_friend_list) {
+                    var client_info = Server.Data.Clients.Find(p => p.ID == account.Friend.ID);
+
                     var friend_info = new FriendInfo() {
                         UserID = account.Friend.ID,
                         Username = account.Friend.Username
                     };
 
+                    friend_info.Status = (client_info != null) ? client_info.Status : false;
                     response.FriendList.Add(friend_info);
                 }
             }

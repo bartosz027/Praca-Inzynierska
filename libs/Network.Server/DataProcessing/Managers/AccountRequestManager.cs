@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using System.Data.SqlTypes;
@@ -69,16 +70,39 @@ namespace Network.Server.DataProcessing.Managers {
                 var token = TokenGenerator.Next();
                 user_account.AccessToken = token;
 
+                client.ID = user_account.ID;
+                client.Status = user_account.Status;
+
+                client.AccessToken = token;
+                client.Username = user_account.Username;
+
                 response.AccessToken = token;
                 response.Username = user_account.Username;
 
-                client.ID = user_account.ID;
-                client.Username = user_account.Username;
-
-                client.AccessToken = token;
                 Server.Data.Clients.Add(client);
-
                 db.SaveChanges();
+
+                var receivers = new List<ClientInfo>();
+                var notification = new LoginNotification() {
+                    ID = client.ID,
+                    Status = client.Status
+                };
+
+                foreach(var friendship in user_account.Friends) {
+                    var client_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                    if(client_info != null) {
+                        receivers.Add(client_info);
+                    }
+                }
+
+                return new RequestResult() {
+                    ResponseReceiver = client,
+                    ResponseData = response,
+
+                    NotificationReceivers = receivers,
+                    NotificationData = notification
+                };
             }
 
             return new RequestResult() {
@@ -281,19 +305,39 @@ namespace Network.Server.DataProcessing.Managers {
             };
 
             using (var db = new PiDbContext()) {
+                var notification = new LogoutNotification() {
+                    ID = client.ID
+                };
+
                 var user_account = db.Accounts.Find(client.ID);
+                var receivers = new List<ClientInfo>();
+
                 user_account.AccessToken = null;
                 db.SaveChanges();
-            };
 
-            client.ID = 0;
-            client.Username = null;
-            client.AccessToken = null;
-            Server.Data.Clients.Remove(client);
+                foreach (var friendship in user_account.Friends) {
+                    var client_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
 
-            return new RequestResult() {
-                ResponseReceiver = client,
-                ResponseData = response
+                    if (client_info != null) {
+                        receivers.Add(client_info);
+                    }
+                }
+
+                client.ID = 0;
+                client.Status = false;
+
+                client.Username = null;
+                client.AccessToken = null;
+
+                Server.Data.Clients.Remove(client);
+
+                return new RequestResult() {
+                    ResponseReceiver = client,
+                    ResponseData = response,
+
+                    NotificationReceivers = receivers,
+                    NotificationData = notification
+                };
             };
         }
     }

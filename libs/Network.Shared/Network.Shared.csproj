@@ -75,11 +75,13 @@
     <Compile Include="Core\ErrorCode.cs" />
     <Compile Include="Core\CompressionLZ4.cs" />
     <Compile Include="Core\Serializer.cs" />
+    <Compile Include="DataTransfer\Model\Account\Login\LoginNotification.cs" />
     <Compile Include="DataTransfer\Model\Account\Login\LoginRequest.cs" />
     <Compile Include="DataTransfer\Base\Notification.cs" />
     <Compile Include="DataTransfer\Base\Request.cs" />
     <Compile Include="DataTransfer\Base\Response.cs" />
     <Compile Include="DataTransfer\Model\Account\Login\LoginResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\Logout\LogoutNotification.cs" />
     <Compile Include="DataTransfer\Model\Account\Logout\LogoutRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\Logout\LogoutResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\Register\RegisterRequest.cs" />

@@ -12,10 +12,13 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Network.Server.Core;
+using Network.Server.Database;
 using Network.Server.DataProcessing;
 
 using Network.Shared.Core;
+
 using Network.Shared.DataTransfer.Base;
+using Network.Shared.DataTransfer.Model.Account.Logout;
 
 using Network.Shared.DataTransfer.Security.ExchangeAESKeys;
 using Network.Shared.DataTransfer.Security.ExchangeRSAKeys;
@@ -23,9 +26,10 @@ using Network.Shared.DataTransfer.Security.ExchangeRSAKeys;
 namespace Network.Server {
 
     internal class ClientInfo {
-        public int ID { get; set; }
-
         // User data
+        public int ID { get; set; }
+        public bool Status { get; set; }
+
         public string Username { get; set; }
         public string AccessToken { get; set; }
 
@@ -140,6 +144,26 @@ namespace Network.Server {
 
                             if (client_info != null) {
                                 Console.WriteLine("Client [id={0}, username={1}] disconnected!", client_info.ID, client_info.Username);
+
+                                using (var db = new PiDbContext()) {
+                                    var notification = new LogoutNotification() {
+                                        ID = client.ID
+                                    };
+
+                                    var user_account = db.Accounts.Find(client.ID);
+                                    var receivers = new List<ClientInfo>();
+
+                                    foreach (var friendship in user_account.Friends) {
+                                        var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                                        if (friend_info != null) {
+                                            receivers.Add(friend_info);
+                                        }
+                                    }
+
+                                    BroadcastNotification(receivers, notification);
+                                }
+
                                 Server.Data.Clients.Remove(client_info);
                             }
 

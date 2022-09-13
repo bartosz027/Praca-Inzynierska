@@ -698,6 +698,7 @@
     <!--Kuleczka powiadomień-->
     <Style TargetType="{x:Type Ellipse}" BasedOn="{x:Null}"
            x:Key="SuperBalls">
+        
         <Setter Property="Width" Value="10"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -708,7 +709,17 @@
     <!--Kuleczka statusu-->
     <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource SuperBalls}"
            x:Key="StatusBalls">
-        <Setter Property="Fill" Value="#007C77"/>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding FriendInfo.Status}" Value="True">
+                <Setter Property="Fill" Value="#007C77"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding FriendInfo.Status}" Value="False">
+                <Setter Property="Fill" Value="#FF808080"/>
+            </DataTrigger>
+        </Style.Triggers>
+        
     </Style>
 
     <!--Kuleczka notyfikacji-->

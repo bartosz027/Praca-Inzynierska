@@ -1,12 +1,14 @@
 ﻿#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
+
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Network.Server.Core {
 
-    internal class ThreadSafeList<T> {
+    internal class ThreadSafeList<T> : IEnumerable<T> {
         public ThreadSafeList() {
             _List = new List<T>();
             _Locker = new ReaderWriterLockSlim();
@@ -39,6 +41,28 @@ namespace Network.Server.Core {
 
             try {
                 return _List.Find(match);
+            }
+            finally {
+                _Locker.ExitReadLock();
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator() {
+            _Locker.EnterReadLock();
+
+            try {
+                return _List.GetEnumerator();
+            }
+            finally {
+                _Locker.ExitReadLock();
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            _Locker.EnterReadLock();
+
+            try {
+                return _List.GetEnumerator();
             }
             finally {
                 _Locker.ExitReadLock();

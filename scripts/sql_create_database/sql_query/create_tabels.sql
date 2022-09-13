@@ -7,7 +7,9 @@ CREATE TABLE Account (
     Email               VARCHAR(128)        NOT NULL,
     Password            VARCHAR(64)         NOT NULL,
 	
-	Verified			BIT					NOT NULL,
+	Status				BIT					NOT NULL		DEFAULT 1,
+	Verified			BIT					NOT NULL		DEFAULT 0,
+	
 	AccessToken			VARCHAR(32)			NULL,
 	
 	-- NP:Friendships  -> remove_property()
