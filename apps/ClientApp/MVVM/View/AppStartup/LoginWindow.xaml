@@ -106,7 +106,9 @@
                                      
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>
                         
-                        <CheckBox Grid.Row="4"
+                        <CheckBox x:Name="RememberMe_CheckBox"
+                                  
+                                  Grid.Row="4"
                                   Margin="10,0,0,0"
                                   
                                   VerticalAlignment="Center"

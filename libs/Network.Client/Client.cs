@@ -152,7 +152,6 @@ namespace Network.Client {
 
             dispatcher.Dispatch<ExchangeAESKeysResponse>((response) => {
                 Client.Data.IsConnectedViaAES = true;
-                //System.Windows.MessageBox.Show("Connected via AES!");
             });
 
             if (Client.Data.IsConnectedViaRSA && Client.Data.IsConnectedViaAES) {
@@ -183,9 +182,6 @@ namespace Network.Client {
             }
         }
 
-        // Logout
-        // TODO: Client logout method
-
         // Properties
         public static class Data {
             // User data
@@ -197,10 +193,10 @@ namespace Network.Client {
             internal static NetworkStream Stream { get; set; }
 
             // Security
-            internal static bool IsConnectedViaRSA { get; set; }
+            public static bool IsConnectedViaRSA { get; internal set; }
             internal static RSAParameters RSA { get; set; }
 
-            internal static bool IsConnectedViaAES { get; set; }
+            public static bool IsConnectedViaAES { get; internal set; }
             internal static EncryptionAES AES { get; set; }
         }
 

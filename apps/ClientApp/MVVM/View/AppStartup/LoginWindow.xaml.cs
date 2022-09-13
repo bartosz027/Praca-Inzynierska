@@ -75,13 +75,20 @@ namespace ClientApp.MVVM.View.AppStartup {
 
         private void OnLoginResponse(LoginResponse response) {
             if(response.Result == ResponseResult.Success) {
-                Client.Data.AccessToken = response.AccessToken;
                 Client.Data.Username = response.Username;
+                Client.Data.AccessToken = response.AccessToken;
+
+                if(RememberMe_CheckBox.IsChecked == true) {
+                    ConfigManager.SetValue("AccessToken", response.AccessToken);
+                }
+                else {
+                    ConfigManager.SetValue("AccessToken", "NULL");
+                }
 
                 var window = new MainWindow();
                 window.Show();
 
-                DisableResponseListener();
+                App.Current.MainWindow = window;
                 this.Close();
             }
 

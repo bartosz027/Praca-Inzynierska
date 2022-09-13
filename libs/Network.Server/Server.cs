@@ -26,10 +26,10 @@ using Network.Shared.DataTransfer.Security.ExchangeRSAKeys;
 namespace Network.Server {
 
     internal class ClientInfo {
-        // User data
         public int ID { get; set; }
-        public bool Status { get; set; }
 
+        // User data
+        public bool Status { get; set; }
         public string Username { get; set; }
         public string AccessToken { get; set; }
 

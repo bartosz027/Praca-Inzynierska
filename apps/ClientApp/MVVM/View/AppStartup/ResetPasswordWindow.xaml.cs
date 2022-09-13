@@ -27,7 +27,6 @@ namespace ClientApp.MVVM.View.AppStartup {
 
         // Window events
         protected override void CloseWindowButton_Click(object sender, RoutedEventArgs e) {
-            DisableResponseListener();
             DialogResult = false;
         }
 
@@ -91,7 +90,6 @@ namespace ClientApp.MVVM.View.AppStartup {
 
         private void OnResetPasswordResponse(ResetPasswordResponse response) {
             if (response.Result == ResponseResult.Success) {
-                this.DisableResponseListener();
                 this.Close();
             }
 

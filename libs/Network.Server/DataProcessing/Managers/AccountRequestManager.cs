@@ -17,7 +17,7 @@ using Network.Shared.DataTransfer.Model.Account.Logout;
 using Network.Shared.DataTransfer.Model.Account.Register;
 using Network.Shared.DataTransfer.Model.Account.ResetPassword;
 using Network.Shared.DataTransfer.Model.Account.SendVerificationCode;
-
+using Network.Shared.DataTransfer.Model.Account.VerifyAccessToken;
 using Network.Shared.DataTransfer.Model.Account.VerifyEmail;
 
 namespace Network.Server.DataProcessing.Managers {
@@ -27,18 +27,17 @@ namespace Network.Server.DataProcessing.Managers {
             if (String.IsNullOrEmpty(dispatcher.Request.AccessToken) || (dispatcher.Request.AccessToken != client.AccessToken)) {
                 // Login
                 dispatcher.Dispatch<LoginRequest>(OnLoginRequest, client);
+                dispatcher.Dispatch<VerifyAccessTokenRequest>(OnVerifyAccessTokenRequest, client);
 
                 // Register
                 dispatcher.Dispatch<RegisterRequest>(OnRegisterRequest, client);
+                dispatcher.Dispatch<VerifyEmailRequest>(OnVerifyEmailRequest, client);
 
                 // Send verification code
                 dispatcher.Dispatch<SendVerificationCodeRequest>(OnSendVerificationCodeRequest, client);
 
                 // Reset password
                 dispatcher.Dispatch<ResetPasswordRequest>(OnResetPasswordRequest, client);
-
-                // Verify email
-                dispatcher.Dispatch<VerifyEmailRequest>(OnVerifyEmailRequest, client);
             }
             else {
                 // Logout
@@ -111,6 +110,57 @@ namespace Network.Server.DataProcessing.Managers {
             };
         }
 
+        private static RequestResult OnVerifyAccessTokenRequest(VerifyAccessTokenRequest request, ClientInfo client) {
+            using var db = new PiDbContext();
+            var user_account = db.Accounts.SingleOrDefault(p => p.AccessToken == request.AccessToken);
+
+            var response = new VerifyAccessTokenResponse();
+            response.Result = ResponseResult.Success;
+
+            if(user_account == null || String.IsNullOrEmpty(request.AccessToken)) {
+                response.Result = ResponseResult.Failure;
+            }
+            else {
+                Console.WriteLine("Client [id={0}, username={1}] connected!", user_account.ID, user_account.Username);
+
+                client.ID = user_account.ID;
+                client.Status = user_account.Status;
+
+                client.Username = user_account.Username;
+                client.AccessToken = user_account.AccessToken;
+
+                response.Username = user_account.Username;
+                Server.Data.Clients.Add(client);
+
+                var receivers = new List<ClientInfo>();
+                var notification = new LoginNotification() {
+                    ID = client.ID,
+                    Status = client.Status
+                };
+
+                foreach (var friendship in user_account.Friends) {
+                    var client_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                    if (client_info != null) {
+                        receivers.Add(client_info);
+                    }
+                }
+
+                return new RequestResult() {
+                    ResponseReceiver = client,
+                    ResponseData = response,
+
+                    NotificationReceivers = receivers,
+                    NotificationData = notification
+                };
+            }
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
         // Register
         private static RequestResult OnRegisterRequest(RegisterRequest request, ClientInfo client) {
             var response = new RegisterResponse() { 
@@ -153,6 +203,44 @@ namespace Network.Server.DataProcessing.Managers {
 
                     db.Accounts.Add(account);
                     db.SaveChanges();
+                }
+            }
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
+        private static RequestResult OnVerifyEmailRequest(VerifyEmailRequest request, ClientInfo client) {
+            var response = new VerifyEmailResponse() {
+                Result = ResponseResult.Success
+            };
+
+            using (var db = new PiDbContext()) {
+                var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
+                var verification = db.Verifications.Where(p => p.Email == request.Email).OrderByDescending(t => t.ExpireDate).First();
+
+                if (user_account == null || verification == null) {
+                    throw new ArgumentException();
+                }
+
+                if (request.VerificationCode != verification.Code) {
+                    response.Result = ResponseResult.Failure;
+                    response.Errors.Add(ErrorCode.InvalidVerificationCode);
+                }
+                else {
+                    var time = verification.ExpireDate - DateTime.Now;
+
+                    if (time.TotalSeconds > 0) {
+                        verification.ExpireDate = SqlDateTime.MinValue.Value;
+                        user_account.Verified = true;
+                        db.SaveChanges();
+                    }
+                    else {
+                        response.Result = ResponseResult.Failure;
+                        response.Errors.Add(ErrorCode.ExpiredVerificationCode);
+                    }
                 }
             }
 
@@ -245,45 +333,6 @@ namespace Network.Server.DataProcessing.Managers {
                             user_account.Password = PasswordHasher.Hash(request.NewPassword);
                             db.SaveChanges();
                         }
-                    }
-                    else {
-                        response.Result = ResponseResult.Failure;
-                        response.Errors.Add(ErrorCode.ExpiredVerificationCode);
-                    }
-                }
-            }
-
-            return new RequestResult() {
-                ResponseReceiver = client,
-                ResponseData = response
-            };
-        }
-
-        // Verify email
-        private static RequestResult OnVerifyEmailRequest(VerifyEmailRequest request, ClientInfo client) {
-            var response = new VerifyEmailResponse() {
-                Result = ResponseResult.Success
-            };
-
-            using (var db = new PiDbContext()) {
-                var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
-                var verification = db.Verifications.Where(p => p.Email == request.Email).OrderByDescending(t => t.ExpireDate).First();
-
-                if (user_account == null || verification == null) {
-                    throw new ArgumentException();
-                }
-
-                if (request.VerificationCode != verification.Code) {
-                    response.Result = ResponseResult.Failure;
-                    response.Errors.Add(ErrorCode.InvalidVerificationCode);
-                }
-                else {
-                    var time = verification.ExpireDate - DateTime.Now;
-
-                    if (time.TotalSeconds > 0) {
-                        verification.ExpireDate = SqlDateTime.MinValue.Value;
-                        user_account.Verified = true;
-                        db.SaveChanges();
                     }
                     else {
                         response.Result = ResponseResult.Failure;

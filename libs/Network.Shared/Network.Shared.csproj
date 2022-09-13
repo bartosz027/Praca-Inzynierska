@@ -90,6 +90,8 @@
     <Compile Include="DataTransfer\Model\Account\ResetPassword\ResetPasswordResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\SendVerificationCode\SendVerificationCodeRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\SendVerificationCode\SendVerificationCodeResponse.cs" />
+    <Compile Include="DataTransfer\Model\Account\VerifyAccessToken\VerifyAccessTokenRequest.cs" />
+    <Compile Include="DataTransfer\Model\Account\VerifyAccessToken\VerifyAccessTokenResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\VerifyEmail\VerifyEmailRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\VerifyEmail\VerifyEmailResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsResponse.cs" />

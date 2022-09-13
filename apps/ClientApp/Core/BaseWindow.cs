@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,10 +33,9 @@ namespace ClientApp.Core {
         }
 
         // Window events
-        protected virtual void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e) {
-            if (e.LeftButton == MouseButtonState.Pressed) {
-                DragMove();
-            }
+        protected override void OnClosing(CancelEventArgs e) {
+            base.OnClosing(e);
+            DisableResponseListener();
         }
 
         protected virtual void CloseWindowButton_Click(object sender, RoutedEventArgs e) {
@@ -55,6 +54,12 @@ namespace ClientApp.Core {
             else {
                 ResizeMode = ResizeMode.CanResizeWithGrip;
                 WindowState = WindowState.Normal;
+            }
+        }
+
+        protected virtual void ResizeWindow_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                DragMove();
             }
         }
 
