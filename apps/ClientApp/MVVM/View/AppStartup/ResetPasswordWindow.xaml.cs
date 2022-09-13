@@ -47,6 +47,8 @@ namespace ClientApp.MVVM.View.AppStartup {
                 Client.Instance.SendRequest(new SendVerificationCodeRequest() {
                     Email = EmailBox.Text
                 });
+
+                ResetPasswordButton.IsEnabled = false;
             }
         }
 
@@ -99,6 +101,7 @@ namespace ClientApp.MVVM.View.AppStartup {
                         VerifyCodeForm.Visibility = Visibility.Hidden;
                         ChangePasswordForm.Visibility = Visibility.Visible;
 
+                        ResetPasswordButton.IsEnabled = true;
                         ShowErrorMessage(ValidatorMessage, ResourcesDictionary.AccountNotVerified);
                         break;
                     }

@@ -51,6 +51,8 @@ namespace ClientApp.MVVM.View.AppStartup {
                     Username = UsernameBox.Text,
                     Password = PasswordBox.Password
                 });
+
+                RegisterButton.IsEnabled = false;
             }
         }
 

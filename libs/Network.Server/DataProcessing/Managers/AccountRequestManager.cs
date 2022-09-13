@@ -46,9 +46,8 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Login
         private static RequestResult OnLoginRequest(LoginRequest request, ClientInfo client) {
-            var response = new LoginResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new LoginResponse();
+            response.Result = ResponseResult.Success;
 
             using var db = new PiDbContext();
             var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
@@ -80,12 +79,11 @@ namespace Network.Server.DataProcessing.Managers {
                 Server.Data.Clients.Add(client);
                 db.SaveChanges();
 
+                var receivers = client.FindConnectedFriends();
                 var notification = new LoginNotification() {
                     ID = client.ID,
                     Status = client.Status
                 };
-
-                var receivers = client.FindConnectedFriends();
 
                 return new RequestResult() {
                     ResponseReceiver = client,
@@ -103,11 +101,11 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         private static RequestResult OnVerifyAccessTokenRequest(VerifyAccessTokenRequest request, ClientInfo client) {
-            using var db = new PiDbContext();
-            var user_account = db.Accounts.SingleOrDefault(p => p.AccessToken == request.AccessToken);
-
             var response = new VerifyAccessTokenResponse();
             response.Result = ResponseResult.Success;
+
+            using var db = new PiDbContext();
+            var user_account = db.Accounts.SingleOrDefault(p => p.AccessToken == request.AccessToken);
 
             if(user_account == null || String.IsNullOrEmpty(request.AccessToken)) {
                 response.Result = ResponseResult.Failure;
@@ -124,12 +122,11 @@ namespace Network.Server.DataProcessing.Managers {
                 response.Username = user_account.Username;
                 Server.Data.Clients.Add(client);
 
+                var receivers = client.FindConnectedFriends();
                 var notification = new LoginNotification() {
                     ID = client.ID,
                     Status = client.Status
                 };
-
-                var receivers = client.FindConnectedFriends();
 
                 return new RequestResult() {
                     ResponseReceiver = client,
@@ -148,47 +145,44 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Register
         private static RequestResult OnRegisterRequest(RegisterRequest request, ClientInfo client) {
-            var response = new RegisterResponse() { 
-                Result = ResponseResult.Success
-            };
+            var response = new RegisterResponse();
+            response.Result = ResponseResult.Success;
 
             if (new EmailAddressAttribute().IsValid(request.Email) == false) {
-                response.Result = ResponseResult.Failure;
-                response.Errors.Add(ErrorCode.InvalidEmailAddress);
+                throw new ArgumentException();
             }
 
             if (request.Username.Length < Values.MinUsernameLength || request.Username.Length > Values.MaxUsernameLength) {
-                response.Result = ResponseResult.Failure;
-                response.Errors.Add(ErrorCode.InvalidUsername);
+                throw new ArgumentException();
             }
 
             if (request.Password.Length < Values.MinPasswordLength || request.Password.Length > Values.MaxPasswordLength) {
-                response.Result = ResponseResult.Failure;
-                response.Errors.Add(ErrorCode.InvalidPassword);
+                throw new ArgumentException();
             }
 
-            if (response.Result == ResponseResult.Success) {
-                using var db = new PiDbContext();
-                var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
+            using var db = new PiDbContext();
+            var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
 
-                if(user_account != null && user_account.Verified) {
-                    response.Result = ResponseResult.Failure;
-                    response.Errors.Add(ErrorCode.EmailAddressTaken);
+            if (user_account != null && user_account.Verified) {
+                response.Result = ResponseResult.Failure;
+                response.Errors.Add(ErrorCode.EmailAddressTaken);
+            }
+            else {
+                var account = new Account() {
+                    Email = request.Email,
+                    Username = request.Username,
+                    Password = PasswordHasher.Hash(request.Password),
+
+                    Status = true,
+                    Verified = false
+                };
+
+                if (user_account != null) {
+                    db.Accounts.Remove(user_account);
                 }
-                else {
-                    var account = new Account() {
-                        Email = request.Email,
-                        Username = request.Username,
-                        Password = PasswordHasher.Hash(request.Password)
-                    };
 
-                    if (user_account != null) {
-                        db.Accounts.Remove(user_account);
-                    }
-
-                    db.Accounts.Add(account);
-                    db.SaveChanges();
-                }
+                db.Accounts.Add(account);
+                db.SaveChanges();
             }
 
             return new RequestResult() {
@@ -198,9 +192,8 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         private static RequestResult OnVerifyEmailRequest(VerifyEmailRequest request, ClientInfo client) {
-            var response = new VerifyEmailResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new VerifyEmailResponse();
+            response.Result = ResponseResult.Success;
 
             using (var db = new PiDbContext()) {
                 var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
@@ -237,24 +230,17 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Send verification code
         private static RequestResult OnSendVerificationCodeRequest(SendVerificationCodeRequest request, ClientInfo client) {
-            var response = new SendVerificationCodeResponse() {
-                Result = ResponseResult.Success
-            };
-
-            if (new EmailAddressAttribute().IsValid(request.Email) == false) {
-                response.Result = ResponseResult.Failure;
-                response.Errors.Add(ErrorCode.InvalidEmailAddress);
-            }
+            var response = new SendVerificationCodeResponse();
+            response.Result = ResponseResult.Success;
 
             using var db = new PiDbContext();
             var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
 
-            if(user_account == null) {
+            if (user_account == null) {
                 response.Result = ResponseResult.Failure;
                 response.Errors.Add(ErrorCode.AccountNotFound);
             }
-
-            if (response.Result == ResponseResult.Success) {
+            else {
                 var code = TokenGenerator.Next().Substring(0, 6);
                 var time = DateTime.Now.AddMinutes(15);
 
@@ -283,9 +269,8 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Reset password
         private static RequestResult OnResetPasswordRequest(ResetPasswordRequest request, ClientInfo client) {
-            var response = new ResetPasswordResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new ResetPasswordResponse();
+            response.Result = ResponseResult.Success;
 
             using (var db = new PiDbContext()) {
                 var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
@@ -294,7 +279,11 @@ namespace Network.Server.DataProcessing.Managers {
                 if (user_account == null || verification == null) {
                     throw new ArgumentException();
                 }
-                
+
+                if (request.NewPassword.Length < Values.MinPasswordLength || request.NewPassword.Length > Values.MaxPasswordLength) {
+                    throw new ArgumentException();
+                }
+
                 if (request.VerificationCode != verification.Code) {
                     response.Result = ResponseResult.Failure;
                     response.Errors.Add(ErrorCode.InvalidVerificationCode);
@@ -306,11 +295,6 @@ namespace Network.Server.DataProcessing.Managers {
                         if (user_account.Verified == false) {
                             response.Result = ResponseResult.Failure;
                             response.Errors.Add(ErrorCode.AccountNotVerified);
-                        }
-
-                        if (request.NewPassword.Length < Values.MinPasswordLength || request.NewPassword.Length > Values.MaxPasswordLength) {
-                            response.Result = ResponseResult.Failure;
-                            response.Errors.Add(ErrorCode.InvalidPassword);
                         }
 
                         if(response.Result == ResponseResult.Success) {
@@ -334,9 +318,8 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Logout
         private static RequestResult OnLogoutRequest(LogoutRequest request, ClientInfo client) {
-            var response = new LogoutResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new LogoutResponse();
+            response.Result = ResponseResult.Success;
 
             using (var db = new PiDbContext()) {
                 var notification = new LogoutNotification() {

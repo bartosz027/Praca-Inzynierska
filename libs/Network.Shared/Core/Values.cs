@@ -12,6 +12,9 @@
         // Password
         public const int MinPasswordLength = 8;
         public const int MaxPasswordLength = 128;
+
+        // Message
+        public const int MaxMessageLength = 5000;
     }
 
 }

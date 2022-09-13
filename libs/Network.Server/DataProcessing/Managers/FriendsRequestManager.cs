@@ -30,9 +30,8 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Manage invitations
         private static RequestResult OnSendFriendInvitationRequest(SendFriendInvitationRequest request, ClientInfo client) {
-            var response = new SendFriendInvitationResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new SendFriendInvitationResponse();
+            response.Result = ResponseResult.Success;
 
             using var db = new PiDbContext();
             var user_account = db.Accounts.SingleOrDefault(p => p.ID == request.UserID);
@@ -98,9 +97,8 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         private static RequestResult OnAcceptFriendInvitationRequest(AcceptFriendInvitationRequest request, ClientInfo client) {
-            var response = new AcceptFriendInvitationResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new AcceptFriendInvitationResponse();
+            response.Result = ResponseResult.Success;
 
             using (var db = new PiDbContext()) {
                 var user_account = db.Accounts.SingleOrDefault(p => p.ID == request.UserID);
@@ -151,9 +149,8 @@ namespace Network.Server.DataProcessing.Managers {
 
         // Manage messages
         private static RequestResult OnDeleteMessageRequest(DeleteMessageRequest request, ClientInfo client) {
-            var response = new DeleteMessageResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new DeleteMessageResponse();
+            response.Result = ResponseResult.Success;
 
             using (var db = new PiDbContext()) {
                 var message = db.Messages.Find(request.MessageID);
@@ -192,9 +189,12 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         private static RequestResult OnSendMessageRequest(SendMessageRequest request, ClientInfo client) {
-            var response = new SendMessageResponse() {
-                Result = ResponseResult.Success
-            };
+            var response = new SendMessageResponse();
+            response.Result = ResponseResult.Success;
+
+            if (request.Content.Length == 0 || request.Content.Length > Values.MaxMessageLength) {
+                throw new ArgumentException();
+            }
 
             using (var db = new PiDbContext()) {
                 var friendship = db.Friendships.SingleOrDefault(p => p.UserID == client.ID && p.FriendID == request.FriendID);

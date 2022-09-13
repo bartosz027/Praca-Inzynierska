@@ -5,6 +5,8 @@ using System.Windows;
 using ClientApp.Core;
 
 using Network.Client;
+
+using Network.Shared.Core;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
@@ -57,7 +59,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             Messages = new ObservableCollection<MessageInfo>();
 
             SendMessageCommand = new RelayCommand(o => {
-                if (RichBoxContent.Length > 0) {
+                if (RichBoxContent.Length > 0 && RichBoxContent.Length <= Values.MaxMessageLength) {
                     Client.Instance.SendRequest(new SendMessageRequest() {
                         FriendID = FriendInfo.ID,
                         Content = RichBoxContent,
@@ -65,6 +67,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
 
                     RichBoxContent = String.Empty;
                 }
+
+                // TODO: Error -> message too long
             });
 
             RemoveMessageCommand = new RelayCommand(o => {

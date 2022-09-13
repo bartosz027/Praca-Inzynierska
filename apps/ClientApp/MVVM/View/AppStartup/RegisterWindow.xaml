@@ -128,9 +128,12 @@
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>
 
 
-                        <Button Content="{DynamicResource ContinueButton_String}"
+                        <Button x:Name="RegisterButton"
+                                Content="{DynamicResource ContinueButton_String}"
+                                
                                 Grid.Row="5" 
                                 Grid.Column="1"
+                                
                                 Width="100" Height="30"
                             
                                 HorizontalAlignment="Center"
