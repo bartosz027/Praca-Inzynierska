@@ -182,6 +182,12 @@ namespace Network.Client {
             }
         }
 
+        // Remove event handler references
+        public void UnsubscribeAllEvents() {
+            ResponseReceived = null;
+            NotificationReceived = null;
+        }
+
         // Properties
         public static class Data {
             // User data

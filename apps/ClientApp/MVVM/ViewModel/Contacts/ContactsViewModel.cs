@@ -13,6 +13,9 @@ using Network.Client.DataProcessing;
 using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
 
+using Network.Shared.DataTransfer.Model.Account.Login;
+using Network.Shared.DataTransfer.Model.Account.Logout;
+
 using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetInvitations;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
@@ -22,9 +25,6 @@ using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvi
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
-
-using Network.Shared.DataTransfer.Model.Account.Login;
-using Network.Shared.DataTransfer.Model.Account.Logout;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 

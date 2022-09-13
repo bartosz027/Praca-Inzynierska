@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using System.Data.SqlTypes;
@@ -81,19 +80,12 @@ namespace Network.Server.DataProcessing.Managers {
                 Server.Data.Clients.Add(client);
                 db.SaveChanges();
 
-                var receivers = new List<ClientInfo>();
                 var notification = new LoginNotification() {
                     ID = client.ID,
                     Status = client.Status
                 };
 
-                foreach(var friendship in user_account.Friends) {
-                    var client_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
-
-                    if(client_info != null) {
-                        receivers.Add(client_info);
-                    }
-                }
+                var receivers = client.FindConnectedFriends();
 
                 return new RequestResult() {
                     ResponseReceiver = client,
@@ -132,19 +124,12 @@ namespace Network.Server.DataProcessing.Managers {
                 response.Username = user_account.Username;
                 Server.Data.Clients.Add(client);
 
-                var receivers = new List<ClientInfo>();
                 var notification = new LoginNotification() {
                     ID = client.ID,
                     Status = client.Status
                 };
 
-                foreach (var friendship in user_account.Friends) {
-                    var client_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
-
-                    if (client_info != null) {
-                        receivers.Add(client_info);
-                    }
-                }
+                var receivers = client.FindConnectedFriends();
 
                 return new RequestResult() {
                     ResponseReceiver = client,
@@ -359,18 +344,10 @@ namespace Network.Server.DataProcessing.Managers {
                 };
 
                 var user_account = db.Accounts.Find(client.ID);
-                var receivers = new List<ClientInfo>();
+                var receivers = client.FindConnectedFriends();
 
                 user_account.AccessToken = null;
                 db.SaveChanges();
-
-                foreach (var friendship in user_account.Friends) {
-                    var client_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
-
-                    if (client_info != null) {
-                        receivers.Add(client_info);
-                    }
-                }
 
                 client.ID = 0;
                 client.Status = false;

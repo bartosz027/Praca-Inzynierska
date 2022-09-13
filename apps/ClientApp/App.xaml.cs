@@ -6,7 +6,9 @@ using System.Linq;
 using System.Windows;
 
 using ClientApp.Core;
+
 using ClientApp.MVVM.View;
+using ClientApp.MVVM.View.AppStartup;
 
 using Simple.Wpf.Themes;
 using Simple.Wpf.Themes.Common;
@@ -18,6 +20,7 @@ using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Account.VerifyAccessToken;
+using Network.Shared.DataTransfer.Model.Account.Logout;
 
 namespace ClientApp {
 
@@ -74,22 +77,39 @@ namespace ClientApp {
                 }
 
                 dispatcher.Dispatch<VerifyAccessTokenResponse>(OnVerifyAccessTokenResponse);
+                dispatcher.Dispatch<LogoutResponse>(OnLogoutResponse);
             });
         }
 
         private void OnVerifyAccessTokenResponse(VerifyAccessTokenResponse response) {
-            if(response.Result == ResponseResult.Success) {
-                Client.Data.Username = response.Username;
+            Client.Data.Username = response.Username;
 
+            if (response.Result == ResponseResult.Success) {
                 var main_window = new MainWindow();
                 main_window.Show();
-
-                var login_window = App.Current.MainWindow as BaseWindow;
-                login_window.Close();
-
-                App.Current.MainWindow = main_window;
             }
+
+            if (response.Result == ResponseResult.Failure) {
+                var login_window = new LoginWindow();
+                login_window.Show();
+            }
+        }
+
+        private void OnLogoutResponse(LogoutResponse response) {
+            Client.Instance.UnsubscribeAllEvents();
+            Client.Instance.ResponseReceived += OnResponseReceived;
+
+            Client.Data.AccessToken = null;
+            Client.Data.Username = null;
+
+            var login_window = new LoginWindow();
+            login_window.Show();
+
+            var main_window = App.Current.MainWindow as BaseWindow;
+            main_window.Close();
+
+            App.Current.MainWindow = login_window;
         }
     }
 
-} 
+}

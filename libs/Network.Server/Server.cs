@@ -43,6 +43,24 @@ namespace Network.Server {
 
         public bool IsConnectedViaAES { get; set; }
         public EncryptionAES AES { get; set; }
+
+        // Methods
+        internal List<ClientInfo> FindConnectedFriends() {
+            using (var db = new PiDbContext()) {
+                var friends = new List<ClientInfo>();
+                var user_account = db.Accounts.Find(ID);
+
+                foreach (var friendship in user_account.Friends) {
+                    var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                    if (friend_info != null) {
+                        friends.Add(friend_info);
+                    }
+                }
+
+                return friends;
+            }
+        }
     }
 
     public class Server {
@@ -145,24 +163,12 @@ namespace Network.Server {
                             if (client_info != null) {
                                 Console.WriteLine("Client [id={0}, username={1}] disconnected!", client_info.ID, client_info.Username);
 
-                                using (var db = new PiDbContext()) {
-                                    var notification = new LogoutNotification() {
-                                        ID = client.ID
-                                    };
+                                var notification = new LogoutNotification() {
+                                    ID = client.ID
+                                };
 
-                                    var user_account = db.Accounts.Find(client.ID);
-                                    var receivers = new List<ClientInfo>();
-
-                                    foreach (var friendship in user_account.Friends) {
-                                        var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
-
-                                        if (friend_info != null) {
-                                            receivers.Add(friend_info);
-                                        }
-                                    }
-
-                                    BroadcastNotification(receivers, notification);
-                                }
+                                var receivers = client.FindConnectedFriends();
+                                BroadcastNotification(receivers, notification);
 
                                 Server.Data.Clients.Remove(client_info);
                             }
