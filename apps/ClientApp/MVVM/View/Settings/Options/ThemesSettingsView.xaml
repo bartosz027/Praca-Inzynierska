@@ -17,11 +17,11 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <RadioButton Margin="10" FontSize="20"
+        <RadioButton Margin="15,10,10,10" FontSize="20"
                      Content="{DynamicResource ThemeSettingDescription_String}"
 
                      VerticalAlignment="Top"
@@ -36,12 +36,12 @@
             <Grid>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="55"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
 
                 <Button Content ="{DynamicResource LigthThemeButton_String}" Command="{Binding LightThemeButtonCommand}"
-                        Style="{DynamicResource LoginWindowButton}"/>
+                        Style="{DynamicResource LoginWindowButton}" Height="37.5"/>
 
                 <Image Grid.Row="1"
                        Margin="5"
@@ -61,12 +61,12 @@
             <Grid>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="55"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
 
                 <Button Content="{DynamicResource DarkThemeButton_String}" Command="{Binding DarkThemeButtonCommand}"
-                        Style="{DynamicResource LoginWindowButton}"/>
+                        Style="{DynamicResource LoginWindowButton}" Height="37.5"/>
 
                 <Image Grid.Row="1"
                        Margin="5"

@@ -21,34 +21,38 @@
 
             <Grid>
 
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="0,2,0,0"
+                            VerticalAlignment="Center" HorizontalAlignment="Left">
 
                     <RadioButton Content="{DynamicResource ContactsManagerDescription_String}"
                                  Style="{DynamicResource PIWindowRadioButon}"
-                                 Padding="10,0" Height="40"
+                                 
+                                 Padding="10,0" Height="37.5"
                                  IsEnabled="False"/>
 
+                    <RadioButton Content="{DynamicResource FriendListButton_String}" 
+                                 Command="{Binding ShowFriendListButtonCommand}"
+                                 
+                                 Style="{DynamicResource PIWindowRadioButon}"
+                                 Padding="13,0,13,2" Height="37.5"/>
+
                     <RadioButton Content="{DynamicResource PendingInvitationsButton_String}" 
+                                 Command="{Binding ShowPendingInvitationsButtonCommand}"
+                                 
                                  Style="{DynamicResource PIWindowRadioButon}"
-                                 Command="{Binding PendingInvitationsButtonCommand}"
-                                 Padding="10,0" Height="40"/>
+                                 Padding="13,0,13,2" Height="37.5"/>
 
-                    <RadioButton Content="{DynamicResource InvitationsButton_String}" 
+                    <RadioButton Content="{DynamicResource ReceivedInvitationsButton_String}" 
+                                 Command="{Binding ShowReceivedInvitationsButtonCommand}"
+                                 
                                  Style="{DynamicResource PIWindowRadioButon}"
-                                 Command="{Binding ReceivedInvitationsButtonCommand}"
-                                 Padding="10,0" Height="40"/>
+                                 Padding="13,0,13,2" Height="37.5"/>
 
-                    <RadioButton Content="{DynamicResource BlockedButton_String}" 
-                                 Style="{DynamicResource PIWindowRadioButon}"
-                                 Command="{Binding BlockedButtonCommand}"
-                                 Padding="10,0" Height="40"/>
-
-                    <RadioButton Content="{DynamicResource SendInvitation_String}" 
-                                 Style="{DynamicResource PIWindowRadioButon}"
+                    <RadioButton Content="{DynamicResource SendInvitationButton_String}" 
                                  Command="{Binding AddContactViewButtonCommand}"
-                                 Padding="10,0" Height="40"/>
+                                 
+                                 Style="{DynamicResource PIWindowRadioButon}"
+                                 Padding="13,0,13,2" Height="37.5"/>
 
                 </StackPanel>
 

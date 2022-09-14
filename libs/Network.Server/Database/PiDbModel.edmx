@@ -11,11 +11,11 @@
           <EntitySet Name="Friendship" EntityType="PiDbModel.Store.Friendship" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Message" EntityType="PiDbModel.Store.Message" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Verification" EntityType="PiDbModel.Store.Verification" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__FriendInv__Recei__300424B4" Association="PiDbModel.Store.FK__FriendInv__Recei__300424B4">
+          <AssociationSet Name="FK__FriendInv__Recei__30F848ED" Association="PiDbModel.Store.FK__FriendInv__Recei__30F848ED">
             <End Role="Account" EntitySet="Account" />
             <End Role="FriendInvitation" EntitySet="FriendInvitation" />
           </AssociationSet>
-          <AssociationSet Name="FK__FriendInv__Sende__2F10007B" Association="PiDbModel.Store.FK__FriendInv__Sende__2F10007B">
+          <AssociationSet Name="FK__FriendInv__Sende__300424B4" Association="PiDbModel.Store.FK__FriendInv__Sende__300424B4">
             <End Role="Account" EntitySet="Account" />
             <End Role="FriendInvitation" EntitySet="FriendInvitation" />
           </AssociationSet>
@@ -73,6 +73,7 @@
           <Property Name="SendDate" Type="datetime" Nullable="false" />
           <Property Name="SenderID" Type="int" Nullable="false" />
           <Property Name="ReceiverID" Type="int" Nullable="false" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Verification">
           <Key>
@@ -83,7 +84,7 @@
           <Property Name="Code" Type="varchar" Nullable="false" MaxLength="6" />
           <Property Name="ExpireDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__FriendInv__Recei__300424B4">
+        <Association Name="FK__FriendInv__Recei__30F848ED">
           <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
           <End Role="FriendInvitation" Type="PiDbModel.Store.FriendInvitation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -95,7 +96,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FriendInv__Sende__2F10007B">
+        <Association Name="FK__FriendInv__Sende__300424B4">
           <End Role="Account" Type="PiDbModel.Store.Account" Multiplicity="1" />
           <End Role="FriendInvitation" Type="PiDbModel.Store.FriendInvitation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -166,11 +167,11 @@
           <EntitySet Name="Friendships" EntityType="PiDbModel.Friendship" />
           <EntitySet Name="Messages" EntityType="PiDbModel.Message" />
           <EntitySet Name="Verifications" EntityType="PiDbModel.Verification" />
-          <AssociationSet Name="FK__FriendInv__Recei__300424B4" Association="PiDbModel.FK__FriendInv__Recei__300424B4">
+          <AssociationSet Name="FK__FriendInv__Recei__30F848ED" Association="PiDbModel.FK__FriendInv__Recei__30F848ED">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="FriendInvitation" EntitySet="FriendInvitations" />
           </AssociationSet>
-          <AssociationSet Name="FK__FriendInv__Sende__2F10007B" Association="PiDbModel.FK__FriendInv__Sende__2F10007B">
+          <AssociationSet Name="FK__FriendInv__Sende__300424B4" Association="PiDbModel.FK__FriendInv__Sende__300424B4">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="FriendInvitation" EntitySet="FriendInvitations" />
           </AssociationSet>
@@ -211,8 +212,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SenderID" Type="Int32" Nullable="false" />
           <Property Name="ReceiverID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__FriendInv__Recei__300424B4" FromRole="FriendInvitation" ToRole="Account" />
-          <NavigationProperty Name="Sender" Relationship="PiDbModel.FK__FriendInv__Sende__2F10007B" FromRole="FriendInvitation" ToRole="Account" />
+          <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__FriendInv__Recei__30F848ED" FromRole="FriendInvitation" ToRole="Account" />
+          <NavigationProperty Name="Sender" Relationship="PiDbModel.FK__FriendInv__Sende__300424B4" FromRole="FriendInvitation" ToRole="Account" />
         </EntityType>
         <EntityType Name="Friendship">
           <Key>
@@ -233,6 +234,7 @@
           <Property Name="SendDate" Type="DateTime" Nullable="false" />
           <Property Name="SenderID" Type="Int32" Nullable="false" />
           <Property Name="ReceiverID" Type="Int32" Nullable="false" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Receiver" Relationship="PiDbModel.FK__Message__Receive__2C3393D0" FromRole="Message" ToRole="Account" />
           <NavigationProperty Name="Sender" Relationship="PiDbModel.FK__Message__SenderI__2B3F6F97" FromRole="Message" ToRole="Account" />
         </EntityType>
@@ -245,7 +247,7 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="false" />
           <Property Name="ExpireDate" Type="DateTime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__FriendInv__Recei__300424B4">
+        <Association Name="FK__FriendInv__Recei__30F848ED">
           <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
           <End Role="FriendInvitation" Type="PiDbModel.FriendInvitation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -257,7 +259,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FriendInv__Sende__2F10007B">
+        <Association Name="FK__FriendInv__Sende__300424B4">
           <End Role="Account" Type="PiDbModel.Account" Multiplicity="1" />
           <End Role="FriendInvitation" Type="PiDbModel.FriendInvitation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -362,6 +364,7 @@
                 <ScalarProperty Name="SendDate" ColumnName="SendDate" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
                 <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -397,14 +400,14 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="29647719676a4c878f729047741e94af" Name="Diagram1">
-        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+      <Diagram DiagramId="abf0560ba0ef4a1c86d29a065f766cc4" Name="Diagram1">
+        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.FriendInvitation" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Message" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Verification" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="PiDbModel.FK__FriendInv__Recei__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="PiDbModel.FK__FriendInv__Sende__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__FriendInv__Recei__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="PiDbModel.FK__FriendInv__Sende__300424B4" ManuallyRouted="false" />
         <AssociationConnector Association="PiDbModel.FK__Friendshi__Frien__286302EC" ManuallyRouted="false" />
         <AssociationConnector Association="PiDbModel.FK__Friendshi__UserI__276EDEB3" ManuallyRouted="false" />
         <AssociationConnector Association="PiDbModel.FK__Message__Receive__2C3393D0" ManuallyRouted="false" />

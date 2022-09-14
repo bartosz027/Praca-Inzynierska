@@ -41,6 +41,8 @@ CREATE TABLE Message (
     SenderID            INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
     ReceiverID          INT                 NOT NULL        FOREIGN KEY REFERENCES Account(ID),
 	
+	IsRead				BIT					NOT NULL		DEFAULT 0,
+	
 	-- NP:Account1 -> rename_to("Sender")
 	-- NP:Account  -> rename_to("Receiver")
 );

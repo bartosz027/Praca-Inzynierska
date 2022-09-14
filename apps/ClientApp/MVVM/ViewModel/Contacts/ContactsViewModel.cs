@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 using ClientApp.Core;
@@ -25,11 +26,13 @@ using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvi
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
+using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
     internal class FriendInfo : ObservableObject {
         public int ID { get; set; }
+        public DateTime LastMessageSendDate { get; set; }
 
         public string Username {
             get { 
@@ -81,6 +84,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             });
 
             EnableNotificationListener();
+            CurrentView = ContactManagerVM;
         }
 
         // Methods
@@ -89,9 +93,29 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         }
 
         // VM's
-        public ManagerViewModel ContactManagerVM { get; private set; }
-        public ObservableCollection<ChatViewModel> FriendList { get; private set; }
-        
+        public ManagerViewModel ContactManagerVM {
+            get {
+                return _ManagerViewModel;
+            }
+            private set {
+                _ManagerViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ChatViewModel> FriendList {
+            get {
+                return _FriendList;
+            } 
+            private set {
+                _FriendList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ManagerViewModel _ManagerViewModel;
+        private ObservableCollection<ChatViewModel> _FriendList;
+
         // Commands
         public RelayCommand ContactManagerButtonCommand { get; private set; }
 
@@ -111,12 +135,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 return _SelectedFriend;
             }
             set {
-                var prev_selected_friend = _SelectedFriend;
                 _SelectedFriend = value;
-
-                if (prev_selected_friend != null) {
-                    prev_selected_friend.IsSelected = false;
-                }
 
                 if (_SelectedFriend != null) {
                     if (_SelectedFriend.Initialized == false) {
@@ -124,12 +143,15 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                     }
 
                     if (_SelectedFriend.FriendInfo.IsANewMessage) {
+                        Client.Instance.SendRequest(new SetMessageReadRequest() { 
+                            FriendID = _SelectedFriend.FriendInfo.ID 
+                        });
+
+                        _SelectedFriend.FriendInfo.IsANewMessage = false;
                         UnreadedMessages.Remove(_SelectedFriend.FriendInfo.ID);
+
                         UpdateNotifcationBall();
                     }
-
-                    _SelectedFriend.FriendInfo.IsANewMessage = false;
-                    _SelectedFriend.IsSelected = true;
                 }
 
                 CurrentView = _SelectedFriend;
@@ -186,9 +208,20 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                     Status = friend.Status,
                     Username = friend.Username
                 };
-                
+
+                if(friend.IsLastMessageRead == false) {
+                    friend_info.IsANewMessage = true;
+                    UnreadedMessages.Add(friend.UserID);
+                }
+
+                friend_info.LastMessageSendDate = friend.LastMessageSendDate;
                 FriendList.Add(new ChatViewModel(friend_info));
             }
+
+            var sorted = FriendList.OrderByDescending(p => p.FriendInfo.LastMessageSendDate);
+            FriendList = new ObservableCollection<ChatViewModel>(sorted);
+
+            UpdateNotifcationBall();
         }
 
         private void OnGetInvitationsResponse(GetInvitationsResponse response) {
@@ -243,6 +276,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                     message.IsMyMessage = false;
                 }
 
+                view_model.FriendInfo.LastMessageSendDate = message_info.SendDate;
                 view_model.Messages.Add(message);
             }
 
@@ -303,7 +337,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var invitation = ContactManagerVM.ReceivedInvitations.Single(p => p.UserID == response.UserID);
             ContactManagerVM.ReceivedInvitations.Remove(invitation);
 
-            FriendList.Add(new ChatViewModel(friend_info));
+            FriendList.Insert(0, new ChatViewModel(friend_info));
             UpdateNotifcationBall();
         }
 
@@ -324,6 +358,13 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             };
 
             var view_model = FriendList.Single(p => p.FriendInfo.ID == response.FriendID);
+            view_model.FriendInfo.LastMessageSendDate = response.SendDate;
+
+            if(view_model != FriendList[0]) {
+                var index = FriendList.IndexOf(view_model);
+                FriendList.Move(index, 0);
+            }
+
             view_model.Messages.Add(message_info);
         }
 
@@ -379,12 +420,15 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var friend_info = new FriendInfo() {
                 ID = notification.UserID,
                 Status = notification.Status,
-                Username = notification.Username
+                Username = notification.Username,
+
+                IsANewMessage = true,
+                LastMessageSendDate = DateTime.UtcNow
             };
 
             if(invitation != null) {
                 ContactManagerVM.PendingInvitations.Remove(invitation);
-                FriendList.Add(new ChatViewModel(friend_info));
+                FriendList.Insert(0, new ChatViewModel(friend_info));
             }
         }
 
@@ -414,16 +458,24 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                     view_model.Messages.Add(message);
                 }
 
-                if (!UnreadedMessages.Contains(view_model.FriendInfo.ID)) {
+                if (UnreadedMessages.Contains(view_model.FriendInfo.ID) == false) {
                     if (SelectedFriend == null || SelectedFriend.FriendInfo.ID != view_model.FriendInfo.ID) {
+                        view_model.FriendInfo.IsANewMessage = true;
                         UnreadedMessages.Add(view_model.FriendInfo.ID);
+                    }
+                    else {
+                        Client.Instance.SendRequest(new SetMessageReadRequest() {
+                            FriendID = view_model.FriendInfo.ID
+                        });
                     }
                 }
 
-                if (!view_model.IsSelected) {
-                    view_model.FriendInfo.IsANewMessage = true;
+                if (view_model != FriendList[0]) {
+                    var index = FriendList.IndexOf(view_model);
+                    FriendList.Move(index, 0);
                 }
 
+                view_model.FriendInfo.LastMessageSendDate = notification.SendDate;
                 UpdateNotifcationBall();
             }
         }

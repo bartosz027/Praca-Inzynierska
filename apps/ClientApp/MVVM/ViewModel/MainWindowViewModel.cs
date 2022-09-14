@@ -14,6 +14,7 @@ namespace ClientApp.MVVM.ViewModel {
             });
 
             SettingsButtonCommand = new RelayCommand(o => {
+                ContactsVM.ContactManagerButtonCommand.Execute(null);
                 CurrentView = SettingsVM;
             });
 

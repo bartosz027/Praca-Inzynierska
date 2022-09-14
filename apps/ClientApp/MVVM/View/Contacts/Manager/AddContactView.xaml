@@ -23,13 +23,15 @@
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0"
+        <Border Grid.Row="0" Height="37.5"
                 Style="{DynamicResource PIWinodwNavigationBar}">
 
             <TextBox Style="{DynamicResource ChatTextBox}"
                      Text="{Binding ContactID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     
                      PreviewTextInput = "NumberValidationTextBox"
                      MaxLength="9"
+                     
                      Margin="10,5" Padding="5"
                      TextWrapping="NoWrap"/>
 
@@ -39,8 +41,11 @@
 
             <Button Content="{DynamicResource AddFriendButton_String}"
                     Command="{Binding SendInvitationButtonCommand}"
+                    
                     Style="{DynamicResource LoginWindowButton}"
-                    Height="40" Margin="0,0,10,0"/>
+                    Height="37.5" Margin="0,0,10,0" Padding="0,0,0,2"
+                    
+                    IsDefault="True"/>
 
         </Border>
 

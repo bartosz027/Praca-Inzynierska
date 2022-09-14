@@ -8,11 +8,11 @@ namespace ClientApp.MVVM.ViewModel.Settings {
 
     internal class SettingsViewModel : BaseVM {
         public SettingsViewModel() {
-            ThemesSettingVM = new ThemesSettingViewModel();
+            ThemeSettingsVM = new ThemesSettingViewModel();
             LanguageSettingsVM = new LanguageSettingsViewModel();
 
             ThemeOptionCommand = new RelayCommand(o => {
-                CurrentView = ThemesSettingVM;
+                CurrentView = ThemeSettingsVM;
             });
 
             LanguageOptionCommand = new RelayCommand(o => {
@@ -22,10 +22,12 @@ namespace ClientApp.MVVM.ViewModel.Settings {
             LogoutOptionCommand = new RelayCommand(o => {
                 Client.Instance.SendRequest(new LogoutRequest());
             });
+
+            // TODO: CurrentView = ProfileSettingsVM;
         }
 
         // VM's
-        public ThemesSettingViewModel ThemesSettingVM { get; private set; }
+        public ThemesSettingViewModel ThemeSettingsVM { get; private set; }
         public LanguageSettingsViewModel LanguageSettingsVM { get; private set; }
 
         // Commands

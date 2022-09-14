@@ -12,11 +12,11 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="400"/>
         </Grid.RowDefinitions>
 
-        <RadioButton Margin="10" FontSize="20"
+        <RadioButton Margin="15,10,10,10" FontSize="20"
                      Content="{DynamicResource LanguageDataButton_String}"
 
                      VerticalAlignment="Top"
@@ -26,8 +26,8 @@
                      Style="{DynamicResource PIWindowRadioButon}"/>
 
 
-        <ListBox Grid.Row="1"
-                 x:Name="ContactList" 
+        <ListBox x:Name="ContactList" 
+                 Grid.Row="1" Margin="5,0,5,0"
                  
                  ItemsSource="{Binding LanguageList}"
                  SelectedItem="{Binding SelectedLanguage}"

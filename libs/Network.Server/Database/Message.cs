@@ -19,6 +19,7 @@ namespace Network.Server.Database
         public System.DateTime SendDate { get; set; }
         public int SenderID { get; set; }
         public int ReceiverID { get; set; }
+        public bool IsRead { get; set; }
     
         public virtual Account Receiver { get; set; }
         public virtual Account Sender { get; set; }

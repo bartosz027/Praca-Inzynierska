@@ -16,11 +16,11 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0"
+        <Border Grid.Row="0" Height="37.5"
                 Style="{DynamicResource PIWinodwNavigationBar}">
 
             <TextBox Style="{DynamicResource ChatTextBox}"
@@ -30,7 +30,7 @@
         </Border>
 
         <Border x:Name="NotificationSector"
-                Grid.Row="1" Margin="10">
+                Grid.Row="1" Margin="20,0,10,0">
 
             <ListView x:Name="NotificationList" ItemsSource="{Binding CurrentList}"
                       Style="{DynamicResource ContactsListbox}">

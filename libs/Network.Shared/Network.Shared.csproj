@@ -100,6 +100,7 @@
     <Compile Include="DataTransfer\Model\Database\Friends\GetFriendList\GetFriendListResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetMessageHistory\GetMessageHistoryRequest.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetMessageHistory\GetMessageHistoryResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\SetMessageRead\SetMessageReadRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\AcceptFriendInvitation\AcceptFriendInvitationNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\AcceptFriendInvitation\AcceptFriendInvitationRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageInvitations\AcceptFriendInvitation\AcceptFriendInvitationResponse.cs" />

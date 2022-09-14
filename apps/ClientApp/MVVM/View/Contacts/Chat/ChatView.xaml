@@ -150,7 +150,7 @@
         </Border>
 
 
-        <Border Grid.Row="2"
+        <Border Grid.Row="2" Margin="10,5,10,10"
                 Style="{DynamicResource PIWinodwNavigationBar}">
             
             <Grid Margin="5">

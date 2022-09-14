@@ -44,25 +44,22 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
             PendingInvitations = new ObservableCollection<ContactManagerItem>();
             ReceivedInvitations = new ObservableCollection<ContactManagerItem>();
 
+            ShowPendingInvitationsButtonCommand = new RelayCommand(o => {
+                InvitationsVM.CurrentList = PendingInvitations;
+                CurrentView = InvitationsVM;
+            });
+
+            ShowReceivedInvitationsButtonCommand = new RelayCommand(o => {
+                InvitationsVM.CurrentList = ReceivedInvitations;
+                CurrentView = InvitationsVM;
+            });
+
             AddContactViewButtonCommand = new RelayCommand(o => {
                 AddContactVM.NotificationText = null;
                 CurrentView = AddContactVM;
             });
 
-            PendingInvitationsButtonCommand = new RelayCommand(o => {
-                InvitationsVM.CurrentList = PendingInvitations;
-                CurrentView = InvitationsVM;
-            });
-
-            ReceivedInvitationsButtonCommand = new RelayCommand(o => {
-                InvitationsVM.CurrentList = ReceivedInvitations;
-                CurrentView = InvitationsVM;
-            });
-
-            BlockedButtonCommand = new RelayCommand(o => {
-                // TODO: Implement blocked contacts
-            });
-
+            // TODO: CurrentView = FriendListVM;
             Client.Instance.SendRequest(new GetInvitationsRequest());
         }
 
@@ -71,10 +68,10 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
         public InvitationsViewModel InvitationsVM { get; private set; }
 
         // Commands
+        public RelayCommand ShowFriendListButtonCommand { get; private set; }
+        public RelayCommand ShowPendingInvitationsButtonCommand  { get; private set; }
+        public RelayCommand ShowReceivedInvitationsButtonCommand { get; private set; }
         public RelayCommand AddContactViewButtonCommand { get; private set; }
-        public RelayCommand PendingInvitationsButtonCommand  { get; private set; }
-        public RelayCommand ReceivedInvitationsButtonCommand { get; private set; }
-        public RelayCommand BlockedButtonCommand { get; private set; }
 
         // Properties
         public ObservableCollection<ContactManagerItem> PendingInvitations {

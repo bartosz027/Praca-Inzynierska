@@ -51,11 +51,11 @@
     <!-- Menadżer kontaktów -->
     <system:String x:Key="ContactsManagerDescription_String">PLACEHOLDER</system:String>
     <system:String x:Key="AddFriendButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="SendInvitation_String">PLACEHOLDER</system:String>
-    
+
+    <system:String x:Key="FriendListButton_String">PLACEHOLDER</system:String>
     <system:String x:Key="PendingInvitationsButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="InvitationsButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="BlockedButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ReceivedInvitationsButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="SendInvitationButton_String">PLACEHOLDER</system:String>
 
     <!-- Okrzyki walidacyjne -->
     <system:String x:Key="AddFriendInvalidID_String">PLACEHOLDER</system:String>

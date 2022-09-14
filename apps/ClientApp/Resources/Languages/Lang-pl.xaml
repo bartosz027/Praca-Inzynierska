@@ -50,12 +50,12 @@
 
     <!-- Menadżer kontaktów -->
     <system:String x:Key="ContactsManagerDescription_String">Menadżer kontaktów</system:String>
-    <system:String x:Key="AddFriendButton_String">Dodaj znajomego</system:String>
-    <system:String x:Key="SendInvitation_String">Wyślij zaproszenie</system:String>
-    
+    <system:String x:Key="AddFriendButton_String">Wyślij zaproszenie</system:String>
+
+    <system:String x:Key="FriendListButton_String">Znajomi</system:String>
     <system:String x:Key="PendingInvitationsButton_String">Oczekujące</system:String>
-    <system:String x:Key="InvitationsButton_String">Zaproszenia</system:String>
-    <system:String x:Key="BlockedButton_String">Zablokowani</system:String>
+    <system:String x:Key="ReceivedInvitationsButton_String">Otrzymane</system:String>
+    <system:String x:Key="SendInvitationButton_String">Dodaj do znajomych</system:String>
 
     <!-- Okrzyki walidacyjne menadżer kontaktów -->
     <system:String x:Key="AddFriendInvalidID_String">Błędny format ID użytkownika.</system:String>
@@ -91,7 +91,7 @@
     
     <!-- Komunikaty -->
     <system:String x:Key="BlockedInfo_String">jest zablokowany.</system:String>
-    <system:String x:Key="PendingInfo_String"> wysłałeś mu zaproszenie.</system:String>
+    <system:String x:Key="PendingInfo_String">wysłałeś mu zaproszenie.</system:String>
     <system:String x:Key="InvitationsInfo_String">wysłał ci zaproszenie.</system:String>
 
 </ResourceDictionary>

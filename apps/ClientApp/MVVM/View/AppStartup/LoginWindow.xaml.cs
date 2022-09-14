@@ -68,6 +68,27 @@ namespace ClientApp.MVVM.View.AppStartup {
             });
         }
 
+        private void DebugAccount4_Click(object sender, RoutedEventArgs e) {
+            Client.Instance.SendRequest(new LoginRequest() {
+                Email = "test4@gmail.com",
+                Password = "okon1"
+            });
+        }
+
+        private void DebugAccount5_Click(object sender, RoutedEventArgs e) {
+            Client.Instance.SendRequest(new LoginRequest() {
+                Email = "test5@gmail.com",
+                Password = "okon2"
+            });
+        }
+
+        private void DebugAccount6_Click(object sender, RoutedEventArgs e) {
+            Client.Instance.SendRequest(new LoginRequest() {
+                Email = "test6@gmail.com",
+                Password = "okon3"
+            });
+        }
+
         // Response events
         protected override void OnResponseReceived(ResponseDispatcher dispatcher) {
             dispatcher.Dispatch<LoginResponse>(OnLoginResponse);

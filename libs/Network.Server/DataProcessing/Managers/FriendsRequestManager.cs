@@ -116,12 +116,14 @@ namespace Network.Server.DataProcessing.Managers {
 
                 response.UserID = user_account.ID;
                 response.Username = user_account.Username;
-                response.Status = (receiver != null) ? receiver.Status : false;
+                response.Status = (receiver != null) && (receiver.Status == true);
 
                 db.Friendships.Add(new Friendship() { UserID = client.ID, FriendID = user_account.ID });
                 db.Friendships.Add(new Friendship() { UserID = user_account.ID, FriendID = client.ID });
 
+                db.Messages.Add(new Message() { SenderID = client.ID, ReceiverID = user_account.ID, Content = "", SendDate = DateTime.UtcNow, IsRead = false });
                 db.FriendInvitations.Remove(invitation);
+
                 db.SaveChanges();
 
                 if (receiver != null) {
@@ -163,7 +165,7 @@ namespace Network.Server.DataProcessing.Managers {
                 response.FriendID = request.FriendID;
                 response.MessageID = request.MessageID;
 
-                db.Messages.Remove(message);
+                message.Content = "";
                 db.SaveChanges();
 
                 if (receiver != null) {

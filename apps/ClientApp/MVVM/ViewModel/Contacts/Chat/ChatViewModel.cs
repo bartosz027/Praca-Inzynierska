@@ -100,12 +100,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         public RelayCommand CopyMessageCommand { get; private set; }
 
         // Properties
-        public bool IsSelected {
+        public FriendInfo FriendInfo {
             get {
-                return _IsSelected;
+                return _Friend;
             }
             set {
-                _IsSelected = value;
+                _Friend = value;
                 OnPropertyChanged();
             }
         }
@@ -120,16 +120,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
-        public FriendInfo FriendInfo {
-            get {
-                return _Friend;
-            }
-            set {
-                _Friend = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ObservableCollection<MessageInfo> Messages {
             get { 
                 return _Messages; 
@@ -140,10 +130,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
-        private bool _IsSelected;
-        private string _RichBoxContent;
-
         private FriendInfo _Friend;
+        private string _RichBoxContent;
         private ObservableCollection<MessageInfo> _Messages;
     }
 
