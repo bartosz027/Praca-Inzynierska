@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              
              xmlns:src="clr-namespace:ClientApp.Core"
-             
+             xmlns:customControls="clr-namespace:ClientApp.Resources.CustomControls"
+             xmlns:extensions="clr-namespace:ClientApp.Core.Extensions"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              mc:Ignorable="d" 
              
@@ -16,20 +17,20 @@
     </UserControl.Resources>
     
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition/>
             <RowDefinition Height="75"/>
         </Grid.RowDefinitions>
-
+        
         <Border Margin="10,0"
                 Style="{DynamicResource ChatTopSector}"/>
 
         <Border x:Name="ChatSector"
                 Grid.Row="1" Margin="10">
             
-            <ListView Background="Transparent"
+            <customControls:ScrollingListView Background="Transparent"
                       ItemsSource="{Binding Messages}"
                       
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -145,7 +146,7 @@
                     
                 </ListView.ItemTemplate>
 
-            </ListView>
+            </customControls:ScrollingListView>
             
         </Border>
 
@@ -161,7 +162,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Text="{Binding RichBoxContent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                         FontSize="16" Style="{DynamicResource ChatTextBox}">
+                         FontSize="16" Style="{DynamicResource ChatTextBox}"
+                         extensions:FocusExtension.IsFocused="{Binding IsFocused}">
                     
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding Path=SendMessageCommand}" Key="Enter"/>

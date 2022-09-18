@@ -162,14 +162,13 @@
                                 </Border>
                                 
                                 <Border Grid.Row="1">
-                                    
-                                    <TextBox Text="UID: 000000997"
-                                                 Style="{DynamicResource ChatTextBox}"
+
+                                    <TextBlock Text="UID: 000000997"
+                                                 Style="{DynamicResource UserInfoTextBlock}"
                                                  FontSize="10"
-                                                 IsReadOnly="True"
                                                  HorizontalAlignment="Left"
                                                  VerticalAlignment="Top"
-                                                 Margin="4,0"
+                                                 Margin="5,0"
                                                  Padding="0"/>
                                     
                                 </Border>

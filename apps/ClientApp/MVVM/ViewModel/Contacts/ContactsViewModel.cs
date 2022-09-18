@@ -27,6 +27,7 @@ using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvi
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
+using System.Text;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -66,6 +67,25 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
         private string _Username;
         private bool _Status, _IsANewMessage;
+        public string GetUID
+        {
+            get
+            {
+                string uid = ID.ToString();
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append("UID: ");
+                for (int i = 0; i < (9 - uid.Length); i++)
+                {
+                    stringBuilder.Append(0);
+                }
+                stringBuilder.Append(uid);
+                return stringBuilder.ToString();
+            }
+            set 
+            {
+            }
+        }
+        
     }
 
     internal class ContactsViewModel : BaseVM {
@@ -153,8 +173,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         UpdateNotifcationBall();
                     }
                 }
-
+                _SelectedFriend.IsFocused = true;
                 CurrentView = _SelectedFriend;
+
+                foreach (var message in _SelectedFriend.NewMessages) 
+                {
+                    _SelectedFriend.Messages.Add(message);
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -454,8 +480,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         Sender = view_model.FriendInfo.Username,
                         IsMyMessage = false
                     };
-
-                    view_model.Messages.Add(message);
+                    if (view_model.FriendInfo.ID == SelectedFriend.FriendInfo.ID)
+                    {
+                        view_model.Messages.Add(message);
+                    }
+                    else
+                    {
+                        view_model.NewMessages.Add(message);
+                    }
                 }
 
                 if (UnreadedMessages.Contains(view_model.FriendInfo.ID) == false) {

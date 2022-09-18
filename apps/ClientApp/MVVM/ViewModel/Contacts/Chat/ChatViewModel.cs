@@ -57,6 +57,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         public ChatViewModel(FriendInfo friend_info) {
             FriendInfo = friend_info;
             Messages = new ObservableCollection<MessageInfo>();
+            NewMessages = new ObservableCollection<MessageInfo>();
 
             SendMessageCommand = new RelayCommand(o => {
                 if (RichBoxContent.Length > 0 && RichBoxContent.Length <= Values.MaxMessageLength) {
@@ -129,10 +130,38 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 OnPropertyChanged();
             }
         }
+        public bool IsFocused
+        {
+            get
+            {
+                return _IsFocused;
+            }
+            set
+            {
+                _IsFocused = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<MessageInfo> NewMessages
+        {
+            get
+            {
+                return _NewMessages;
+            }
+            set
+            {
+                _NewMessages = value;
+                OnPropertyChanged();
+            }
+        }
 
         private FriendInfo _Friend;
         private string _RichBoxContent;
         private ObservableCollection<MessageInfo> _Messages;
+        private ObservableCollection<MessageInfo> _NewMessages;
+        private bool _IsFocused;
+
     }
 
 }
