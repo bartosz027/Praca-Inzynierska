@@ -57,7 +57,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         public ChatViewModel(FriendInfo friend_info) {
             FriendInfo = friend_info;
             Messages = new ObservableCollection<MessageInfo>();
-            NewMessages = new ObservableCollection<MessageInfo>();
 
             SendMessageCommand = new RelayCommand(o => {
                 if (RichBoxContent.Length > 0 && RichBoxContent.Length <= Values.MaxMessageLength) {
@@ -92,6 +91,16 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             Client.Instance.SendRequest(new GetMessageHistoryRequest() {
                 FriendID = FriendInfo.ID
             });
+        }
+        public void RefreshList() 
+        {
+            IsFocused = true;
+            if (Messages.Count > 0)
+            {
+                var tempValue = Messages[Messages.Count - 1];
+                Messages.RemoveAt(Messages.Count - 1);
+                Messages.Add(tempValue);
+            }
         }
         public bool Initialized { get; set; }
 
@@ -143,23 +152,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
-        public ObservableCollection<MessageInfo> NewMessages
-        {
-            get
-            {
-                return _NewMessages;
-            }
-            set
-            {
-                _NewMessages = value;
-                OnPropertyChanged();
-            }
-        }
-
         private FriendInfo _Friend;
         private string _RichBoxContent;
         private ObservableCollection<MessageInfo> _Messages;
-        private ObservableCollection<MessageInfo> _NewMessages;
         private bool _IsFocused;
 
     }

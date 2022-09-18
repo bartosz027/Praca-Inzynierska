@@ -28,6 +28,7 @@ using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 using System.Text;
+using System.Collections.Generic;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -81,13 +82,10 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 stringBuilder.Append(uid);
                 return stringBuilder.ToString();
             }
-            set 
-            {
-            }
+            set {}
         }
         
     }
-
     internal class ContactsViewModel : BaseVM {
         public ContactsViewModel() {
             EnableResponseListener();
@@ -173,14 +171,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         UpdateNotifcationBall();
                     }
                 }
-                _SelectedFriend.IsFocused = true;
+                
                 CurrentView = _SelectedFriend;
-
-                foreach (var message in _SelectedFriend.NewMessages) 
+                if (_SelectedFriend != null)
                 {
-                    _SelectedFriend.Messages.Add(message);
+                    _SelectedFriend.RefreshList();
                 }
-
                 OnPropertyChanged();
             }
         }
@@ -286,13 +282,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var view_model = FriendList.Single(p => p.FriendInfo.ID == response.FriendID);
             var friend_info = view_model.FriendInfo;
 
+            var temp_list = new List<Chat.MessageInfo>();
             foreach (var message_info in response.Messages) {
                 var message = new Chat.MessageInfo() {
                     ID = message_info.ID,
                     Date = message_info.SendDate.ToLocalTime().ToString("HH:mm"),
                     Content = message_info.Content
                 };
-
+                
                 if (message_info.SenderID != friend_info.ID) {
                     message.Sender = Client.Data.Username;
                     message.IsMyMessage = true;
@@ -303,8 +300,10 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 }
 
                 view_model.FriendInfo.LastMessageSendDate = message_info.SendDate;
-                view_model.Messages.Add(message);
+                temp_list.Add(message);
             }
+                view_model.Messages = new ObservableCollection<Chat.MessageInfo>(temp_list);
+                view_model.RefreshList();
 
             view_model.Initialized = true;
         }
@@ -480,14 +479,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         Sender = view_model.FriendInfo.Username,
                         IsMyMessage = false
                     };
-                    if (view_model.FriendInfo.ID == SelectedFriend.FriendInfo.ID)
-                    {
-                        view_model.Messages.Add(message);
-                    }
-                    else
-                    {
-                        view_model.NewMessages.Add(message);
-                    }
+                    view_model.Messages.Add(message);
                 }
 
                 if (UnreadedMessages.Contains(view_model.FriendInfo.ID) == false) {

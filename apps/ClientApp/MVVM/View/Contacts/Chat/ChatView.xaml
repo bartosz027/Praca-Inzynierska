@@ -35,8 +35,8 @@
                       
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      ScrollViewer.CanContentScroll="False"
-                      
+                      ScrollViewer.CanContentScroll="True"
+                                              
                       FocusVisualStyle="{x:Null}"
                       BorderBrush="Transparent"
                       

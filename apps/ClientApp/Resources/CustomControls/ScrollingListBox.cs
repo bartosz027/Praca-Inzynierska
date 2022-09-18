@@ -23,13 +23,4 @@ namespace ClientApp.Resources.CustomControls
             }
         }
     }
-
-    public class ScrollingListBox : ListBox
-    {
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            MessageBox.Show("Huj hehe XD");
-            base.OnSelectionChanged(e);
-        }
-    }
 }

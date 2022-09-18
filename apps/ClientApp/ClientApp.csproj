@@ -97,7 +97,7 @@
     <Compile Include="Core\BaseVM.cs" />
     <Compile Include="Core\BaseWindow.cs" />
     <Compile Include="Core\BindingProxy.cs" />
-    <Compile Include="Core\Extensions\FocusExtension.cs" />
+    <Compile Include="Core\Extensions\FocusExtesnoion.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\Chat\ChatViewModel.cs" />
