@@ -360,7 +360,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var friend_info = new FriendInfo() {
                 ID = response.UserID,
                 Status = response.Status,
-                Username = response.Username
+
+                Username = response.Username,
+                UserImage = ImageLoader.Load(response.ImageBytes)
             };
 
             var invitation = ContactManagerVM.ReceivedInvitations.Single(p => p.UserID == response.UserID);
@@ -449,7 +451,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var friend_info = new FriendInfo() {
                 ID = notification.UserID,
                 Status = notification.Status,
+
                 Username = notification.Username,
+                UserImage = ImageLoader.Load(notification.ImageBytes),
 
                 IsANewMessage = true,
                 LastMessageSendDate = DateTime.UtcNow

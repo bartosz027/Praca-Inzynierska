@@ -7,7 +7,9 @@ namespace Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFrie
     public class AcceptFriendInvitationNotification : Notification {
         public int UserID { get; set; }
         public bool Status { get; set; }
+
         public string Username { get; set; }
+        public byte[] ImageBytes { get; set; }
     }
 
 }

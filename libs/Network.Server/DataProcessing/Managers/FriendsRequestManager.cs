@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 
 using System.Linq;
-using Network.Server.Database;
+using System.Collections.Generic;
 
+using Network.Server.Database;
 using Network.Shared.Core;
+
 using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
@@ -116,8 +118,10 @@ namespace Network.Server.DataProcessing.Managers {
                 }
 
                 response.UserID = user_account.ID;
-                response.Username = user_account.Username;
                 response.Status = (receiver != null) && (receiver.Status == true);
+
+                response.Username = user_account.Username;
+                response.ImageBytes = File.ReadAllBytes(invitation.Sender.UserImage);
 
                 db.Friendships.Add(new Friendship() { UserID = client.ID, FriendID = user_account.ID });
                 db.Friendships.Add(new Friendship() { UserID = user_account.ID, FriendID = client.ID });
@@ -128,10 +132,13 @@ namespace Network.Server.DataProcessing.Managers {
                 db.SaveChanges();
 
                 if (receiver != null) {
+                    user_account = db.Accounts.SingleOrDefault(p => p.ID == client.ID);
+
                     var notification = new AcceptFriendInvitationNotification() {
                         UserID = client.ID,
                         Status = client.Status,
-                        Username = client.Username
+                        Username = client.Username,
+                        ImageBytes = File.ReadAllBytes(user_account.UserImage)
                     };
 
                     return new RequestResult() {
