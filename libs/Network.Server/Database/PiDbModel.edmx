@@ -46,6 +46,7 @@
           <Property Name="Password" Type="varchar" Nullable="false" MaxLength="64" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Verified" Type="bit" Nullable="false" />
+          <Property Name="UserImage" Type="varchar" Nullable="false" MaxLength="512" />
           <Property Name="AccessToken" Type="varchar" MaxLength="32" />
         </EntityType>
         <EntityType Name="FriendInvitation">
@@ -202,6 +203,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Verified" Type="Boolean" Nullable="false" />
+          <Property Name="UserImage" Type="String" Nullable="false" MaxLength="512" Unicode="false" FixedLength="false" />
           <Property Name="AccessToken" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Friends" Relationship="PiDbModel.FK__Friendshi__UserI__276EDEB3" FromRole="Account" ToRole="Friendship" />
         </EntityType>
@@ -334,6 +336,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="UserImage" ColumnName="UserImage" />
                 <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -400,8 +403,8 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="abf0560ba0ef4a1c86d29a065f766cc4" Name="Diagram1">
-        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+      <Diagram DiagramId="0e145800cc6f481190aacf52243eaded" Name="Diagram1">
+        <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.FriendInvitation" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Message" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />

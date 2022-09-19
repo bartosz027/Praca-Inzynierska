@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+
 using System.Windows;
+using System.Windows.Controls;
 
 using ClientApp.Core;
 using ClientApp.Resources;
@@ -80,6 +82,7 @@ namespace ClientApp.MVVM.View.AppStartup {
                     Email = EmailBox.Text
                 });
 
+                RegisterForm.Visibility = Visibility.Hidden;
                 VerifyCodeForm.Visibility = Visibility.Visible;
             }
 

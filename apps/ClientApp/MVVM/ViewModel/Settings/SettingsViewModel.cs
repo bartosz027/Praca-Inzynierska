@@ -1,13 +1,21 @@
-﻿using ClientApp.Core;
+﻿using System.Windows.Media.Imaging;
+using Network.Server.Core;
+
+using ClientApp.Core;
 using ClientApp.MVVM.ViewModel.Settings.Options;
 
 using Network.Client;
+using Network.Client.DataProcessing;
+
 using Network.Shared.DataTransfer.Model.Account.Logout;
+using Network.Shared.DataTransfer.Model.Database.Friends.GetAvatar;
 
 namespace ClientApp.MVVM.ViewModel.Settings {
 
     internal class SettingsViewModel : BaseVM {
         public SettingsViewModel() {
+            EnableResponseListener();
+
             ThemeSettingsVM = new ThemesSettingViewModel();
             LanguageSettingsVM = new LanguageSettingsViewModel();
 
@@ -23,6 +31,10 @@ namespace ClientApp.MVVM.ViewModel.Settings {
                 Client.Instance.SendRequest(new LogoutRequest());
             });
 
+            UserID = "UID: " + Client.Data.ID.ToString("000000000");
+            Username = Client.Data.Username;
+
+            Client.Instance.SendRequest(new GetAvatarRequest());
             // TODO: CurrentView = ProfileSettingsVM;
         }
 
@@ -39,6 +51,40 @@ namespace ClientApp.MVVM.ViewModel.Settings {
 
         public RelayCommand LogoutOptionCommand { get; private set; }
 
+        // Properties
+        public string UserID {
+            get {
+                return _UserID;
+            }
+            set {
+                _UserID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Username { 
+            get {
+                return _Username;
+            }
+            set {
+                _Username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public BitmapImage UserImage { 
+            get {
+                return _UserImage;
+            }
+            set {
+                _UserImage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _UserID, _Username;
+        private BitmapImage _UserImage;
+
         // Current view
         public object CurrentView {
             get { 
@@ -50,6 +96,15 @@ namespace ClientApp.MVVM.ViewModel.Settings {
             }
         }
         private object _CurrentView;
+
+        // Response events
+        protected override void OnResponseReceived(ResponseDispatcher dispatcher) {
+            dispatcher.Dispatch<GetAvatarResponse>(OnGetAvatarResponse);
+        }
+
+        private void OnGetAvatarResponse(GetAvatarResponse response) {
+            UserImage = ImageLoader.Load(response.ImageBytes);
+        }
     }
 
 }

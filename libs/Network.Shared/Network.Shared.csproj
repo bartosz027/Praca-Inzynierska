@@ -94,6 +94,8 @@
     <Compile Include="DataTransfer\Model\Account\VerifyAccessToken\VerifyAccessTokenResponse.cs" />
     <Compile Include="DataTransfer\Model\Account\VerifyEmail\VerifyEmailRequest.cs" />
     <Compile Include="DataTransfer\Model\Account\VerifyEmail\VerifyEmailResponse.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetAvatar\GetAvatarRequest.cs" />
+    <Compile Include="DataTransfer\Model\Database\Friends\GetAvatar\GetAvatarResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsResponse.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetInvitations\GetInvitationsRequest.cs" />
     <Compile Include="DataTransfer\Model\Database\Friends\GetFriendList\GetFriendListRequest.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="DataTransfer\Security\ExchangeAESKeys\ExchangeAESKeysResponse.cs" />
     <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysRequest.cs" />
     <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysResponse.cs" />
+    <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

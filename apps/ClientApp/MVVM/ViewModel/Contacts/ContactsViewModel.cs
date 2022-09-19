@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using System.Linq;
-using System.Text;
+using System.Windows.Media.Imaging;
 
 using ClientApp.Core;
 using ClientApp.Resources;
@@ -32,6 +32,7 @@ using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 
+using Network.Server.Core;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -75,8 +76,19 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             }
         }
 
+        public BitmapImage UserImage {
+            get {
+                return _UserImage;
+            }
+            set {
+                _UserImage = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _Username;
         private bool _Status, _IsANewMessage;
+        private BitmapImage _UserImage;
     }
 
     internal class ContactsViewModel : BaseVM {
@@ -219,7 +231,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 var friend_info = new FriendInfo() {
                     ID = friend.UserID,
                     Status = friend.Status,
-                    Username = friend.Username
+                    Username = friend.Username,
+                    UserImage = ImageLoader.Load(friend.ImageBytes)
                 };
 
                 if(friend.IsLastMessageRead == false) {

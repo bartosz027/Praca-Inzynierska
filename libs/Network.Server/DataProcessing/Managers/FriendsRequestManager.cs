@@ -5,6 +5,7 @@ using System.Linq;
 using Network.Server.Database;
 
 using Network.Shared.Core;
+using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;

@@ -65,7 +65,7 @@
                                         Margin="1">
                                     
                                     <Border.Background>
-                                        <ImageBrush Stretch="Fill" ImageSource="https://cdn.discordapp.com/attachments/690706276912594944/1018241847388274768/sr2405aa1b050e3.png"/>
+                                        <ImageBrush Stretch="Fill" ImageSource="{Binding FriendInfo.UserImage}"/>
                                     </Border.Background>
                                     
                                 </Border>

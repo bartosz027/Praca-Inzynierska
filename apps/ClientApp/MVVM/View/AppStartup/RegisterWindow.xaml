@@ -35,17 +35,17 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="1"
-                        Content="✕"
+                        Content="✕" IsTabStop="False"
                         
-                        Style="{DynamicResource WindowButton}"
-                        Click="CloseWindowButton_Click"/>
+                        Click="CloseWindowButton_Click"
+                        Style="{DynamicResource WindowButton}"/>
                 
             </Grid>
 
         </Border>
 
-        <Border Grid.Row="1"
-                Margin="40" CornerRadius="5"
+        <Border x:Name="RegisterForm"
+                Grid.Row="1" Margin="40" CornerRadius="5"
                 Style="{DynamicResource LoginWindowCenter}">
 
             <Grid>
@@ -89,6 +89,7 @@
                                  Margin="10,0,0,0"
                                  HorizontalAlignment="Left"
                                  
+                                 TabIndex="0"
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
                         <TextBlock Grid.Row="2"
@@ -107,6 +108,7 @@
                                  Margin="10,0,0,0"
                                  HorizontalAlignment="Left"
                                  
+                                 TabIndex="1"
                                  Style="{DynamicResource RoundCornerTextBox}"/>
 
                         <TextBlock Grid.Row="4"
@@ -125,6 +127,7 @@
                                      Margin="10,0,0,0"
                                      HorizontalAlignment="Left"
                                      
+                                     TabIndex="2"
                                      Style="{DynamicResource RoundCornerPasswordBox}"/>
 
 
@@ -135,10 +138,13 @@
                                 Grid.Column="1"
                                 
                                 Width="100" Height="30"
-                            
-                                HorizontalAlignment="Center"
+                                
+                                IsDefault="True"
+                                TabIndex="3"
+                                
                                 VerticalAlignment="Bottom"
-                            
+                                HorizontalAlignment="Center"
+                                
                                 Click="RegisterAccount_Click"
                                 Style="{DynamicResource LoginWindowButton}"/>
 
@@ -198,17 +204,21 @@
                              HorizontalAlignment="Center"
                              HorizontalContentAlignment="Center"
                              
+                             MaxLength="6"
                              Width="150" Padding="0"
+                             
+                             TabIndex="0"
                              Style="{DynamicResource RoundCornerTextBox}"/>
 
                     <Button Grid.Row="2" 
                             Width="100" Height="30"
+                            IsDefault="True"
                             
-                            Margin="10"
+                            Margin="10" TabIndex="1"
                             Content="{DynamicResource SendVerificationCodeButton_String}"
                             
-                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
 
                             Click="VerifyCode_Click"
                             Style="{DynamicResource LoginWindowButton}"/>

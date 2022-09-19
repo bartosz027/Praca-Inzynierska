@@ -30,12 +30,7 @@ namespace ClientApp {
     public partial class App : Application {
         protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
-
-            var ip = ConfigManager.GetValue("Server_IP");
-            var port = ConfigManager.GetValue("Server_PORT");
-
-            Client.Instance.Connect(ip, int.Parse(port));
-            Client.Instance.EnableSecureConnection();
+            this.ConnectToServer(this, null);
 
             // Load application settings
             var theme = ConfigManager.GetValue("Theme");
@@ -46,23 +41,46 @@ namespace ClientApp {
                 SelectedItem = Themes.FirstOrDefault(p => p.Name == theme)
             };
 
-            var dictionary = new ResourceDictionary();
-            dictionary.Source = new Uri("/ClientApp;component/Resources/Languages/" + language + ".xaml", UriKind.Relative);
+            var dictionary = new ResourceDictionary() {
+                Source = new Uri("/ClientApp;component/Resources/Languages/" + language + ".xaml", UriKind.Relative)
+            };
 
             this.Resources.MergedDictionaries.Add(dictionary);
+        }
 
-            // Login via access token
-            Client.Data.AccessToken = ConfigManager.GetValue("AccessToken");
+        private void ConnectToServer(object sender, EventArgs e) {
+            Client.Instance.UnsubscribeAllEvents();
 
-            while(Client.Data.IsConnectedViaAES == false) {
-                Thread.Sleep(125);
+            var ip = ConfigManager.GetValue("Server_IP");
+            var port = ConfigManager.GetValue("Server_PORT");
+
+            // Connect to server
+            while(Client.Data.TCP.Connected == false) {
+                try {
+                    Client.Instance.Connect(ip, int.Parse(port));
+                    Client.Instance.EnableSecureConnection();
+
+                    while(Client.Data.IsConnectedViaAES == false) {
+                        Thread.Sleep(25);
+                    }
+                }
+                catch {
+                    Thread.Sleep(5000);
+                }
             }
 
+            // Login via access token
+            Client.Instance.ConnectionLost += ConnectToServer;
             Client.Instance.ResponseReceived += OnResponseReceived;
+
+            if (String.IsNullOrEmpty(Client.Data.AccessToken)) {
+                Client.Data.AccessToken = ConfigManager.GetValue("AccessToken");
+            }
+
             Client.Instance.SendRequest(new VerifyAccessTokenRequest());
         }
 
-        private static IEnumerable<Theme> Themes = new[] {
+        private IEnumerable<Theme> Themes = new[] {
             new Theme("LightTheme", new Uri("/ClientApp;component/Resources/Themes/LightTheme.xaml", UriKind.Relative)),
             new Theme("DarkTheme", new Uri("/ClientApp;component/Resources/Themes/DarkTheme.xaml", UriKind.Relative))
         };
@@ -82,25 +100,38 @@ namespace ClientApp {
         }
 
         private void OnVerifyAccessTokenResponse(VerifyAccessTokenResponse response) {
+            BaseWindow window = null;
+
+            Client.Data.ID = response.ID;
+            Client.Data.Status = response.Status;
             Client.Data.Username = response.Username;
 
-            if (response.Result == ResponseResult.Success) {
-                var main_window = new MainWindow();
-                main_window.Show();
+            if (response.Result == ResponseResult.Failure) {
+                window = new LoginWindow();
             }
 
-            if (response.Result == ResponseResult.Failure) {
-                var login_window = new LoginWindow();
-                login_window.Show();
+            if (response.Result == ResponseResult.Success) {
+                window = new MainWindow();
+            }
+
+            window.Show();
+            MainWindow = window;
+
+            for (int i = 0; i < Current.Windows.Count - 2; i++) {
+                Current.Windows[0].Close();
             }
         }
 
         private void OnLogoutResponse(LogoutResponse response) {
             Client.Instance.UnsubscribeAllEvents();
+
+            Client.Instance.ConnectionLost += ConnectToServer;
             Client.Instance.ResponseReceived += OnResponseReceived;
 
-            Client.Data.AccessToken = null;
+            Client.Data.ID = 0;
+            Client.Data.Status = false;
             Client.Data.Username = null;
+            Client.Data.AccessToken = null;
 
             var login_window = new LoginWindow();
             login_window.Show();

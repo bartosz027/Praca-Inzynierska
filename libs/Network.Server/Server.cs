@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
-using System.Security.Cryptography;
-
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +14,7 @@ using Network.Server.Database;
 using Network.Server.DataProcessing;
 
 using Network.Shared.Core;
+using Network.Shared.Model;
 
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Account.Logout;
@@ -24,44 +23,6 @@ using Network.Shared.DataTransfer.Security.ExchangeAESKeys;
 using Network.Shared.DataTransfer.Security.ExchangeRSAKeys;
 
 namespace Network.Server {
-
-    internal class ClientInfo {
-        public int ID { get; set; }
-
-        // User data
-        public bool Status { get; set; }
-        public string Username { get; set; }
-        public string AccessToken { get; set; }
-
-        // Connection data
-        public TcpClient TCP { get; set; }
-        public NetworkStream Stream { get; set; }
-
-        // Security
-        public bool IsConnectedViaRSA { get; set; }
-        public RSAParameters RSA { get; set; }
-
-        public bool IsConnectedViaAES { get; set; }
-        public EncryptionAES AES { get; set; }
-
-        // Methods
-        internal List<ClientInfo> FindConnectedFriends() {
-            using (var db = new PiDbContext()) {
-                var friends = new List<ClientInfo>();
-                var user_account = db.Accounts.Find(ID);
-
-                foreach (var friendship in user_account.Friends) {
-                    var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
-
-                    if (friend_info != null) {
-                        friends.Add(friend_info);
-                    }
-                }
-
-                return friends;
-            }
-        }
-    }
 
     public class Server {
         private Server() {
@@ -123,7 +84,7 @@ namespace Network.Server {
                         Array.Copy(request_bytes, 0, request_buffer, buffer_length, request_bytes.Length);
                         buffer_length += request_bytes.Length;
 
-                        for (int index = 0, length = 0; index <= buffer_length; index += (length + 4)) {
+                        for (int index = 0, length = 0; index <= buffer_length; index += length + 4) {
                             length = BitConverter.ToInt32(request_buffer, index);
 
                             if(index == buffer_length) {
@@ -167,8 +128,20 @@ namespace Network.Server {
                                     ID = client.ID
                                 };
 
-                                var receivers = client.FindConnectedFriends();
-                                BroadcastNotification(receivers, notification);
+                                using (var db = new PiDbContext()) {
+                                    var receivers = new List<ClientInfo>();
+                                    var user_account = db.Accounts.Find(client.ID);
+
+                                    foreach (var friendship in user_account.Friends) {
+                                        var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                                        if (friend_info != null) {
+                                            receivers.Add(friend_info);
+                                        }
+                                    }
+
+                                    BroadcastNotification(receivers, notification);
+                                }
 
                                 Server.Data.Clients.Remove(client_info);
                             }

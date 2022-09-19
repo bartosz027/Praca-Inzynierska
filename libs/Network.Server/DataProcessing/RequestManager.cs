@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
+
 using Network.Server.DataProcessing.Managers;
 
 namespace Network.Server.DataProcessing {

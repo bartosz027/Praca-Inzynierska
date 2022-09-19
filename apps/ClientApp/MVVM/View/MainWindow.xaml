@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         
         xmlns:src="clr-namespace:ClientApp.Core"
-        xmlns:vm="clr-namespace:ClientApp.MVVM.ViewModel"
+        xmlns:viewmodel="clr-namespace:ClientApp.MVVM.ViewModel"
                 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
@@ -17,7 +17,7 @@
         Height="720" Width="1280">
 
     <Window.DataContext>
-        <vm:MainWindowViewModel/>
+        <viewmodel:MainWindowViewModel/>
     </Window.DataContext>
     
     <WindowChrome.WindowChrome>
@@ -142,12 +142,12 @@
                                     Width="45" Height="45">
                                 
                                 <Border.Background>
-                                    <ImageBrush Stretch="Fill" ImageSource="https://cdn.discordapp.com/attachments/690706276912594944/1018241847388274768/sr2405aa1b050e3.png"/>
+                                    <ImageBrush Stretch="Fill" ImageSource="{Binding SettingsVM.UserImage }" />
                                 </Border.Background>
                                 
                             </Border>
-                            
-                            <Grid Grid.Column="1" Height="40">
+
+                            <Grid Grid.Column="1" Height="40" Margin="3,3,0,0">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"/>
@@ -155,21 +155,22 @@
                                 </Grid.RowDefinitions>
                                 
                                 <Border>
-                                    
-                                    <TextBlock Text="Dzidziuś" FontWeight="SemiBold"
+
+                                    <TextBlock Text="{Binding SettingsVM.Username}" FontWeight="SemiBold"
                                                Style="{DynamicResource UserInfoTextBlock}" />
                                     
                                 </Border>
                                 
                                 <Border Grid.Row="1">
-
-                                    <TextBlock Text="UID: 000000997"
-                                                 Style="{DynamicResource UserInfoTextBlock}"
-                                                 FontSize="10"
-                                                 HorizontalAlignment="Left"
-                                                 VerticalAlignment="Top"
-                                                 Margin="5,0"
-                                                 Padding="0"/>
+                                    
+                                    <TextBlock Text="{Binding SettingsVM.UserID}"
+                                               Style="{DynamicResource UserInfoTextBlock}"
+                                               
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               
+                                               FontSize="10"
+                                               Margin="5,0,0,0"/>
                                     
                                 </Border>
 

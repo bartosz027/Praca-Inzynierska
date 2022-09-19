@@ -26,6 +26,7 @@ namespace Network.Server.Database
         public string Password { get; set; }
         public bool Status { get; set; }
         public bool Verified { get; set; }
+        public string UserImage { get; set; }
         public string AccessToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Network.Client.DataProcessing;
 
 using Network.Shared.Core;
+using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Security.ExchangeAESKeys;
@@ -20,6 +21,8 @@ namespace Network.Client {
     public class Client {
         private Client() {
             EncryptionRSA.Init();
+            Client.Data = new ClientInfo();
+            Client.Data.TCP = new TcpClient();
         }
 
         public static Client Instance {
@@ -30,8 +33,6 @@ namespace Network.Client {
 
         // Connect to server
         public void Connect(string ip, int port) {
-            Client.Data.TCP = new TcpClient();
-
             Client.Data.TCP.Connect(ip, port);
             Client.Data.Stream = Client.Data.TCP.GetStream();
 
@@ -58,7 +59,7 @@ namespace Network.Client {
                         Array.Copy(received_bytes, 0, receive_buffer, buffer_length, received_bytes.Length);
                         buffer_length += received_bytes.Length;
 
-                        for (int index = 0, length = 0; index <= buffer_length; index += (length + 4)) {
+                        for (int index = 0, length = 0; index <= buffer_length; index += length + 4) {
                             length = BitConverter.ToInt32(receive_buffer, index);
 
                             if (index == buffer_length) {
@@ -93,6 +94,14 @@ namespace Network.Client {
                     }
                     catch {
                         if(Client.Data.TCP.Connected == false) {
+                            var token = Client.Data.AccessToken;
+
+                            Client.Data = new ClientInfo();
+                            Client.Data.TCP = new TcpClient();
+
+                            Client.Data.AccessToken = token;
+                            ConnectionLost?.Invoke(this, new EventArgs());
+
                             // TODO: Write to log file
                             cancellation.Cancel();
                             break;
@@ -184,31 +193,18 @@ namespace Network.Client {
 
         // Remove event handler references
         public void UnsubscribeAllEvents() {
+            ConnectionLost = null;
             ResponseReceived = null;
             NotificationReceived = null;
         }
 
         // Properties
-        public static class Data {
-            // User data
-            public static string Username { get; set; }
-            public static string AccessToken { get; set; }
-
-            // Connection data
-            internal static TcpClient TCP { get; set; }
-            internal static NetworkStream Stream { get; set; }
-
-            // Security
-            public static bool IsConnectedViaRSA { get; internal set; }
-            internal static RSAParameters RSA { get; set; }
-
-            public static bool IsConnectedViaAES { get; internal set; }
-            internal static EncryptionAES AES { get; set; }
-        }
+        public static ClientInfo Data { get; private set; }
 
         // Events
-        public event EventHandler<Response> ResponseReceived = null;
-        public event EventHandler<Notification> NotificationReceived = null;
+        public event EventHandler<Response> ResponseReceived;
+        public event EventHandler<Notification> NotificationReceived;
+        public event EventHandler<EventArgs> ConnectionLost;
     }
 
 }

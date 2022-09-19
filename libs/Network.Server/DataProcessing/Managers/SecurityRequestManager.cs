@@ -1,6 +1,7 @@
 ﻿using Network.Shared.Core;
-using Network.Shared.DataTransfer.Base;
+using Network.Shared.Model;
 
+using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Security.ExchangeAESKeys;
 using Network.Shared.DataTransfer.Security.ExchangeRSAKeys;
 

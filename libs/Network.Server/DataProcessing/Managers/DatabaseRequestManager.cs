@@ -1,10 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
+using System.Linq;
 using Network.Server.Database;
+
+using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
+using Network.Shared.DataTransfer.Model.Database.Friends.GetAvatar;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetInvitations;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
@@ -17,6 +21,7 @@ namespace Network.Server.DataProcessing.Managers {
         public static void Dispatch(RequestDispatcher dispatcher, ClientInfo client) {
             if (dispatcher.Request.AccessToken == client.AccessToken) {
                 // Get data
+                dispatcher.Dispatch<GetAvatarRequest>(OnGetAvatarRequest, client);
                 dispatcher.Dispatch<GetFriendListRequest>(OnGetFriendListRequest, client);
                 dispatcher.Dispatch<GetInvitationsRequest>(OnGetInvitationsRequest, client);
                 dispatcher.Dispatch<GetMessageHistoryRequest>(OnGetMessageHistoryRequest, client);
@@ -27,6 +32,21 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         // Get data
+        private static RequestResult OnGetAvatarRequest(GetAvatarRequest request, ClientInfo client) {
+            var response = new GetAvatarResponse();
+            response.Result = ResponseResult.Success;
+
+            using (var db = new PiDbContext()) {
+                var user_account = db.Accounts.Find(client.ID);
+                response.ImageBytes = File.ReadAllBytes(user_account.UserImage);
+            }
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
         private static RequestResult OnGetFriendListRequest(GetFriendListRequest request, ClientInfo client) {
             var response = new GetFriendListResponse() {
                 FriendList = new List<FriendInfo>(),
@@ -54,6 +74,7 @@ namespace Network.Server.DataProcessing.Managers {
                     var client_info = Server.Data.Clients.Find(p => p.ID == account.Friend.ID);
                     friend_info.Status = (client_info != null) ? client_info.Status : false;
 
+                    friend_info.ImageBytes = File.ReadAllBytes(account.Friend.UserImage);
                     response.FriendList.Add(friend_info);
                 }
             }

@@ -10,6 +10,7 @@ CREATE TABLE Account (
 	Status				BIT					NOT NULL		DEFAULT 1,
 	Verified			BIT					NOT NULL		DEFAULT 0,
 	
+	UserImage			VARCHAR(512)		NOT NULL,
 	AccessToken			VARCHAR(32)			NULL,
 	
 	-- NP:Friendships  -> remove_property()

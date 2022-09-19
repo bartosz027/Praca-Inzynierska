@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 using ClientApp.Core;
 using ClientApp.Resources;
@@ -34,6 +35,8 @@ namespace ClientApp.MVVM.View.AppStartup {
                 Email = EmailBox.Text,
                 Password = PasswordBox.Password
             });
+
+            LoginButton.IsEnabled = false;
         }
 
         private void ResetPassword_Click(object sender, RoutedEventArgs e) {
@@ -48,6 +51,9 @@ namespace ClientApp.MVVM.View.AppStartup {
 
         // Debug events
         private void DebugAccount1_Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            button.IsEnabled = false;
+
             Client.Instance.SendRequest(new LoginRequest() {
                 Email = "test1@gmail.com",
                 Password = "okon1"
@@ -55,6 +61,9 @@ namespace ClientApp.MVVM.View.AppStartup {
         }
 
         private void DebugAccount2_Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            button.IsEnabled = false;
+
             Client.Instance.SendRequest(new LoginRequest() {
                 Email = "test2@gmail.com",
                 Password = "okon2"
@@ -62,6 +71,9 @@ namespace ClientApp.MVVM.View.AppStartup {
         }
 
         private void DebugAccount3_Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            button.IsEnabled = false;
+
             Client.Instance.SendRequest(new LoginRequest() {
                 Email = "test3@gmail.com",
                 Password = "okon3"
@@ -69,6 +81,9 @@ namespace ClientApp.MVVM.View.AppStartup {
         }
 
         private void DebugAccount4_Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            button.IsEnabled = false;
+
             Client.Instance.SendRequest(new LoginRequest() {
                 Email = "test4@gmail.com",
                 Password = "okon1"
@@ -76,6 +91,9 @@ namespace ClientApp.MVVM.View.AppStartup {
         }
 
         private void DebugAccount5_Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            button.IsEnabled = false;
+
             Client.Instance.SendRequest(new LoginRequest() {
                 Email = "test5@gmail.com",
                 Password = "okon2"
@@ -83,6 +101,9 @@ namespace ClientApp.MVVM.View.AppStartup {
         }
 
         private void DebugAccount6_Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            button.IsEnabled = false;
+
             Client.Instance.SendRequest(new LoginRequest() {
                 Email = "test6@gmail.com",
                 Password = "okon3"
@@ -95,11 +116,13 @@ namespace ClientApp.MVVM.View.AppStartup {
         }
 
         private void OnLoginResponse(LoginResponse response) {
-            if(response.Result == ResponseResult.Success) {
+            if (response.Result == ResponseResult.Success) {
+                Client.Data.ID = response.ID;
+                Client.Data.Status = response.Status;
                 Client.Data.Username = response.Username;
                 Client.Data.AccessToken = response.AccessToken;
 
-                if(RememberMe_CheckBox.IsChecked == true) {
+                if (RememberMe_CheckBox.IsChecked == true) {
                     ConfigManager.SetValue("AccessToken", response.AccessToken);
                 }
                 else {
@@ -128,6 +151,8 @@ namespace ClientApp.MVVM.View.AppStartup {
                     }
                 }
             }
+
+            LoginButton.IsEnabled = true;
         }
     }
 

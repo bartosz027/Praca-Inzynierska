@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using System.Data.SqlTypes;
@@ -8,6 +9,7 @@ using Network.Server.Core;
 using Network.Server.Database;
 
 using Network.Shared.Core;
+using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Account.Login;
@@ -69,21 +71,30 @@ namespace Network.Server.DataProcessing.Managers {
 
                 client.ID = user_account.ID;
                 client.Status = user_account.Status;
-
-                client.AccessToken = token;
                 client.Username = user_account.Username;
-
-                response.AccessToken = token;
-                response.Username = user_account.Username;
+                client.AccessToken = token;
 
                 Server.Data.Clients.Add(client);
                 db.SaveChanges();
 
-                var receivers = client.FindConnectedFriends();
+                response.ID = client.ID;
+                response.Status = client.Status;
+                response.Username = client.Username;
+                response.AccessToken = client.AccessToken;
+
+                var receivers = new List<ClientInfo>();
                 var notification = new LoginNotification() {
                     ID = client.ID,
                     Status = client.Status
                 };
+
+                foreach (var friendship in user_account.Friends) {
+                    var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                    if (friend_info != null) {
+                        receivers.Add(friend_info);
+                    }
+                }
 
                 return new RequestResult() {
                     ResponseReceiver = client,
@@ -115,18 +126,28 @@ namespace Network.Server.DataProcessing.Managers {
 
                 client.ID = user_account.ID;
                 client.Status = user_account.Status;
-
                 client.Username = user_account.Username;
                 client.AccessToken = user_account.AccessToken;
 
-                response.Username = user_account.Username;
+                response.ID = client.ID;
+                response.Status = client.Status;
+                response.Username = client.Username;
+
                 Server.Data.Clients.Add(client);
 
-                var receivers = client.FindConnectedFriends();
+                var receivers = new List<ClientInfo>();
                 var notification = new LoginNotification() {
                     ID = client.ID,
                     Status = client.Status
                 };
+
+                foreach (var friendship in user_account.Friends) {
+                    var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                    if (friend_info != null) {
+                        receivers.Add(friend_info);
+                    }
+                }
 
                 return new RequestResult() {
                     ResponseReceiver = client,
@@ -174,7 +195,9 @@ namespace Network.Server.DataProcessing.Managers {
                     Password = PasswordHasher.Hash(request.Password),
 
                     Status = true,
-                    Verified = false
+                    Verified = false,
+                    
+                    UserImage = "Resources/DefaultAvatar.jpg"
                 };
 
                 if (user_account != null) {
@@ -256,7 +279,8 @@ namespace Network.Server.DataProcessing.Managers {
                 try {
                     SMTP.SendMail(request.Email, Values.EmailSubject, Values.EmailBody + ' ' + code);
                 }
-                catch {
+                catch (Exception e) {
+                    Console.WriteLine(e);
                     // TODO: Account locked exception
                 }
             }
@@ -322,19 +346,25 @@ namespace Network.Server.DataProcessing.Managers {
             response.Result = ResponseResult.Success;
 
             using (var db = new PiDbContext()) {
+                var user_account = db.Accounts.Find(client.ID);
+                user_account.AccessToken = null;
+                db.SaveChanges();
+
+                var receivers = new List<ClientInfo>();
                 var notification = new LogoutNotification() {
                     ID = client.ID
                 };
 
-                var user_account = db.Accounts.Find(client.ID);
-                var receivers = client.FindConnectedFriends();
+                foreach (var friendship in user_account.Friends) {
+                    var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
 
-                user_account.AccessToken = null;
-                db.SaveChanges();
+                    if (friend_info != null) {
+                        receivers.Add(friend_info);
+                    }
+                }
 
                 client.ID = 0;
                 client.Status = false;
-
                 client.Username = null;
                 client.AccessToken = null;
 

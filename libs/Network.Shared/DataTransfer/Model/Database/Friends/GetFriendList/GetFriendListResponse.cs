@@ -10,7 +10,9 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList {
     public class FriendInfo {
         public int UserID { get; set; }
         public bool Status { get; set; }
+
         public string Username { get; set; }
+        public byte[] ImageBytes { get; set; }
 
         public bool IsLastMessageRead { get; set; }
         public DateTime LastMessageSendDate { get; set; }
