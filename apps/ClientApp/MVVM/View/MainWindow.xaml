@@ -13,8 +13,8 @@
         Title="MainWindow" 
         WindowStyle="None"
                 
-        MinHeight="550" MinWidth="900"
-        Height="550" Width="900">
+        MinHeight="720" MinWidth="1280"
+        Height="720" Width="1280">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>

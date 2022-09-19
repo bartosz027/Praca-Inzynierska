@@ -40,8 +40,8 @@
                          Background="Transparent"
                          BorderBrush="Transparent"/>
 
-                <ListBox Grid.Row="2"
-                         x:Name="ContactList" 
+                <ListBox x:Name="ContactList" 
+                         Grid.Row="2"
                          
                          ItemsSource="{Binding FriendList}"
                          SelectedItem="{Binding SelectedFriend}"
@@ -87,12 +87,12 @@
                                     <Border Grid.Row="1">
 
                                         <TextBlock Text="{Binding FriendInfo.GetUID}"
-                                                 Style="{DynamicResource UserInfoTextBlock}"
-                                                 FontSize="10"
-                                                 HorizontalAlignment="Left"
-                                                 VerticalAlignment="Top"
-                                                 Margin="5,0"
-                                                 Padding="0"/>
+                                                   Style="{DynamicResource UserInfoTextBlock}"
+                                                   FontSize="10"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   Margin="5,0"
+                                                   Padding="0"/>
                                         
                                     </Border>
 

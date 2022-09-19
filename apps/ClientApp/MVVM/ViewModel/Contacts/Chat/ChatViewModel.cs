@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 
 using ClientApp.Core;
-
 using Network.Client;
 
 using Network.Shared.Core;
@@ -92,16 +91,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 FriendID = FriendInfo.ID
             });
         }
-        public void RefreshList() 
-        {
-            IsFocused = true;
-            if (Messages.Count > 0)
-            {
-                var tempValue = Messages[Messages.Count - 1];
-                Messages.RemoveAt(Messages.Count - 1);
-                Messages.Add(tempValue);
-            }
-        }
         public bool Initialized { get; set; }
 
         // Commands
@@ -110,12 +99,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         public RelayCommand CopyMessageCommand { get; private set; }
 
         // Properties
-        public FriendInfo FriendInfo {
+        public bool IsFocused {
             get {
-                return _Friend;
+                return _IsFocused;
             }
             set {
-                _Friend = value;
+                _IsFocused = value;
                 OnPropertyChanged();
             }
         }
@@ -130,6 +119,16 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
+        public FriendInfo FriendInfo {
+            get {
+                return _Friend;
+            }
+            set {
+                _Friend = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<MessageInfo> Messages {
             get { 
                 return _Messages; 
@@ -139,24 +138,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 OnPropertyChanged();
             }
         }
-        public bool IsFocused
-        {
-            get
-            {
-                return _IsFocused;
-            }
-            set
-            {
-                _IsFocused = value;
-                OnPropertyChanged();
-            }
-        }
+
+        private bool _IsFocused;
+        private string _RichBoxContent;
 
         private FriendInfo _Friend;
-        private string _RichBoxContent;
         private ObservableCollection<MessageInfo> _Messages;
-        private bool _IsFocused;
-
     }
 
 }

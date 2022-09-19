@@ -4,8 +4,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              
              xmlns:src="clr-namespace:ClientApp.Core"
-             xmlns:customControls="clr-namespace:ClientApp.Resources.CustomControls"
+             
+             xmlns:controls="clr-namespace:ClientApp.Core.Controls"
              xmlns:extensions="clr-namespace:ClientApp.Core.Extensions"
+             
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              mc:Ignorable="d" 
              
@@ -29,8 +31,8 @@
 
         <Border x:Name="ChatSector"
                 Grid.Row="1" Margin="10">
-            
-            <customControls:ScrollingListView Background="Transparent"
+
+            <controls:ScrollingListView Background="Transparent"
                       ItemsSource="{Binding Messages}"
                       
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -146,7 +148,7 @@
                     
                 </ListView.ItemTemplate>
 
-            </customControls:ScrollingListView>
+            </controls:ScrollingListView>
             
         </Border>
 
