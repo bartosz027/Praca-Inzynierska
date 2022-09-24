@@ -4,33 +4,33 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFC8F06C-41BF-46F8-BF7C-7E6E23DFF20C}</ProjectGuid>
+    <ProjectGuid>{686634DB-D3C9-494E-A233-B0CEE34C30C5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Network.Client</RootNamespace>
-    <AssemblyName>Network.Client</AssemblyName>
+    <RootNamespace>OpusWrapper</RootNamespace>
+    <AssemblyName>OpusWrapper</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(SolutionDir)build\Debug\bin\libs\$(AssemblyName)</OutputPath>
-    <IntermediateOutputPath>$(SolutionDir)build\Debug\obj\libs\$(AssemblyName)</IntermediateOutputPath>
+    <OutputPath>$(SolutionDir)build\Debug\bin\libs\OpusWrapper</OutputPath>
+    <IntermediateOutputPath>$(SolutionDir)build\Debug\obj\libs\OpusWrapper</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)build\Release\bin\libs\$(AssemblyName)</OutputPath>
-    <IntermediateOutputPath>$(SolutionDir)build\Release\obj\libs\$(AssemblyName)</IntermediateOutputPath>
+    <OutputPath>$(SolutionDir)build\Release\bin\libs\OpusWrapper</OutputPath>
+    <IntermediateOutputPath>$(SolutionDir)build\Release\obj\libs\OpusWrapper</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,8 +39,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NAudio.Core, Version=2.1.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,23 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
-    <Compile Include="DataProcessing\NotificationDispatcher.cs" />
+    <Compile Include="API.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="Bandwidth.cs" />
+    <Compile Include="Control.cs" />
+    <Compile Include="ForceChannels.cs" />
+    <Compile Include="OpusDecoder.cs" />
+    <Compile Include="OpusEncoder.cs" />
+    <Compile Include="OpusError.cs" />
+    <Compile Include="OpusException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataProcessing\ResponseDispatcher.cs" />
+    <Compile Include="SafeDecoderHandle.cs" />
+    <Compile Include="SafeEncoderHandle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Network.Shared\Network.Shared.csproj">
-      <Project>{1699265f-9187-4a50-bb3d-3dc3e6d48161}</Project>
-      <Name>Network.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpusWrapper\OpusWrapper.csproj">
-      <Project>{686634db-d3c9-494e-a233-b0cee34c30c5}</Project>
-      <Name>OpusWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="lib\opus.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

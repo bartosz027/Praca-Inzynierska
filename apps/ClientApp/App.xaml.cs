@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Text;
 
 using System.Linq;
 using System.Windows;
@@ -106,12 +107,18 @@ namespace ClientApp {
             Client.Data.Status = response.Status;
             Client.Data.Username = response.Username;
 
-            if (response.Result == ResponseResult.Failure) {
-                window = new LoginWindow();
-            }
+            switch(response.Result) {
+                case ResponseResult.Success: {
+                    byte[] data = Encoding.ASCII.GetBytes(Client.Data.ID.ToString());
+                    Client.UDPClient.Send(data, data.Length, Client.ServerEndPoint);
 
-            if (response.Result == ResponseResult.Success) {
-                window = new MainWindow();
+                    window = new MainWindow();
+                    break;
+                }
+                case ResponseResult.Failure: {
+                    window = new LoginWindow();
+                    break;
+                }
             }
 
             window.Show();
@@ -132,6 +139,7 @@ namespace ClientApp {
             Client.Data.Status = false;
             Client.Data.Username = null;
             Client.Data.AccessToken = null;
+            Client.Data.ExternalEndPoint = null;
 
             var login_window = new LoginWindow();
             login_window.Show();

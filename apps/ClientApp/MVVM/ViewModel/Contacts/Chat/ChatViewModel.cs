@@ -11,6 +11,8 @@ using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
+
 namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
 
     internal class MessageInfo : ObservableObject {
@@ -83,6 +85,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 var message = o as MessageInfo;
                 Clipboard.SetText(message.Content);
             });
+
+            CallFriendCommand = new RelayCommand(o => {
+                Client.Instance.SendRequest(new StartVoiceChatRequest() {
+                    FriendID = FriendInfo.ID
+                });
+            });
         }
 
         // Methods
@@ -97,6 +105,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         public RelayCommand SendMessageCommand { get; private set; }
         public RelayCommand RemoveMessageCommand { get; private set; }
         public RelayCommand CopyMessageCommand { get; private set; }
+        public RelayCommand CallFriendCommand { get; private set; }
 
         // Properties
         public bool IsFocused {

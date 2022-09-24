@@ -352,7 +352,8 @@ namespace Network.Server.DataProcessing.Managers {
 
                 var receivers = new List<ClientInfo>();
                 var notification = new LogoutNotification() {
-                    ID = client.ID
+                    ID = client.ID,
+                    EndPoint = client.ExternalEndPoint
                 };
 
                 foreach (var friendship in user_account.Friends) {
@@ -367,6 +368,7 @@ namespace Network.Server.DataProcessing.Managers {
                 client.Status = false;
                 client.Username = null;
                 client.AccessToken = null;
+                client.ExternalEndPoint = null;
 
                 Server.Data.Clients.Remove(client);
 

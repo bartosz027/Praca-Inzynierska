@@ -1,4 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using System.Net;
+using System.Net.Sockets;
+
 using System.Security.Cryptography;
 using Network.Shared.Core;
 
@@ -14,6 +16,7 @@ namespace Network.Shared.Model {
         // Connection data
         public TcpClient TCP { get; internal set; }
         internal NetworkStream Stream { get; set; }
+        public IPEndPoint ExternalEndPoint { get; set; }
 
         // Security
         public bool IsConnectedViaRSA { get; internal set; }

@@ -3,12 +3,17 @@
 using ClientApp.MVVM.ViewModel.Contacts;
 using ClientApp.MVVM.ViewModel.Settings;
 
+using Network.Shared.Core.Audio;
+
 namespace ClientApp.MVVM.ViewModel {
 
     internal class MainWindowViewModel : BaseVM {
         public MainWindowViewModel() {
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
+
+            Audio.MuteMicrophone(false);
+            Audio.MuteHeadphones(false);
 
             ContactsButtonCommand = new RelayCommand(o => {
                 CurrentView = ContactsVM;
@@ -17,6 +22,14 @@ namespace ClientApp.MVVM.ViewModel {
             SettingsButtonCommand = new RelayCommand(o => {
                 ContactsVM.ContactManagerButtonCommand.Execute(null);
                 CurrentView = SettingsVM;
+            });
+
+            MuteMicrophoneButtonCommand = new RelayCommand(o => {
+                Audio.MuteMicrophone();
+            });
+
+            MuteHeadphonesButtonCommand = new RelayCommand(o => {
+                Audio.MuteHeadphones();
             });
 
             CurrentView = ContactsVM;
@@ -29,6 +42,9 @@ namespace ClientApp.MVVM.ViewModel {
         // Commands
         public RelayCommand ContactsButtonCommand { get; private set; }
         public RelayCommand SettingsButtonCommand { get; private set; }
+
+        public RelayCommand MuteMicrophoneButtonCommand { get; private set; }
+        public RelayCommand MuteHeadphonesButtonCommand { get; private set; }
 
         // Current view
         public object CurrentView {

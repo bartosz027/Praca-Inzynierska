@@ -112,10 +112,12 @@
                             </Grid.ColumnDefinitions>
 
                             <ToggleButton Grid.Column="0"
-                                          Style="{DynamicResource MicroButton}"/>
+                                          Style="{DynamicResource MicroButton}"
+                                          Command="{Binding MuteMicrophoneButtonCommand}"/>
 
                             <ToggleButton Grid.Column="1"
-                                          Style="{DynamicResource HeadphonesButton}"/>
+                                          Style="{DynamicResource HeadphonesButton}"
+                                          Command="{Binding MuteHeadphonesButtonCommand}"/>
 
                             <Button Grid.Column="2" Command="{Binding SettingsButtonCommand}"
                                     Style="{DynamicResource NavigationButton}">

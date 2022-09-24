@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Linq;
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-using System.Linq;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 using ClientApp.Core;
@@ -31,6 +32,9 @@ using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvi
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
+
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 
 using Network.Server.Core;
 
@@ -221,9 +225,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             dispatcher.Dispatch<SendFriendInvitationResponse>(OnSendFriendInvitationResponse);
             dispatcher.Dispatch<AcceptFriendInvitationResponse>(OnAcceptFriendInvitationResponse);
 
-            // Chat
+            // Text chat
             dispatcher.Dispatch<DeleteMessageResponse>(OnDeleteMessageResponse);
             dispatcher.Dispatch<SendMessageResponse>(OnSendMessageResponse);
+
+            // Voice chat
+            dispatcher.Dispatch<AcceptVoiceChatResponse>(OnAcceptVoiceChatResponse);
         }
 
         private void OnGetFriendListResponse(GetFriendListResponse response) {
@@ -399,6 +406,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             view_model.Messages.Add(message_info);
         }
 
+        private void OnAcceptVoiceChatResponse(AcceptVoiceChatResponse response) {
+            if(response.Result == ResponseResult.Success) {
+                Client.Data.ExternalEndPoint = response.EndPoint;
+            }
+        }
+
         // Notification events
         protected override void OnNotificationReceived(NotificationDispatcher dispatcher) {
             // Friend status
@@ -409,9 +422,13 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             dispatcher.Dispatch<SendFriendInvitationNotification>(OnSendFriendInvitationNotification);
             dispatcher.Dispatch<AcceptFriendInvitationNotification>(OnAcceptFriendInvitationNotification);
 
-            // Chat
+            // Text chat
             dispatcher.Dispatch<DeleteMessageNotification>(OnDeleteMessageNotification);
             dispatcher.Dispatch<SendMessageNotification>(OnSendMessageNotification);
+
+            // Voice chat
+            dispatcher.Dispatch<StartVoiceChatNotification>(OnStartVoiceChatNotification);
+            dispatcher.Dispatch<AcceptVoiceChatNotification>(OnAcceptVoiceChatNotification);
         }
 
         private void OnLoginNotification(LoginNotification notification) {
@@ -427,6 +444,10 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
             if (view_model != null) {
                 view_model.FriendInfo.Status = false;
+            }
+
+            if (notification.EndPoint.Equals(Client.Data.ExternalEndPoint)) {
+                Client.Data.ExternalEndPoint = null;
             }
         }
 
@@ -511,6 +532,26 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 view_model.FriendInfo.LastMessageSendDate = notification.SendDate;
                 UpdateNotifcationBall();
             }
+        }
+
+        private void OnStartVoiceChatNotification(StartVoiceChatNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+
+            if(view_model != null) {
+                var result = MessageBox.Show(view_model.FriendInfo.Username + " dzwoni! Czy zaakceptować połączenie?", "ROZMOWA GŁOSOWA", MessageBoxButton.YesNo);
+
+                if(result == MessageBoxResult.Yes) {
+                    Client.Instance.SendRequest(new AcceptVoiceChatRequest() { 
+                        FriendID = view_model.FriendInfo.ID
+                    });
+                }
+
+                SelectedFriend = view_model;
+            }
+        }
+
+        private void OnAcceptVoiceChatNotification(AcceptVoiceChatNotification notification) {
+            Client.Data.ExternalEndPoint = notification.EndPoint;
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -45,12 +46,40 @@ namespace Network.Server {
         public void Start(string ip_address, int port) {
             // Init server
             var ip = IPAddress.Parse(ip_address);
-
-            Server.Data.Listener = new TcpListener(ip, port);
             Server.Data.Clients = new ThreadSafeList<ClientInfo>();
 
             // Start server
+            Server.Data.Listener = new TcpListener(ip, port);
             Server.Data.Listener.Start();
+
+            Server.Data.UDP = new UdpClient(new IPEndPoint(ip, port));
+            Task.Factory.StartNew(() => {
+                while (true) {
+                    try {
+                        byte[] data = null;
+
+                        var ep = new IPEndPoint(ip, port);
+                        data = Server.Data.UDP.Receive(ref ep);
+
+                        if (data != null) {
+                            var id = 0;
+                            var result = int.TryParse(Encoding.UTF8.GetString(data), out id);
+
+                            if(result) {
+                                //var external_ip_string = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
+                                //var external_ip = IPAddress.Parse(external_ip_string);
+
+                                var client = Server.Data.Clients.Find(p => p.ID == id);
+                                client.ExternalEndPoint = ep;
+
+                                data = Encoding.UTF8.GetBytes("NULL");
+                                Server.Data.UDP.Send(data, data.Length, ep);
+                            }
+                        }
+                    }
+                    catch {}
+                }
+            }, TaskCreationOptions.LongRunning);
 
             Console.WriteLine("Server has started on {0}!", Server.Data.Listener.LocalEndpoint);
             Console.WriteLine("Waiting for connection...");
@@ -125,7 +154,8 @@ namespace Network.Server {
                                 Console.WriteLine("Client [id={0}, username={1}] disconnected!", client_info.ID, client_info.Username);
 
                                 var notification = new LogoutNotification() {
-                                    ID = client.ID
+                                    ID = client.ID,
+                                    EndPoint = client.ExternalEndPoint
                                 };
 
                                 using (var db = new PiDbContext()) {
@@ -233,6 +263,7 @@ namespace Network.Server {
 
         // Properties
         internal static class Data {
+            public static UdpClient UDP { get; set; }
             public static TcpListener Listener { get; set; }
             public static ThreadSafeList<ClientInfo> Clients { get; set; }
         }

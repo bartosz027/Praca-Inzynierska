@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+
 using System.Windows;
 using System.Windows.Controls;
 
@@ -121,6 +123,9 @@ namespace ClientApp.MVVM.View.AppStartup {
                 Client.Data.Status = response.Status;
                 Client.Data.Username = response.Username;
                 Client.Data.AccessToken = response.AccessToken;
+
+                byte[] data = Encoding.ASCII.GetBytes(Client.Data.ID.ToString());
+                Client.UDPClient.Send(data, data.Length, Client.ServerEndPoint);
 
                 if (RememberMe_CheckBox.IsChecked == true) {
                     ConfigManager.SetValue("AccessToken", response.AccessToken);

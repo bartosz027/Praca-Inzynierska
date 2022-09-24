@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Text;
 
+using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 using Network.Client.DataProcessing;
 
 using Network.Shared.Core;
+using Network.Shared.Core.Audio;
+
 using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
@@ -21,8 +24,42 @@ namespace Network.Client {
     public class Client {
         private Client() {
             EncryptionRSA.Init();
+
             Client.Data = new ClientInfo();
             Client.Data.TCP = new TcpClient();
+
+            _Audio = new Audio();
+            _NoiseGate = new NoiseGate();
+
+            UDPClient = new UdpClient(0);
+            Task.Factory.StartNew(() => {
+                while (true) {
+                    try {
+                        IPEndPoint ep = null;
+                        byte[] data = UDPClient.Receive(ref ep);
+
+                        if (ep != null && Encoding.UTF8.GetString(data) != "NULL") {
+                            data = _Audio.Decode(data);
+                            _Audio.Play(data);
+                        }
+                    }
+                    catch {}
+                }
+            }, TaskCreationOptions.LongRunning);
+
+            _Audio.StartVoiceRecording((sender, args) => {
+                if(Client.Data.ExternalEndPoint != null) {
+                    try {
+                        byte[] data = _NoiseGate.ApplyNoiseGate(args.Buffer);
+                        data = _Audio.Encode(data);
+
+                        if (data != null) {
+                            UDPClient.Send(data, data.Length, Client.Data.ExternalEndPoint);
+                        }
+                    }
+                    catch { }
+                }
+            });
         }
 
         public static Client Instance {
@@ -33,6 +70,8 @@ namespace Network.Client {
 
         // Connect to server
         public void Connect(string ip, int port) {
+            ServerEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+
             Client.Data.TCP.Connect(ip, port);
             Client.Data.Stream = Client.Data.TCP.GetStream();
 
@@ -200,6 +239,14 @@ namespace Network.Client {
 
         // Properties
         public static ClientInfo Data { get; private set; }
+
+        // UDP Connection
+        public static UdpClient UDPClient { get; private set; }
+        public static IPEndPoint ServerEndPoint { get; private set; }
+
+        // Audio
+        private Audio _Audio;
+        private NoiseGate _NoiseGate;
 
         // Events
         public event EventHandler<Response> ResponseReceived;
