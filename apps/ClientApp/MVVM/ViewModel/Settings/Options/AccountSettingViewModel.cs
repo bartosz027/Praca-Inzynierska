@@ -11,7 +11,17 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options
     {
         public AccountSettingViewModel()
         {
-
+            Email = "example@example.com";
         }
+        public string Email 
+        {
+            get { return _email; }
+            set 
+            {
+                _email = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _email;
     }
 }

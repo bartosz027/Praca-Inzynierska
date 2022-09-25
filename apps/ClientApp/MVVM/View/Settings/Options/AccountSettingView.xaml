@@ -43,7 +43,7 @@
                 <TextBox Style="{DynamicResource ChatTextBox}"
                          Margin="10,5" Padding="5"
                          TextWrapping="NoWrap"
-                         Text="example@example.com"
+                         Text="{Binding Email}"
                          IsReadOnly="True"/>
 
             </Border>
