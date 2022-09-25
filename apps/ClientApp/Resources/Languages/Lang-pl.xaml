@@ -72,6 +72,12 @@
     <system:String x:Key="ProfileDataButton_String">Dane profilu</system:String>
     <system:String x:Key="AccountDataButton_String">Dane konta</system:String>
 
+    <system:String x:Key="ProfileNickName_String">Pseudonim artystczny:</system:String>
+    <system:String x:Key="ProfileAvatar_String">Zmień avatar:</system:String>
+    <system:String x:Key="ProfileAddAvatar_String">Dodaj zdjęcie</system:String>
+    <system:String x:Key="ProfilePreview_String">Podgląd</system:String>
+    <system:String x:Key="ProfileSaveChanges_String">Zapisz zmiany</system:String>
+
     <system:String x:Key="ThemeButton_String">Motyw</system:String>
     <system:String x:Key="ThemeSettingDescription_String">Wygląd</system:String>
 

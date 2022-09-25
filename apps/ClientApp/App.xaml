@@ -19,7 +19,6 @@
              xmlns:OptionsViewModel="clr-namespace:ClientApp.MVVM.ViewModel.Settings.Options">
 
     <Application.Resources>
-        
         <ResourceDictionary>
 
             <!-->Contacts</!-->
@@ -57,6 +56,14 @@
 
             <DataTemplate DataType="{x:Type OptionsViewModel:LanguageSettingsViewModel}">
                 <OptionsView:LanguageSettingsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type OptionsViewModel:AccountSettingViewModel}">
+                <OptionsView:AccountSettingView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type OptionsViewModel:ProfileSettingViewModel}">
+                <OptionsView:ProfileSettingView/>
             </DataTemplate>
             
         </ResourceDictionary>
