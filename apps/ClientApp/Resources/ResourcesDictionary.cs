@@ -41,6 +41,8 @@
         public const string Info = "Info";
 
         // TODO: Dodać wszystkie resources
+
+        public const string PasswordChanged = "AccountDataPasswordChanged_String";
     }
 
 }

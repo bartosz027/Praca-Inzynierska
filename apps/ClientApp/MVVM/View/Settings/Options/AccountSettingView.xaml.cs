@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClientApp.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,30 @@ namespace ClientApp.MVVM.View.Settings.Options
         {
             InitializeComponent();
         }
+
+        private void ResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            ResetButtonPanel.Visibility = Visibility.Hidden;
+            ResetFormPanel.Visibility = Visibility.Visible;
+        }
+        private void SendResetPasswordRequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (OldPasswordBox.Password == "" || NewPasswordBox1.Password == "" || NewPasswordBox2.Password == "")
+            {
+                ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.FieldIsEmpty);
+                ErrorMessage.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#CB1919"));
+            }
+            else if (NewPasswordBox1.Password != NewPasswordBox2.Password) 
+            {
+                ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.NotSamePassword);
+                ErrorMessage.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#CB1919"));
+            }
+            else 
+            {
+                ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.PasswordChanged);
+                ErrorMessage.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#007C77"));
+            }
+        }
+
     }
 }

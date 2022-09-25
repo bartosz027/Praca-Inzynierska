@@ -70,13 +70,20 @@
     <system:String x:Key="AppSettings_String">Ustawienia aplikacji</system:String>
 
     <system:String x:Key="ProfileDataButton_String">Dane profilu</system:String>
-    <system:String x:Key="AccountDataButton_String">Dane konta</system:String>
-
+    
     <system:String x:Key="ProfileNickName_String">Pseudonim artystczny:</system:String>
     <system:String x:Key="ProfileAvatar_String">Zmień avatar:</system:String>
     <system:String x:Key="ProfileAddAvatar_String">Dodaj zdjęcie</system:String>
     <system:String x:Key="ProfilePreview_String">Podgląd</system:String>
     <system:String x:Key="ProfileSaveChanges_String">Zapisz zmiany</system:String>
+
+    <system:String x:Key="AccountDataButton_String">Dane konta</system:String>
+    <system:String x:Key="AccountDataEmail_String">E-mail:</system:String>
+    <system:String x:Key="AccountDataPassword_String">Zmień hasło:</system:String>
+    <system:String x:Key="AccountDataOldPassword_String">Wprowadz stare hasło:</system:String>
+    <system:String x:Key="AccountDataNewPassword_String">Wprowadz nowe hasło:</system:String>
+    <system:String x:Key="AccountDataNewPassword2_String">Potwierdź nowe hasło:</system:String>
+    <system:String x:Key="AccountDataPasswordChanged_String">Hasło zostało zmienione poprawnie.</system:String>
 
     <system:String x:Key="ThemeButton_String">Motyw</system:String>
     <system:String x:Key="ThemeSettingDescription_String">Wygląd</system:String>
