@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Network.Shared.DataTransfer.Base;
-using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
 namespace Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList {
 

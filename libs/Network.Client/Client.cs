@@ -9,13 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Network.Client.DataProcessing;
+using Network.Client.Model;
 
 using Network.Shared.Core;
 using Network.Shared.Core.Audio;
 
-using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
-
 using Network.Shared.DataTransfer.Security.ExchangeAESKeys;
 using Network.Shared.DataTransfer.Security.ExchangeRSAKeys;
 
@@ -31,30 +30,19 @@ namespace Network.Client {
             _Audio = new Audio();
             _NoiseGate = new NoiseGate();
 
-            UDPClient = new UdpClient(0);
-            Task.Factory.StartNew(() => {
-                while (true) {
-                    try {
-                        IPEndPoint ep = null;
-                        byte[] data = UDPClient.Receive(ref ep);
-
-                        if (ep != null && Encoding.UTF8.GetString(data) != "NULL") {
-                            data = _Audio.Decode(data);
-                            _Audio.Play(data);
-                        }
-                    }
-                    catch {}
-                }
-            }, TaskCreationOptions.LongRunning);
+            Client.Data.UDP = new UdpClient(0);
+            UdpListenerThread();
 
             _Audio.StartVoiceRecording((sender, args) => {
-                if(Client.Data.ExternalEndPoint != null) {
+                if(Client.Data.ClientEndPoint != null) {
                     try {
                         byte[] data = _NoiseGate.ApplyNoiseGate(args.Buffer);
+
                         data = _Audio.Encode(data);
+                        data = AES.Encrypt(data);
 
                         if (data != null) {
-                            UDPClient.Send(data, data.Length, Client.Data.ExternalEndPoint);
+                            Client.Data.UDP.Send(data, data.Length, Client.Data.ClientEndPoint);
                         }
                     }
                     catch { }
@@ -62,6 +50,28 @@ namespace Network.Client {
             });
         }
 
+        private void UdpListenerThread() {
+            Task.Factory.StartNew(() => {
+                while (true) {
+                    try {
+                        IPEndPoint ep = null;
+                        byte[] data = Client.Data.UDP.Receive(ref ep);
+
+                        if (Encoding.UTF8.GetString(data) != "NULL") {
+                            data = AES.Decrypt(data);
+                            data = _Audio.Decode(data);
+
+                            if (ep != null) {
+                                _Audio.Play(data);
+                            }
+                        }
+                    }
+                    catch { }
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        // Singleton
         public static Client Instance {
             get { return _Instance ??= new Client(); }
             private set { _Instance = value; }
@@ -70,13 +80,12 @@ namespace Network.Client {
 
         // Connect to server
         public void Connect(string ip, int port) {
-            ServerEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            Client.Data.ServerEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
 
             Client.Data.TCP.Connect(ip, port);
             Client.Data.Stream = Client.Data.TCP.GetStream();
 
             if (Client.Data.TCP.Connected) {
-                // TODO: Write to log file
                 StartListenerThread();
             }
         }
@@ -141,7 +150,6 @@ namespace Network.Client {
                             Client.Data.AccessToken = token;
                             ConnectionLost?.Invoke(this, new EventArgs());
 
-                            // TODO: Write to log file
                             cancellation.Cancel();
                             break;
                         }
@@ -167,8 +175,6 @@ namespace Network.Client {
                         }
                     }
                     catch (Exception e) {
-                        // TODO: Write to log file
-
                         if(e is OperationCanceledException) {
                             break;
                         }
@@ -225,9 +231,7 @@ namespace Network.Client {
                 request_bytes = Serializer.AddArrayLength(request_bytes);
                 Client.Data.Stream.Write(request_bytes, 0, request_bytes.Length);
             }
-            catch {
-                // TODO: Write to log file
-            }
+            catch {}
         }
 
         // Remove event handler references
@@ -238,13 +242,10 @@ namespace Network.Client {
         }
 
         // Properties
-        public static ClientInfo Data { get; private set; }
+        public static ClientInfo Data { get; internal set; }
+        public static EncryptionAES AES { get; set; }
 
-        // UDP Connection
-        public static UdpClient UDPClient { get; private set; }
-        public static IPEndPoint ServerEndPoint { get; private set; }
-
-        // Audio
+        // Voice chat
         private Audio _Audio;
         private NoiseGate _NoiseGate;
 

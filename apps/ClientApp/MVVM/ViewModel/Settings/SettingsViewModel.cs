@@ -1,5 +1,4 @@
 ﻿using System.Windows.Media.Imaging;
-using Network.Server.Core;
 
 using ClientApp.Core;
 using ClientApp.MVVM.ViewModel.Settings.Options;
@@ -16,12 +15,21 @@ namespace ClientApp.MVVM.ViewModel.Settings {
         public SettingsViewModel() {
             EnableResponseListener();
 
+            AccountSettingVM = new AccountSettingsViewModel();
+            ProfileSettingVM = new ProfileSettingViewModel();
+
             ThemeSettingsVM = new ThemesSettingViewModel();
             LanguageSettingsVM = new LanguageSettingsViewModel();
-            ProfileSettingVM = new ProfileSettingViewModel();
-            AccountSettingVM = new AccountSettingViewModel();
 
-            
+
+            AccountOptionCommand = new RelayCommand(o => {
+                CurrentView = AccountSettingVM;
+            });
+
+            ProfileOptionCommand = new RelayCommand(o => {
+                ProfileSettingVM.SetMockData(Username, UserID, UserImage);
+                CurrentView = ProfileSettingVM;
+            });
 
             ThemeOptionCommand = new RelayCommand(o => {
                 CurrentView = ThemeSettingsVM;
@@ -35,15 +43,6 @@ namespace ClientApp.MVVM.ViewModel.Settings {
                 Client.Instance.SendRequest(new LogoutRequest());
             });
 
-            ProfileOptionCommand = new RelayCommand(o => {
-                ProfileSettingVM.SetMockData(Username, UserID, UserImage);
-                CurrentView = ProfileSettingVM;
-            });
-
-            AccountOptionCommand = new RelayCommand(o => {
-                CurrentView = AccountSettingVM;
-            });
-
             UserID = "UID: " + Client.Data.ID.ToString("000000000");
             Username = Client.Data.Username;
 
@@ -52,14 +51,15 @@ namespace ClientApp.MVVM.ViewModel.Settings {
         }
 
         // VM's
+        public AccountSettingsViewModel AccountSettingVM { get; private set; }
+        public ProfileSettingViewModel ProfileSettingVM { get; private set; }
+
         public ThemesSettingViewModel ThemeSettingsVM { get; private set; }
         public LanguageSettingsViewModel LanguageSettingsVM { get; private set; }
-        public ProfileSettingViewModel ProfileSettingVM { get; private set; }
-        public AccountSettingViewModel AccountSettingVM { get; private set; }  
 
         // Commands
-        public RelayCommand ProfileOptionCommand { get; private set; }
         public RelayCommand AccountOptionCommand { get; private set; }
+        public RelayCommand ProfileOptionCommand { get; private set; }
 
         public RelayCommand ThemeOptionCommand { get; private set; }
         public RelayCommand LanguageOptionCommand { get; private set; }

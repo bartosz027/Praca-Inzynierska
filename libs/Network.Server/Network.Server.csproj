@@ -96,6 +96,7 @@
     <Compile Include="DataProcessing\Managers\FriendsRequestManager.cs" />
     <Compile Include="DataProcessing\Managers\DatabaseRequestManager.cs" />
     <Compile Include="DataProcessing\Managers\SecurityRequestManager.cs" />
+    <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProcessing\RequestManager.cs" />
     <Compile Include="DataProcessing\RequestDispatcher.cs" />

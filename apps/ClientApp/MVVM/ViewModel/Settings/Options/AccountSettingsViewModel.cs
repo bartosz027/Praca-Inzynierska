@@ -1,18 +1,15 @@
 ﻿using ClientApp.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Network.Client;
 
 namespace ClientApp.MVVM.ViewModel.Settings.Options
 {
-    internal class AccountSettingViewModel : ObservableObject
+    internal class AccountSettingsViewModel : ObservableObject
     {
-        public AccountSettingViewModel()
+        public AccountSettingsViewModel()
         {
-            Email = "example@example.com";
+            Email = Client.Data.Email;
         }
+
         public string Email 
         {
             get { return _email; }

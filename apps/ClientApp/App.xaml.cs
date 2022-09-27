@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows;
 
 using ClientApp.Core;
-
 using ClientApp.MVVM.View;
 using ClientApp.MVVM.View.AppStartup;
 
@@ -104,13 +103,14 @@ namespace ClientApp {
             BaseWindow window = null;
 
             Client.Data.ID = response.ID;
+            Client.Data.Email = response.Email;
             Client.Data.Status = response.Status;
             Client.Data.Username = response.Username;
 
             switch(response.Result) {
                 case ResponseResult.Success: {
                     byte[] data = Encoding.ASCII.GetBytes(Client.Data.ID.ToString());
-                    Client.UDPClient.Send(data, data.Length, Client.ServerEndPoint);
+                    Client.Data.UDP.Send(data, data.Length, Client.Data.ServerEndPoint);
 
                     window = new MainWindow();
                     break;
@@ -130,16 +130,11 @@ namespace ClientApp {
         }
 
         private void OnLogoutResponse(LogoutResponse response) {
+            Client.Data.ClearUserData();
             Client.Instance.UnsubscribeAllEvents();
 
             Client.Instance.ConnectionLost += ConnectToServer;
             Client.Instance.ResponseReceived += OnResponseReceived;
-
-            Client.Data.ID = 0;
-            Client.Data.Status = false;
-            Client.Data.Username = null;
-            Client.Data.AccessToken = null;
-            Client.Data.ExternalEndPoint = null;
 
             var login_window = new LoginWindow();
             login_window.Show();

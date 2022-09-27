@@ -1,5 +1,5 @@
 ﻿using System;
-using Network.Shared.Model;
+using Network.Server.Model;
 using Network.Shared.DataTransfer.Base;
 
 namespace Network.Server.DataProcessing {

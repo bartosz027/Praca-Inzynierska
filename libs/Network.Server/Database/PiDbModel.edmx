@@ -403,7 +403,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="0e145800cc6f481190aacf52243eaded" Name="Diagram1">
+      <Diagram DiagramId="ff564ea362f1450cba0f8aa0a5ebfd78" Name="Diagram1">
         <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.FriendInvitation" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />

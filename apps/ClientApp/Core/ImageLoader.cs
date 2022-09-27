@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace Network.Server.Core {
+namespace ClientApp.Core {
 
     public static class ImageLoader {
         public static BitmapImage Load(byte[] data) {

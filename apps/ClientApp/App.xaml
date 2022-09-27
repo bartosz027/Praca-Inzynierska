@@ -58,7 +58,7 @@
                 <OptionsView:LanguageSettingsView/>
             </DataTemplate>
             
-            <DataTemplate DataType="{x:Type OptionsViewModel:AccountSettingViewModel}">
+            <DataTemplate DataType="{x:Type OptionsViewModel:AccountSettingsViewModel}">
                 <OptionsView:AccountSettingView/>
             </DataTemplate>
 

@@ -1,14 +1,11 @@
-﻿using ClientApp.Core;
+﻿using System;
+using System.Windows.Media.Imaging;
+
+using ClientApp.Core;
 using ClientApp.Resources;
+
 using Microsoft.Win32;
 using Network.Shared.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace ClientApp.MVVM.ViewModel.Settings.Options
 {
@@ -60,7 +57,7 @@ namespace ClientApp.MVVM.ViewModel.Settings.Options
                 IsValidToSave = ((isAvatarChanged || _mockUsername != OrginalUsername) && _mockUsername.Length >= 2);
                 if (_mockUsername.Length < 2)
                 {
-                    ErrorMessage = ResourceManager.GetValue(ResourcesDictionary.InvalidUsername, Values.MinUsernameLength, Values.MaxPasswordLength);
+                    ErrorMessage = ResourceManager.GetValue(ResourcesDictionary.InvalidUsername, Values.MinUsernameLength, Values.MaxUsernameLength);
                 }
                 else
                 {

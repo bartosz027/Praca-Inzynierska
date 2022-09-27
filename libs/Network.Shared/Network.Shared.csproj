@@ -156,7 +156,6 @@
     <Compile Include="DataTransfer\Security\ExchangeAESKeys\ExchangeAESKeysResponse.cs" />
     <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysRequest.cs" />
     <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysResponse.cs" />
-    <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

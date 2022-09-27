@@ -5,9 +5,9 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Network.Server.Database;
-using Network.Shared.Core;
+using Network.Server.Model;
 
-using Network.Shared.Model;
+using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
@@ -287,14 +287,20 @@ namespace Network.Server.DataProcessing.Managers {
             var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
 
             if (receiver != null) {
+                var client_endpoint = (client.ExternalEndPoint.Address.ToString() != receiver.ExternalEndPoint.Address.ToString()) ? client.ExternalEndPoint : client.InternalEndPoint;
+                var receiver_endpoint = (client.ExternalEndPoint.Address.ToString() != receiver.ExternalEndPoint.Address.ToString()) ? receiver.ExternalEndPoint : receiver.InternalEndPoint;
+
                 var response = new AcceptVoiceChatResponse() {
                     Result = ResponseResult.Success,
-                    EndPoint = receiver.ExternalEndPoint
+                    EndPoint = receiver_endpoint
                 };
 
                 var notification = new AcceptVoiceChatNotification() {
                     FriendID = client.ID,
-                    EndPoint = client.ExternalEndPoint
+                    EndPoint = client_endpoint,
+
+                    Key = request.Key,
+                    IV = request.IV
                 };
 
                 return new RequestResult() {

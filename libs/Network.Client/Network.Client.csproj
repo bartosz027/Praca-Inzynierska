@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="DataProcessing\NotificationDispatcher.cs" />
+    <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataProcessing\ResponseDispatcher.cs" />
   </ItemGroup>

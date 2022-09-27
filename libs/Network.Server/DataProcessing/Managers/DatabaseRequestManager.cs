@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
+
 using System.Collections.Generic;
-
 using System.Linq;
-using Network.Server.Database;
 
-using Network.Shared.Model;
+using Network.Server.Database;
+using Network.Server.Model;
+
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Database.Friends.GetAvatar;

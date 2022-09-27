@@ -13,10 +13,9 @@ using System.Threading.Tasks;
 using Network.Server.Core;
 using Network.Server.Database;
 using Network.Server.DataProcessing;
+using Network.Server.Model;
 
 using Network.Shared.Core;
-using Network.Shared.Model;
-
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Account.Logout;
 
@@ -36,6 +35,7 @@ namespace Network.Server {
             EncryptionRSA.Init();
         }
 
+        // Singleton
         public static Server Instance {
             get { return _Instance ??= new Server(); }
             private set { _Instance = value; }
@@ -53,33 +53,7 @@ namespace Network.Server {
             Server.Data.Listener.Start();
 
             Server.Data.UDP = new UdpClient(new IPEndPoint(ip, port));
-            Task.Factory.StartNew(() => {
-                while (true) {
-                    try {
-                        byte[] data = null;
-
-                        var ep = new IPEndPoint(ip, port);
-                        data = Server.Data.UDP.Receive(ref ep);
-
-                        if (data != null) {
-                            var id = 0;
-                            var result = int.TryParse(Encoding.UTF8.GetString(data), out id);
-
-                            if(result) {
-                                //var external_ip_string = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
-                                //var external_ip = IPAddress.Parse(external_ip_string);
-
-                                var client = Server.Data.Clients.Find(p => p.ID == id);
-                                client.ExternalEndPoint = ep;
-
-                                data = Encoding.UTF8.GetBytes("NULL");
-                                Server.Data.UDP.Send(data, data.Length, ep);
-                            }
-                        }
-                    }
-                    catch {}
-                }
-            }, TaskCreationOptions.LongRunning);
+            StartUdpThread(ip, port);
 
             Console.WriteLine("Server has started on {0}!", Server.Data.Listener.LocalEndpoint);
             Console.WriteLine("Waiting for connection...");
@@ -90,13 +64,46 @@ namespace Network.Server {
 
                 client_info.TCP = client;
                 client_info.Stream = client.GetStream();
+                client_info.InternalEndPoint = client_info.TCP.Client.LocalEndPoint as IPEndPoint;
 
                 Console.WriteLine("Connection established with {0}!", client_info.TCP.Client.RemoteEndPoint);
-                StartClientThread(client_info);
+                StartTcpThread(client_info);
             }
         }
 
-        private void StartClientThread(ClientInfo client) {
+        private void StartUdpThread(IPAddress ip, int port) {
+            Task.Factory.StartNew(() => {
+                while (true) {
+                    try {
+                        byte[] data = null; 
+                        IPEndPoint ep = null;
+                        data = Server.Data.UDP.Receive(ref ep);
+
+                        if (data != null) {
+                            var id = 0;
+                            var result = int.TryParse(Encoding.UTF8.GetString(data), out id);
+
+                            if (result) {
+                                var client = Server.Data.Clients.Find(p => p.ID == id);
+                                var ep_address = ep.Address.ToString();
+
+                                var external_ip_string = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
+                                var external_ip = IPAddress.Parse(external_ip_string);
+
+                                client.ExternalEndPoint = ep_address.StartsWith("192.168") ? new IPEndPoint(external_ip, ep.Port) : ep;
+                                client.InternalEndPoint.Port = ep.Port;
+
+                                data = Encoding.UTF8.GetBytes("NULL");
+                                Server.Data.UDP.Send(data, data.Length, ep);
+                            }
+                        }
+                    }
+                    catch { }
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        private void StartTcpThread(ClientInfo client) {
             var request_queue = new BlockingCollection<Request>();
             var cancellation_token = new CancellationTokenSource();
 

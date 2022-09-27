@@ -106,7 +106,7 @@
     <Compile Include="MVVM\ViewModel\Contacts\Manager\AddContactViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\Manager\InvitationsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Settings\Options\AccountSettingViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Settings\Options\AccountSettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Settings\Options\LanguageSettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Settings\Options\ProfileSettingViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Settings\Options\ThemesSettingViewModel.cs" />

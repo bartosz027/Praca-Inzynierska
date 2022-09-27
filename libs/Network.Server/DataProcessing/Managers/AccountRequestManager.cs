@@ -7,9 +7,9 @@ using System.Linq;
 
 using Network.Server.Core;
 using Network.Server.Database;
+using Network.Server.Model;
 
 using Network.Shared.Core;
-using Network.Shared.Model;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Account.Login;
@@ -18,6 +18,7 @@ using Network.Shared.DataTransfer.Model.Account.Logout;
 using Network.Shared.DataTransfer.Model.Account.Register;
 using Network.Shared.DataTransfer.Model.Account.ResetPassword;
 using Network.Shared.DataTransfer.Model.Account.SendVerificationCode;
+
 using Network.Shared.DataTransfer.Model.Account.VerifyAccessToken;
 using Network.Shared.DataTransfer.Model.Account.VerifyEmail;
 
@@ -79,6 +80,8 @@ namespace Network.Server.DataProcessing.Managers {
 
                 response.ID = client.ID;
                 response.Status = client.Status;
+
+                response.Email = user_account.Email;
                 response.Username = client.Username;
                 response.AccessToken = client.AccessToken;
 
@@ -131,6 +134,8 @@ namespace Network.Server.DataProcessing.Managers {
 
                 response.ID = client.ID;
                 response.Status = client.Status;
+
+                response.Email = user_account.Email;
                 response.Username = client.Username;
 
                 Server.Data.Clients.Add(client);
@@ -281,7 +286,6 @@ namespace Network.Server.DataProcessing.Managers {
                 }
                 catch (Exception e) {
                     Console.WriteLine(e);
-                    // TODO: Account locked exception
                 }
             }
 

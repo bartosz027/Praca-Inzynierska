@@ -120,12 +120,13 @@ namespace ClientApp.MVVM.View.AppStartup {
         private void OnLoginResponse(LoginResponse response) {
             if (response.Result == ResponseResult.Success) {
                 Client.Data.ID = response.ID;
+                Client.Data.Email = response.Email;
                 Client.Data.Status = response.Status;
                 Client.Data.Username = response.Username;
                 Client.Data.AccessToken = response.AccessToken;
 
                 byte[] data = Encoding.ASCII.GetBytes(Client.Data.ID.ToString());
-                Client.UDPClient.Send(data, data.Length, Client.ServerEndPoint);
+                Client.Data.UDP.Send(data, data.Length, Client.Data.ServerEndPoint);
 
                 if (RememberMe_CheckBox.IsChecked == true) {
                     ConfigManager.SetValue("AccessToken", response.AccessToken);

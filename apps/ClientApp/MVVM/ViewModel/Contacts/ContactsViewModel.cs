@@ -36,8 +36,6 @@ using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 
-using Network.Server.Core;
-
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
     internal class FriendInfo : ObservableObject {
@@ -408,7 +406,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
         private void OnAcceptVoiceChatResponse(AcceptVoiceChatResponse response) {
             if(response.Result == ResponseResult.Success) {
-                Client.Data.ExternalEndPoint = response.EndPoint;
+                Client.Data.ClientEndPoint = response.EndPoint;
             }
         }
 
@@ -446,8 +444,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 view_model.FriendInfo.Status = false;
             }
 
-            if (notification.EndPoint.Equals(Client.Data.ExternalEndPoint)) {
-                Client.Data.ExternalEndPoint = null;
+            if (notification.EndPoint.Equals(Client.Data.ClientEndPoint)) {
+                Client.Data.ClientEndPoint = null;
             }
         }
 
@@ -541,8 +539,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 var result = MessageBox.Show(view_model.FriendInfo.Username + " dzwoni! Czy zaakceptować połączenie?", "ROZMOWA GŁOSOWA", MessageBoxButton.YesNo);
 
                 if(result == MessageBoxResult.Yes) {
+                    Client.AES = new EncryptionAES();
+
                     Client.Instance.SendRequest(new AcceptVoiceChatRequest() { 
-                        FriendID = view_model.FriendInfo.ID
+                        FriendID = view_model.FriendInfo.ID,
+                        Key = Client.AES.GetKey(),
+                        IV = Client.AES.GetIV()
                     });
                 }
 
@@ -551,7 +553,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         }
 
         private void OnAcceptVoiceChatNotification(AcceptVoiceChatNotification notification) {
-            Client.Data.ExternalEndPoint = notification.EndPoint;
+            Client.AES = new EncryptionAES(notification.Key, notification.IV);
+            Client.Data.ClientEndPoint = notification.EndPoint;
         }
     }
 

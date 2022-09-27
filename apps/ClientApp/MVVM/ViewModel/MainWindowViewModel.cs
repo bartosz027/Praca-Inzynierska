@@ -1,9 +1,8 @@
 ﻿using ClientApp.Core;
+using Network.Shared.Core.Audio;
 
 using ClientApp.MVVM.ViewModel.Contacts;
 using ClientApp.MVVM.ViewModel.Settings;
-
-using Network.Shared.Core.Audio;
 
 namespace ClientApp.MVVM.ViewModel {
 

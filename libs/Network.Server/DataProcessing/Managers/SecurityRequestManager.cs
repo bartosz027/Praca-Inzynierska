@@ -1,5 +1,5 @@
 ﻿using Network.Shared.Core;
-using Network.Shared.Model;
+using Network.Server.Model;
 
 using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Security.ExchangeAESKeys;

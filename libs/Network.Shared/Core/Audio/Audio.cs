@@ -32,6 +32,7 @@ namespace Network.Shared.Core.Audio {
             _AudioSink.Play();
         }
 
+
         public void StartVoiceRecording(EventHandler<WaveInEventArgs> callback) {
             _AudioSource = new WaveInEvent();
             _AudioSource.BufferMilliseconds = _BufferMilliseconds;
@@ -41,6 +42,13 @@ namespace Network.Shared.Core.Audio {
 
             _AudioSource.StartRecording();
         }
+
+        public void Play(byte[] data) {
+            if (_HeadphonesMuted == false) {
+                _AudioBuffer.AddSamples(data, 0, data.Length);
+            }
+        }
+
 
         public byte[] Encode(byte[] data) {
             int encoded_length = _Encoder.Encode(data, data.Length, _EncodedByteArray, _EncodedByteArray.Length);
@@ -52,11 +60,6 @@ namespace Network.Shared.Core.Audio {
             return _DecodedByteArray;
         }
 
-        public void Play(byte[] data) {
-            if(_HeadphonesMuted == false) {
-                _AudioBuffer.AddSamples(data, 0, data.Length);
-            }
-        }
 
         public static void MuteMicrophone() {
             _MicrophoneMuted = !_MicrophoneMuted;
@@ -81,6 +84,7 @@ namespace Network.Shared.Core.Audio {
             _MicrophoneMuted = flag;
         }
 
+
         public static void MuteHeadphones() {
             _HeadphonesMuted = !_HeadphonesMuted;
         }
@@ -88,6 +92,7 @@ namespace Network.Shared.Core.Audio {
         public static void MuteHeadphones(bool flag) {
             _HeadphonesMuted = flag;
         }
+
 
         public static void SetVolume(float value) {
             _Volume = value;
