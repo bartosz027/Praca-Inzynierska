@@ -36,6 +36,9 @@ using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 
+using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
+using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
+
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
     internal class FriendInfo : ObservableObject {
@@ -229,6 +232,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
             // Voice chat
             dispatcher.Dispatch<AcceptVoiceChatResponse>(OnAcceptVoiceChatResponse);
+
+            // Settings
+            dispatcher.Dispatch<ChangeUsernameResponse>(OnChangeUsernameResponse);
         }
 
         private void OnGetFriendListResponse(GetFriendListResponse response) {
@@ -410,6 +416,16 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             }
         }
 
+        private void OnChangeUsernameResponse(ChangeUsernameResponse response) {
+            foreach (var friend in FriendList) {
+                foreach (var message in friend.Messages) {
+                    if (friend.Initialized && message.IsMyMessage) {
+                        message.Sender = response.Username;
+                    }
+                }
+            }
+        }
+
         // Notification events
         protected override void OnNotificationReceived(NotificationDispatcher dispatcher) {
             // Friend status
@@ -427,6 +443,10 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             // Voice chat
             dispatcher.Dispatch<StartVoiceChatNotification>(OnStartVoiceChatNotification);
             dispatcher.Dispatch<AcceptVoiceChatNotification>(OnAcceptVoiceChatNotification);
+
+            // Settings
+            dispatcher.Dispatch<ChangeAvatarNotification>(OnChangeAvatarNotification);
+            dispatcher.Dispatch<ChangeUsernameNotification>(OnChangeUsernameNotification);
         }
 
         private void OnLoginNotification(LoginNotification notification) {
@@ -555,6 +575,28 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         private void OnAcceptVoiceChatNotification(AcceptVoiceChatNotification notification) {
             Client.AES = new EncryptionAES(notification.Key, notification.IV);
             Client.Data.ClientEndPoint = notification.EndPoint;
+        }
+
+        private void OnChangeAvatarNotification(ChangeAvatarNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+
+            if (view_model != null) {
+                view_model.FriendInfo.UserImage = ImageLoader.Load(notification.UserImage);
+            }
+        }
+
+        private void OnChangeUsernameNotification(ChangeUsernameNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+
+            if(view_model != null) {
+                view_model.FriendInfo.Username = notification.Username;
+
+                foreach(var message in view_model.Messages) {
+                    if(message.IsMyMessage == false) {
+                        message.Sender = notification.Username;
+                    }
+                }
+            }
         }
     }
 

@@ -66,6 +66,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
       <Private>True</Private>
@@ -99,6 +100,7 @@
     <Compile Include="Core\BindingProxy.cs" />
     <Compile Include="Core\ImageLoader.cs" />
     <Compile Include="Core\Extensions\FocusExtension.cs" />
+    <Compile Include="Core\ImageResizer.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\Chat\ChatViewModel.cs" />

@@ -21,7 +21,6 @@ namespace ClientApp.MVVM.ViewModel.Settings {
             ThemeSettingsVM = new ThemesSettingViewModel();
             LanguageSettingsVM = new LanguageSettingsViewModel();
 
-
             AccountOptionCommand = new RelayCommand(o => {
                 CurrentView = AccountSettingVM;
             });
@@ -46,8 +45,12 @@ namespace ClientApp.MVVM.ViewModel.Settings {
             UserID = "UID: " + Client.Data.ID.ToString("000000000");
             Username = Client.Data.Username;
 
+            ProfileSettingVM.SetUpdateInferfaceCallback((username, image) => {
+                Username = username;
+                UserImage = image;
+            });
+
             Client.Instance.SendRequest(new GetAvatarRequest());
-            // TODO: CurrentView = ProfileSettingsVM;
         }
 
         // VM's
@@ -119,6 +122,7 @@ namespace ClientApp.MVVM.ViewModel.Settings {
 
         private void OnGetAvatarResponse(GetAvatarResponse response) {
             UserImage = ImageLoader.Load(response.ImageBytes);
+            ProfileOptionCommand.Execute(null);
         }
     }
 

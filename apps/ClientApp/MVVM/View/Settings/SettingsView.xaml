@@ -27,7 +27,7 @@
                 <RadioButton Content="{DynamicResource ProfileDataButton_String}"
                              Style="{DynamicResource PIWindowRadioButon}"
                              Command="{Binding ProfileOptionCommand}"
-                             Height="40"/>
+                             Height="40" IsChecked="True"/>
 
                 <RadioButton Content="{DynamicResource AccountDataButton_String}" 
                              Style="{DynamicResource PIWindowRadioButon}" 

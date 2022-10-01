@@ -25,6 +25,7 @@ namespace Network.Server.DataProcessing {
             DatabaseRequestManager.Dispatch(dispatcher, client);
             FriendsRequestManager.Dispatch(dispatcher, client);
             SecurityRequestManager.Dispatch(dispatcher, client);
+            SettingsRequestManager.Dispatch(dispatcher, client);
 
             return dispatcher.Result;
         }

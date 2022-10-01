@@ -1,18 +1,12 @@
-﻿using ClientApp.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+using Network.Client;
+using ClientApp.Resources;
+
+using Network.Shared.Core;
+using Network.Shared.DataTransfer.Model.Settings.ChangePassword;
 
 namespace ClientApp.MVVM.View.Settings.Options
 {
@@ -33,20 +27,23 @@ namespace ClientApp.MVVM.View.Settings.Options
         }
         private void SendResetPasswordRequest_Click(object sender, RoutedEventArgs e)
         {
-            if (OldPasswordBox.Password == "" || NewPasswordBox1.Password == "" || NewPasswordBox2.Password == "")
-            {
-                ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.FieldIsEmpty);
-                ErrorMessage.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#CB1919"));
-            }
-            else if (NewPasswordBox1.Password != NewPasswordBox2.Password) 
-            {
+            if (NewPasswordBox1.Password != NewPasswordBox2.Password) {
                 ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.NotSamePassword);
-                ErrorMessage.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#CB1919"));
+                ErrorMessage.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CB1919"));
+            }
+            else if (NewPasswordBox1.Password.Length < Values.MinPasswordLength || NewPasswordBox1.Password.Length > Values.MaxPasswordLength) 
+            {
+                ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.InvalidPassword, Values.MinPasswordLength, Values.MaxPasswordLength);
+                ErrorMessage.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CB1919"));
             }
             else 
             {
+                Client.Instance.SendRequest(new ChangePasswordRequest() { 
+                    Password = NewPasswordBox1.Password
+                });
+
                 ErrorMessage.Text = ResourceManager.GetValue(ResourcesDictionary.PasswordChanged);
-                ErrorMessage.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#007C77"));
+                ErrorMessage.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#007C77"));
             }
         }
 

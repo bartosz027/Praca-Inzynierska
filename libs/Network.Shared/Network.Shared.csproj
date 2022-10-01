@@ -152,6 +152,12 @@
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\AcceptVoiceChat\AcceptVoiceChatRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\StartVoiceChat\StartVoiceChatNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\StartVoiceChat\StartVoiceChatRequest.cs" />
+    <Compile Include="DataTransfer\Model\Settings\ChangeAvatar\ChangeAvatarNotification.cs" />
+    <Compile Include="DataTransfer\Model\Settings\ChangeAvatar\ChangeAvatarRequest.cs" />
+    <Compile Include="DataTransfer\Model\Settings\ChangePassword\ChangePasswordRequest.cs" />
+    <Compile Include="DataTransfer\Model\Settings\ChangeUsername\ChangeUsernameNotification.cs" />
+    <Compile Include="DataTransfer\Model\Settings\ChangeUsername\ChangeUsernameRequest.cs" />
+    <Compile Include="DataTransfer\Model\Settings\ChangeUsername\ChangeUsernameResponse.cs" />
     <Compile Include="DataTransfer\Security\ExchangeAESKeys\ExchangeAESKeysRequest.cs" />
     <Compile Include="DataTransfer\Security\ExchangeAESKeys\ExchangeAESKeysResponse.cs" />
     <Compile Include="DataTransfer\Security\ExchangeRSAKeys\ExchangeRSAKeysRequest.cs" />
@@ -171,5 +177,6 @@
       <Name>OpusWrapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
