@@ -117,6 +117,18 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 OnPropertyChanged();
             }
         }
+        public bool IsOnCall
+        {
+            get
+            {
+                return _IsOnCall;
+            }
+            set
+            {
+                _IsOnCall = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string RichBoxContent {
             get {
@@ -148,6 +160,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
+        private bool _IsOnCall;
         private bool _IsFocused;
         private string _RichBoxContent;
 

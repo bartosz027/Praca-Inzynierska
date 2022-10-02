@@ -134,13 +134,13 @@
                     <Border Grid.Row="1">
 
                         <TextBlock Text="{Binding UserID}"
-                                               Style="{DynamicResource UserInfoTextBlock}"
-                                               
-                                               VerticalAlignment="Top"
-                                               HorizontalAlignment="Left"
-                                               
-                                               FontSize="10"
-                                               Margin="0"/>
+                                   Style="{DynamicResource UserInfoTextBlock}"
+                                   
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   
+                                   FontSize="10"
+                                   Margin="0"/>
 
                     </Border>
 

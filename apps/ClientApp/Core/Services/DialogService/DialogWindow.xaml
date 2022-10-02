@@ -1,0 +1,27 @@
+﻿<src:BaseWindow x:Class="ClientApp.Core.Services.DialogService.DialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientApp.Core.Services.DialogService"
+        mc:Ignorable="d"
+        xmlns:src="clr-namespace:ClientApp.Core"        
+        Title="DialogWindow" Height="275" Width="250"
+        ResizeMode="NoResize"
+        WindowStyle="None">
+    <Grid Style="{DynamicResource LoginWindowMainBackground}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border MouseDown="ResizeWindow_MouseDown"
+                Style="{DynamicResource ToolBarStyle}">
+        </Border>
+
+        <ContentControl Grid.Row="1" x:Name="ContentPeresenter" Content="{Binding}"/>
+        
+    </Grid>
+    
+</src:BaseWindow>

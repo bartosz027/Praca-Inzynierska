@@ -107,4 +107,7 @@
     <system:String x:Key="PendingInfo_String">wysłałeś mu zaproszenie.</system:String>
     <system:String x:Key="InvitationsInfo_String">wysłał ci zaproszenie.</system:String>
 
+    <!-- Okno dzwonka -->
+    <system:String x:Key="CallMessageBox_String">Nowe połączenie</system:String>
+
 </ResourceDictionary>

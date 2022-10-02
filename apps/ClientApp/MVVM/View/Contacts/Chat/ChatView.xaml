@@ -29,14 +29,14 @@
         <Border Margin="10,0"
                 Style="{DynamicResource ChatTopSector}">
 
-            <Button Width="35" Height="35"
-                    Margin="0,0,15,0"
-                    
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"
-                    
-                    Command="{Binding CallFriendCommand}"
-                    Style="{DynamicResource LoginWindowButton}"/>
+            <ToggleButton Margin="0,0,15,0"
+                          IsChecked="{Binding IsOnCall}"      
+                          
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Right"
+                          
+                          Command="{Binding CallFriendCommand}"
+                          Style="{DynamicResource CallButton}"/>
             
         </Border>
 

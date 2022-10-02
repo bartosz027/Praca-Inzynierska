@@ -31,6 +31,10 @@
                 <ChatView:ChatView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type ChatViewModel:CallMessageBoxViewModel}">
+                <ChatView:CallMessageBoxView/>
+            </DataTemplate>
+
             <!-->Contacts -> Manager</!-->
             <DataTemplate DataType="{x:Type ContactManagerViewModel:ManagerViewModel}">
                 <ContactManagerView:ManagerView/>

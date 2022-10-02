@@ -38,6 +38,8 @@ using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 
 using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
 using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
+using ClientApp.MVVM.View.Contacts.Chat;
+using ClientApp.Core.Services.DialogService;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -99,6 +101,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
     internal class ContactsViewModel : BaseVM {
         public ContactsViewModel() {
             EnableResponseListener();
+            _dialogService = new DialogService();
 
             FriendList = new ObservableCollection<ChatViewModel>();
             UnreadedMessages = new ObservableCollection<int>();
@@ -119,6 +122,9 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         public void UpdateNotifcationBall() {
             NotificationBall = (UnreadedMessages.Count > 0) || (ContactManagerVM.ReceivedInvitations.Count > 0);
         }
+
+        // Services
+        DialogService _dialogService;
 
         // VM's
         public ManagerViewModel ContactManagerVM {
@@ -556,10 +562,19 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
 
             if(view_model != null) {
-                var result = MessageBox.Show(view_model.FriendInfo.Username + " dzwoni! Czy zaakceptować połączenie?", "ROZMOWA GŁOSOWA", MessageBoxButton.YesNo);
+                //var result = MessageBox.Show(view_model.FriendInfo.Username + " dzwoni! Czy zaakceptować połączenie?", "ROZMOWA GŁOSOWA", MessageBoxButton.YesNo);
+                var callMessageBoxVM = new CallMessageBoxViewModel();
+                callMessageBoxVM.SetInfo(view_model.FriendInfo.UserImage, view_model.FriendInfo.Username);
+                var result2 = _dialogService.OpenDialog(callMessageBoxVM);
 
-                if(result == MessageBoxResult.Yes) {
+                if (result2 == DialogResults.Yes) {
                     Client.AES = new EncryptionAES();
+                    //
+                    foreach (var friend in FriendList) 
+                    {
+                        friend.IsOnCall = false;
+                    }
+                    view_model.IsOnCall = true;
 
                     Client.Instance.SendRequest(new AcceptVoiceChatRequest() { 
                         FriendID = view_model.FriendInfo.ID,
@@ -575,6 +590,13 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         private void OnAcceptVoiceChatNotification(AcceptVoiceChatNotification notification) {
             Client.AES = new EncryptionAES(notification.Key, notification.IV);
             Client.Data.ClientEndPoint = notification.EndPoint;
+
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+            foreach (var friend in FriendList)
+            {
+                friend.IsOnCall = false;
+            }
+            view_model.IsOnCall = true;
         }
 
         private void OnChangeAvatarNotification(ChangeAvatarNotification notification) {

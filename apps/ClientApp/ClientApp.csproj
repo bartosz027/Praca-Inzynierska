@@ -103,6 +103,14 @@
     <Compile Include="Core\ImageResizer.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Core\Services\DialogService\DialogBase.cs" />
+    <Compile Include="Core\Services\DialogService\DialogResults.cs" />
+    <Compile Include="Core\Services\DialogService\DialogService.cs" />
+    <Compile Include="Core\Services\DialogService\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Services\DialogService\IDialogWindow.cs" />
+    <Compile Include="MVVM\ViewModel\Contacts\Chat\CallMessageBoxViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\Chat\ChatViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\ContactsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\Manager\AddContactViewModel.cs" />
@@ -114,6 +122,9 @@
     <Compile Include="MVVM\ViewModel\Settings\Options\ThemesSettingViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Contacts\Manager\ManagerViewModel.cs" />
+    <Compile Include="MVVM\View\Contacts\Chat\CallMessageBoxView.xaml.cs">
+      <DependentUpon>CallMessageBoxView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\Contacts\Manager\AddContactView.xaml.cs">
       <DependentUpon>AddContactView.xaml</DependentUpon>
     </Compile>
@@ -215,6 +226,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Core\Services\DialogService\DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Contacts\Chat\CallMessageBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\Contacts\Manager\AddContactView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -310,6 +329,10 @@
     <Resource Include="Resources\Images\Pictures\DarkThemeButton.png" />
     <Resource Include="Resources\Images\Pictures\LightThemeButton.png" />
     <Resource Include="Resources\Images\Pictures\LoginBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\Shared\DisconectIcon.png" />
+    <Resource Include="Resources\Images\Icons\Shared\CallIcon.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

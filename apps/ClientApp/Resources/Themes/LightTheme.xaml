@@ -660,7 +660,63 @@
         </Setter>
 
     </Style>
+    
+    <!--Guziki nawigacyjne dynamiczne Dzwonienie PIWindow-->
+    <Style TargetType="{x:Type ToggleButton}" BasedOn="{x:Null}"
+           x:Key="CallButton">
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type ToggleButton}">
 
+                    <Border x:Name="border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="/ClientApp;component/Resources/Images/Icons/Shared/CallIcon.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Width" Value="60"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="/ClientApp;component/Resources/Images/Icons/Shared/DisconectIcon.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            <Setter Property="Width" Value="70"/>
+                            <Setter Property="Height" Value="70"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    
     <!--Ikona szukaj kontaktu-->
     <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
            x:Key="SearchIcon">
@@ -689,6 +745,17 @@
         <Setter Property="Source" Value="/ClientApp;component/Resources/Images/Icons/LightThemeIcons/SettingsIcon.png"/>
     </Style>
 
+    <!--Ikona akceptacji poloczenia znajomych-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="CallIcon">
+        <Setter Property="Source" Value="/ClientApp;component/Resources/Images/Icons/Shared/CallIcon.png"/>
+    </Style>
+
+    <!--Ikona odrzucenia poloczenia-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="DisconectIcon">
+        <Setter Property="Source" Value="/ClientApp;component/Resources/Images/Icons/Shared/DisconectIcon.png"/>
+    </Style>
 
     <!--ChcekBox Okna Logowania-->
     <Style TargetType="{x:Type CheckBox}" BasedOn="{x:Null}"
