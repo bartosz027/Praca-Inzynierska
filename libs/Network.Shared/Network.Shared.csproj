@@ -150,8 +150,11 @@
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\AcceptVoiceChat\AcceptVoiceChatNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\AcceptVoiceChat\AcceptVoiceChatResponse.cs" />
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\AcceptVoiceChat\AcceptVoiceChatRequest.cs" />
+    <Compile Include="DataTransfer\Model\Friends\VoiceChat\DisconnectVoiceChat\DisconnectVoiceChatNotification.cs" />
+    <Compile Include="DataTransfer\Model\Friends\VoiceChat\DisconnectVoiceChat\DisconnectVoiceChatRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\StartVoiceChat\StartVoiceChatNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\VoiceChat\StartVoiceChat\StartVoiceChatRequest.cs" />
+    <Compile Include="DataTransfer\Model\Friends\VoiceChat\StartVoiceChat\StartVoiceChatResponse.cs" />
     <Compile Include="DataTransfer\Model\Settings\ChangeAvatar\ChangeAvatarNotification.cs" />
     <Compile Include="DataTransfer\Model\Settings\ChangeAvatar\ChangeAvatarRequest.cs" />
     <Compile Include="DataTransfer\Model\Settings\ChangePassword\ChangePasswordRequest.cs" />

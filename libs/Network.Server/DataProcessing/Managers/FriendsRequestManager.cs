@@ -16,8 +16,9 @@ using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvi
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 
-using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 
 namespace Network.Server.DataProcessing.Managers {
 
@@ -35,6 +36,7 @@ namespace Network.Server.DataProcessing.Managers {
                 // Voice chat
                 dispatcher.Dispatch<StartVoiceChatRequest>(OnStartVoiceChatRequest, client);
                 dispatcher.Dispatch<AcceptVoiceChatRequest>(OnAcceptVoiceChatRequest, client);
+                dispatcher.Dispatch<DisconnectVoiceChatRequest>(OnDisconnectVoiceChatRequest, client);
             }
         }
 
@@ -269,18 +271,29 @@ namespace Network.Server.DataProcessing.Managers {
         private static RequestResult OnStartVoiceChatRequest(StartVoiceChatRequest request, ClientInfo client) {
             var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
 
+            var response = new StartVoiceChatResponse() {
+                FriendID = request.FriendID,
+                Result = ResponseResult.Success
+            };
+
             if (receiver != null) {
                 var notification = new StartVoiceChatNotification() {
                     FriendID = client.ID
                 };
 
                 return new RequestResult() {
+                    ResponseReceiver = client,
+                    ResponseData = response,
+
                     NotificationReceivers = new List<ClientInfo>() { receiver },
                     NotificationData = notification
                 };
             }
 
-            return null;
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
         }
 
         private static RequestResult OnAcceptVoiceChatRequest(AcceptVoiceChatRequest request, ClientInfo client) {
@@ -291,8 +304,9 @@ namespace Network.Server.DataProcessing.Managers {
                 var receiver_endpoint = (client.ExternalEndPoint.Address.ToString() != receiver.ExternalEndPoint.Address.ToString()) ? receiver.ExternalEndPoint : receiver.InternalEndPoint;
 
                 var response = new AcceptVoiceChatResponse() {
-                    Result = ResponseResult.Success,
-                    EndPoint = receiver_endpoint
+                    FriendID = receiver.ID,
+                    EndPoint = receiver_endpoint,
+                    Result = ResponseResult.Success
                 };
 
                 var notification = new AcceptVoiceChatNotification() {
@@ -307,6 +321,23 @@ namespace Network.Server.DataProcessing.Managers {
                     ResponseReceiver = client,
                     ResponseData = response,
 
+                    NotificationReceivers = new List<ClientInfo>() { receiver },
+                    NotificationData = notification
+                };
+            }
+
+            return null;
+        }
+
+        private static RequestResult OnDisconnectVoiceChatRequest(DisconnectVoiceChatRequest request, ClientInfo client) {
+            var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
+
+            if (receiver != null) {
+                var notification = new DisconnectVoiceChatNotification() {
+                    FriendID = client.ID
+                };
+
+                return new RequestResult() {
                     NotificationReceivers = new List<ClientInfo>() { receiver },
                     NotificationData = notification
                 };

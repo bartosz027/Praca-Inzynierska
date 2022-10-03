@@ -38,8 +38,9 @@ using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 
 using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
 using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
-using ClientApp.MVVM.View.Contacts.Chat;
+
 using ClientApp.Core.Services.DialogService;
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -124,7 +125,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
         }
 
         // Services
-        DialogService _dialogService;
+        private DialogService _dialogService;
 
         // VM's
         public ManagerViewModel ContactManagerVM {
@@ -237,6 +238,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             dispatcher.Dispatch<SendMessageResponse>(OnSendMessageResponse);
 
             // Voice chat
+            dispatcher.Dispatch<StartVoiceChatResponse>(OnStartVoiceChatResponse);
             dispatcher.Dispatch<AcceptVoiceChatResponse>(OnAcceptVoiceChatResponse);
 
             // Settings
@@ -416,6 +418,18 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             view_model.Messages.Add(message_info);
         }
 
+        private void OnStartVoiceChatResponse(StartVoiceChatResponse response) {
+            var prev_call = FriendList.SingleOrDefault(p => p.FriendInfo.ID != response.FriendID && p.IsOnCall);
+
+            if (prev_call != null) {
+                Client.Instance.SendRequest(new DisconnectVoiceChatRequest() {
+                    FriendID = prev_call.FriendInfo.ID
+                });
+
+                prev_call.IsOnCall = false;
+            }
+        }
+
         private void OnAcceptVoiceChatResponse(AcceptVoiceChatResponse response) {
             if(response.Result == ResponseResult.Success) {
                 Client.Data.ClientEndPoint = response.EndPoint;
@@ -449,6 +463,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             // Voice chat
             dispatcher.Dispatch<StartVoiceChatNotification>(OnStartVoiceChatNotification);
             dispatcher.Dispatch<AcceptVoiceChatNotification>(OnAcceptVoiceChatNotification);
+            dispatcher.Dispatch<DisconnectVoiceChatNotification>(OnDisconnectVoiceChatNotification);
 
             // Settings
             dispatcher.Dispatch<ChangeAvatarNotification>(OnChangeAvatarNotification);
@@ -562,18 +577,21 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
 
             if(view_model != null) {
-                //var result = MessageBox.Show(view_model.FriendInfo.Username + " dzwoni! Czy zaakceptować połączenie?", "ROZMOWA GŁOSOWA", MessageBoxButton.YesNo);
                 var callMessageBoxVM = new CallMessageBoxViewModel();
                 callMessageBoxVM.SetInfo(view_model.FriendInfo.UserImage, view_model.FriendInfo.Username);
-                var result2 = _dialogService.OpenDialog(callMessageBoxVM);
 
-                if (result2 == DialogResults.Yes) {
-                    Client.AES = new EncryptionAES();
-                    //
-                    foreach (var friend in FriendList) 
-                    {
-                        friend.IsOnCall = false;
+                if (_dialogService.OpenDialog(callMessageBoxVM) == DialogResults.Yes) {
+                    var info = FriendList.SingleOrDefault(p => p.FriendInfo.ID != notification.FriendID && p.IsOnCall);
+
+                    if (info != null) {
+                        Client.Instance.SendRequest(new DisconnectVoiceChatRequest() {
+                            FriendID = info.FriendInfo.ID
+                        });
+
+                        info.IsOnCall = false;
                     }
+
+                    Client.AES = new EncryptionAES();
                     view_model.IsOnCall = true;
 
                     Client.Instance.SendRequest(new AcceptVoiceChatRequest() { 
@@ -582,21 +600,35 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         IV = Client.AES.GetIV()
                     });
                 }
+                else {
+                    Client.Instance.SendRequest(new DisconnectVoiceChatRequest() {
+                        FriendID = view_model.FriendInfo.ID
+                    });
+                }
 
                 SelectedFriend = view_model;
             }
         }
 
         private void OnAcceptVoiceChatNotification(AcceptVoiceChatNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+
             Client.AES = new EncryptionAES(notification.Key, notification.IV);
             Client.Data.ClientEndPoint = notification.EndPoint;
 
-            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
-            foreach (var friend in FriendList)
-            {
-                friend.IsOnCall = false;
+            if(view_model != null) {
+                var info = FriendList.SingleOrDefault(p => p.FriendInfo.ID != notification.FriendID && p.IsOnCall);
+
+                if (info != null) {
+                    Client.Instance.SendRequest(new DisconnectVoiceChatRequest() {
+                        FriendID = info.FriendInfo.ID
+                    });
+
+                    info.IsOnCall = false;
+                }
+
+                view_model.IsOnCall = true;
             }
-            view_model.IsOnCall = true;
         }
 
         private void OnChangeAvatarNotification(ChangeAvatarNotification notification) {
@@ -618,6 +650,17 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         message.Sender = notification.Username;
                     }
                 }
+            }
+        }
+
+        private void OnDisconnectVoiceChatNotification(DisconnectVoiceChatNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+
+            Client.AES = null;
+            Client.Data.ClientEndPoint = null;
+
+            if (view_model != null) {
+                view_model.IsOnCall = false;
             }
         }
     }

@@ -10,7 +10,7 @@ using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
-
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
@@ -87,9 +87,19 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             });
 
             CallFriendCommand = new RelayCommand(o => {
-                Client.Instance.SendRequest(new StartVoiceChatRequest() {
-                    FriendID = FriendInfo.ID
-                });
+                Client.AES = null;
+                Client.Data.ClientEndPoint = null;
+
+                if (IsOnCall) {
+                    Client.Instance.SendRequest(new StartVoiceChatRequest() {
+                        FriendID = FriendInfo.ID
+                    });
+                }
+                else {
+                    Client.Instance.SendRequest(new DisconnectVoiceChatRequest() {
+                        FriendID = FriendInfo.ID
+                    });
+                }
             });
         }
 

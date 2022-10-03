@@ -664,8 +664,8 @@
     <!--Guziki nawigacyjne dynamiczne Dzwonienie PIWindow-->
     <Style TargetType="{x:Type ToggleButton}" BasedOn="{x:Null}"
            x:Key="CallButton">
-        <Setter Property="Width" Value="60"/>
-        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="Height" Value="45"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -684,8 +684,8 @@
 
                         <Trigger Property="IsChecked" Value="False">
                             <Setter Property="Background" TargetName="border" Value="Transparent"/>
-                            <Setter Property="Width" Value="60"/>
-                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Width" Value="45"/>
+                            <Setter Property="Height" Value="45"/>
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Image Source="/ClientApp;component/Resources/Images/Icons/Shared/CallIcon.png"/>
@@ -696,8 +696,8 @@
 
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Background" TargetName="border" Value="Transparent"/>
-                            <Setter Property="Width" Value="60"/>
-                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Width" Value="45"/>
+                            <Setter Property="Height" Value="45"/>
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Image Source="/ClientApp;component/Resources/Images/Icons/Shared/DisconectIcon.png"/>
@@ -706,8 +706,8 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" TargetName="border" Value="transparent"/>
-                            <Setter Property="Width" Value="70"/>
-                            <Setter Property="Height" Value="70"/>
+                            <Setter Property="Width" Value="55"/>
+                            <Setter Property="Height" Value="55"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

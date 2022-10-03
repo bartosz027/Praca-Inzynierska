@@ -1,11 +1,7 @@
-﻿using ClientApp.Core;
+﻿using System.Windows.Media.Imaging;
+
+using ClientApp.Core;
 using ClientApp.Core.Services.DialogService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Chat
 {
@@ -62,5 +58,4 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat
         private string _friendUsername;
     }
 
-    
 }
