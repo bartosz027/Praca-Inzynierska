@@ -23,6 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="75"/>
         </Grid.RowDefinitions>
 
@@ -48,7 +49,7 @@
                       
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.CanContentScroll="False"
                                               
                       FocusVisualStyle="{x:Null}"
                       BorderBrush="Transparent"
@@ -84,6 +85,10 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
                             <TextBlock Text="{Binding Date}"
                                        Grid.Column="0"
@@ -134,6 +139,12 @@
                                 </TextBox.ContextMenu>
                                 
                             </TextBox>
+
+                            <WrapPanel Grid.Row="1"
+                                       Grid.Column="2">
+                                <Image Source="{Binding ImageContnet}"
+                                       MaxWidth="500"/>
+                            </WrapPanel>
                             
                             <Grid.ContextMenu>
                                 
@@ -163,20 +174,65 @@
             
         </Border>
 
+        <Border Grid.Row="2"
+                Style="{DynamicResource PIWinodwNavigationBar}"
+                MaxHeight="200"
+                src:ScrollViewerHelper.WheelScrollsHorizontally="True">
 
-        <Border Grid.Row="2" Margin="10,5,10,10"
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Disabled"
+                          Margin="10,0">
+
+                <ItemsControl ItemsSource="{Binding ImagesToSendList}"
+                              Name="ImagesList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image Source="{Binding}" MaxHeight="200"
+                                       Margin="10"/>
+                                <Button Width="20"
+                                        Height="20"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Margin="10"
+                                        Style="{DynamicResource NavigationButton}"
+                                        Command="{Binding Path=DataContext.DeleteImageCommand, ElementName=ImagesList}"
+                                        CommandParameter="{Binding}">
+
+                                    <Image Source="/ClientApp;component/Resources/Images/Icons/Shared/DeclineIcon.png"/>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+        </Border>
+        
+        <Border Grid.Row="3" Margin="10,5,10,10"
                 Style="{DynamicResource PIWinodwNavigationBar}">
             
             <Grid Margin="5">
-                
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
                     <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+
+                <Button Command="{Binding AddImageToSendCommand}"
+                        Style="{DynamicResource NavigationButton}">
+                    <Image Style="{DynamicResource GalleryIcon}"/>
+                </Button>
 
                 <TextBox Text="{Binding RichBoxContent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          FontSize="16" Style="{DynamicResource ChatTextBox}"
-                         extensions:FocusExtension.IsFocused="{Binding IsFocused}">
+                         extensions:FocusExtension.IsFocused="{Binding IsFocused}"
+                         Grid.Column="1">
                     
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding Path=SendMessageCommand}" Key="Enter"/>

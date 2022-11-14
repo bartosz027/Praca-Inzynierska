@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-
+using System.Windows.Media.Imaging;
 using ClientApp.Core;
+using Microsoft.Win32;
 using Network.Client;
 
 using Network.Shared.Core;
@@ -49,15 +50,30 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
+        public ObservableCollection<BitmapImage> Images
+        {
+            get
+            {
+                return _Images;
+            }
+            set
+            {
+                _Images = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _Date;
         private string _Sender;
         private string _Content;
+        private ObservableCollection<BitmapImage> _Images;
     }
 
     internal class ChatViewModel : BaseVM {
         public ChatViewModel(FriendInfo friend_info) {
             FriendInfo = friend_info;
             Messages = new ObservableCollection<MessageInfo>();
+            ImagesToSendList = new ObservableCollection<BitmapImage>();
 
             SendMessageCommand = new RelayCommand(o => {
                 if (RichBoxContent.Length > 0 && RichBoxContent.Length <= Values.MaxMessageLength) {
@@ -101,6 +117,25 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                     });
                 }
             });
+
+            DeleteImageCommand = new RelayCommand(o => 
+            {
+                var image = (o as BitmapImage);
+                ImagesToSendList.Remove(image);
+            });
+
+            AddImageToSendCommand = new RelayCommand(o => 
+            {
+                var openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Files|*.jpg;*.jpeg;*.png;";
+                openFileDialog.Multiselect = false;
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    var image = new BitmapImage(new Uri(openFileDialog.FileName));
+                    ImagesToSendList.Add(image);
+                }
+            });
         }
 
         // Methods
@@ -116,8 +151,11 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
         public RelayCommand RemoveMessageCommand { get; private set; }
         public RelayCommand CopyMessageCommand { get; private set; }
         public RelayCommand CallFriendCommand { get; private set; }
+        public RelayCommand DeleteImageCommand { get; private set; }
+        public RelayCommand AddImageToSendCommand { get; private set; }
 
         // Properties
+
         public bool IsFocused {
             get {
                 return _IsFocused;
@@ -170,12 +208,26 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             }
         }
 
+        public ObservableCollection<BitmapImage> ImagesToSendList
+        {
+            get
+            {
+                return _ImagesToSendList;
+            }
+            set
+            {
+                _ImagesToSendList = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _IsOnCall;
         private bool _IsFocused;
         private string _RichBoxContent;
 
         private FriendInfo _Friend;
         private ObservableCollection<MessageInfo> _Messages;
+        private ObservableCollection<BitmapImage> _ImagesToSendList;
     }
 
 }

@@ -739,6 +739,12 @@
         <Setter Property="Source" Value="/ClientApp;component/Resources/Images/Icons/DarkThemeIcons/SettingsIcon.png"/>
     </Style>
 
+    <!--Ikona Dodawanie zdjec-->
+    <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
+           x:Key="GalleryIcon">
+        <Setter Property="Source" Value="/ClientApp;component/Resources/Images/Icons/DarkThemeIcons/ImagesGalleryIcon.png"/>
+    </Style>
+
     <!--Ikona akceptacji poloczenia znajomych-->
     <Style TargetType="{x:Type Image}" BasedOn="{x:Null}"
            x:Key="CallIcon">

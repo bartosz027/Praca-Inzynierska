@@ -55,6 +55,15 @@
     <IntermediateOutputPath>$(SolutionDir)build\Release\obj\apps\$(AssemblyName)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hangfire.Core, Version=1.7.31.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Hangfire.Core.1.7.31\lib\net46\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Simple.Wpf.Themes, Version=2.3.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Simple.Wpf.Themes.2.3.15\lib\net48\Simple.Wpf.Themes.dll</HintPath>
     </Reference>
@@ -103,6 +112,7 @@
     <Compile Include="Core\ImageResizer.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Core\ScrollViewerHelper.cs" />
     <Compile Include="Core\Services\DialogService\DialogBase.cs" />
     <Compile Include="Core\Services\DialogService\DialogResults.cs" />
     <Compile Include="Core\Services\DialogService\DialogService.cs" />
@@ -334,7 +344,12 @@
     <Resource Include="Resources\Images\Icons\Shared\DisconectIcon.png" />
     <Resource Include="Resources\Images\Icons\Shared\CallIcon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\ImagesGalleryIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\ImagesGalleryIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
