@@ -98,6 +98,10 @@
     <system:String x:Key="DeleteMessageButton_String">Usuń</system:String>
     <system:String x:Key="CopyMessageButton_String">Kopiuj</system:String>
 
+    <system:String x:Key="AvailableStatus_String">Dostępny</system:String>
+    <system:String x:Key="InvisibleStatus_String">Niewidoczny</system:String>
+    <system:String x:Key="CopyID_String">Kopiuj UID</system:String>
+
     <!-- Języki -->
     <system:String x:Key="LangResources-pl">polski</system:String>
     <system:String x:Key="LangResources-en">english</system:String>

@@ -816,6 +816,22 @@
 
     </Style>
 
+    <!--Kuleczka statusu-->
+    <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource SuperBalls}"
+           x:Key="UserStatusBalls">
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Status}" Value="True">
+                <Setter Property="Fill" Value="#007C77"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Status}" Value="False">
+                <Setter Property="Fill" Value="#FF808080"/>
+            </DataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
     <!-- Okno profilu -->
     <Style TargetType="{x:Type RadioButton}" BasedOn="{x:Null}"
            x:Key="UserView">
@@ -851,9 +867,21 @@
                             x:Name="_Border"
                             CornerRadius="10"
                             Margin="5">
-                        <TextBlock Text="{TemplateBinding Header}"
-                                   Style="{DynamicResource ChatTextBlock}"
-                                   Padding="10,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter x:Name="Icon" VerticalAlignment="Center" ContentSource="Icon" 
+                                              Margin="5"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{TemplateBinding Header}"
+                                       Style="{DynamicResource ChatTextBlock}"
+                                       Padding="10,5"
+                                       HorizontalAlignment="Center"/>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

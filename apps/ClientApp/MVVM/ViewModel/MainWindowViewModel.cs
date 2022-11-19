@@ -3,6 +3,8 @@ using Network.Shared.Core.Audio;
 
 using ClientApp.MVVM.ViewModel.Contacts;
 using ClientApp.MVVM.ViewModel.Settings;
+using System.Windows;
+using Network.Client;
 
 namespace ClientApp.MVVM.ViewModel {
 
@@ -13,6 +15,8 @@ namespace ClientApp.MVVM.ViewModel {
 
             Audio.MuteMicrophone(false);
             Audio.MuteHeadphones(false);
+
+            Status = Client.Data.Status;
 
             ContactsButtonCommand = new RelayCommand(o => {
                 CurrentView = ContactsVM;
@@ -32,6 +36,21 @@ namespace ClientApp.MVVM.ViewModel {
                 Audio.MuteHeadphones();
             });
 
+            AvailableStatusCommand = new RelayCommand(o => 
+            {
+                if (!Status) Status = true;
+            });
+
+            InvisibleStatusCommand = new RelayCommand(o => 
+            {
+                if (Status) Status = false;
+            });
+
+            CopyIDCommand = new RelayCommand(o => 
+            {
+                Clipboard.SetText(SettingsVM.UserID);
+            });
+
             CurrentView = ContactsVM;
         }
 
@@ -46,6 +65,9 @@ namespace ClientApp.MVVM.ViewModel {
         public RelayCommand MuteMicrophoneButtonCommand { get; private set; }
         public RelayCommand MuteHeadphonesButtonCommand { get; private set; }
 
+        public RelayCommand AvailableStatusCommand { get; private set; }
+        public RelayCommand InvisibleStatusCommand { get; private set; }
+        public RelayCommand CopyIDCommand { get; private set; }
         // Current view
         public object CurrentView {
             get { 
@@ -57,6 +79,20 @@ namespace ClientApp.MVVM.ViewModel {
             }
         }
         private object _CurrentView;
+
+        public bool Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                _Status = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _Status;
     }
 
 }

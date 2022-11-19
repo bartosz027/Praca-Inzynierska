@@ -179,6 +179,38 @@
 
                             </Grid>
 
+                            <Ellipse Grid.Column="2" Style="{DynamicResource UserStatusBalls}"/>
+
+                            <Grid.Resources>
+                                <src:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                            </Grid.Resources>
+
+                            <Grid.ContextMenu>
+
+                                <ContextMenu Style="{DynamicResource PIContextMenu}">
+
+                                    <MenuItem Header="{DynamicResource AvailableStatus_String}"
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.AvailableStatusCommand}">
+                                        <MenuItem.Icon>
+                                            <Ellipse Fill="#007C77" Height="10" Width="10"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="{DynamicResource InvisibleStatus_String}"
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.InvisibleStatusCommand}">
+                                        <MenuItem.Icon>
+                                            <Ellipse Fill="#FF808080" Height="10" Width="10"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="{DynamicResource InvisibleStatus_String}"
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.CopyIDCommand}">
+                                    </MenuItem>
+
+                                </ContextMenu>
+
+                            </Grid.ContextMenu>
+
                         </Grid>
 
                     </Border>
