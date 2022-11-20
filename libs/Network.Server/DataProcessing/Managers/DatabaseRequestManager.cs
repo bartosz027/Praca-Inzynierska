@@ -11,10 +11,12 @@ using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Database.Friends.GetAvatar;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
+
 using Network.Shared.DataTransfer.Model.Database.Friends.GetInvitations;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
 using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
+using Network.Shared.DataTransfer.Model.Database.Friends.SetStatusRequest;
 
 namespace Network.Server.DataProcessing.Managers {
 
@@ -28,6 +30,7 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<GetMessageHistoryRequest>(OnGetMessageHistoryRequest, client);
 
                 // Set data
+                dispatcher.Dispatch<SetStatusRequest>(OnSetStatusRequest, client);
                 dispatcher.Dispatch<SetMessageReadRequest>(OnSetMessageReadRequest, client);
             }
         }
@@ -157,6 +160,35 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         // Set data
+        private static RequestResult OnSetStatusRequest(SetStatusRequest request, ClientInfo client) {
+            client.Status = request.Status;
+
+            using (var db = new PiDbContext()) {
+                var acc = db.Accounts.Find(client.ID);
+                acc.Status = request.Status;
+                db.SaveChanges();
+
+                var receivers = new List<ClientInfo>();
+                var notification = new SetStatusNotification() {
+                    ID = client.ID,
+                    Status = request.Status
+                };
+
+                foreach (var friendship in acc.Friends) {
+                    var friend_info = Server.Data.Clients.Find(p => p.ID == friendship.FriendID);
+
+                    if (friend_info != null) {
+                        receivers.Add(friend_info);
+                    }
+                }
+
+                return new RequestResult() {
+                    NotificationReceivers = receivers,
+                    NotificationData = notification
+                };
+            }
+        }
+
         private static RequestResult OnSetMessageReadRequest(SetMessageReadRequest request, ClientInfo client) {
             using (var db = new PiDbContext()) {
                 var messages = db.Messages.Where(p => p.SenderID == request.FriendID && p.ReceiverID == client.ID);

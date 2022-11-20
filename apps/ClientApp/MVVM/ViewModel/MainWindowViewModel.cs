@@ -1,10 +1,13 @@
-﻿using ClientApp.Core;
-using Network.Shared.Core.Audio;
+﻿using System.Windows;
+
+using ClientApp.Core;
+using Network.Client;
 
 using ClientApp.MVVM.ViewModel.Contacts;
 using ClientApp.MVVM.ViewModel.Settings;
-using System.Windows;
-using Network.Client;
+
+using Network.Shared.Core.Audio;
+using Network.Shared.DataTransfer.Model.Database.Friends.SetStatusRequest;
 
 namespace ClientApp.MVVM.ViewModel {
 
@@ -38,12 +41,26 @@ namespace ClientApp.MVVM.ViewModel {
 
             AvailableStatusCommand = new RelayCommand(o => 
             {
-                if (!Status) Status = true;
+                if (Status == false) {
+                    Client.Instance.SendRequest(new SetStatusRequest() {
+                        ID = Client.Data.ID,
+                        Status = true
+                    });
+
+                    Status = true;
+                }
             });
 
             InvisibleStatusCommand = new RelayCommand(o => 
             {
-                if (Status) Status = false;
+                if (Status == true) {
+                    Client.Instance.SendRequest(new SetStatusRequest() {
+                        ID = Client.Data.ID,
+                        Status = false
+                    });
+
+                    Status = false;
+                }
             });
 
             CopyIDCommand = new RelayCommand(o => 

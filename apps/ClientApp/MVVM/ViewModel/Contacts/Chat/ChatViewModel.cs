@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+
 using System.Windows;
 using System.Windows.Media.Imaging;
+
 using ClientApp.Core;
-using Microsoft.Win32;
+
 using Network.Client;
+using Microsoft.Win32;
 
 using Network.Shared.Core;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
+
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 

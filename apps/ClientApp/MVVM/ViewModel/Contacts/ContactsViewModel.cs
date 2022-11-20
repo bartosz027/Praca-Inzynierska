@@ -4,11 +4,11 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-using System.Windows;
+using ClientApp.Resources;
 using System.Windows.Media.Imaging;
 
 using ClientApp.Core;
-using ClientApp.Resources;
+using ClientApp.Core.Services.DialogService;
 
 using ClientApp.MVVM.ViewModel.Contacts.Chat;
 using ClientApp.MVVM.ViewModel.Contacts.Manager;
@@ -39,8 +39,8 @@ using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
 using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
 
-using ClientApp.Core.Services.DialogService;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
+using Network.Shared.DataTransfer.Model.Database.Friends.SetStatusRequest;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -451,6 +451,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             // Friend status
             dispatcher.Dispatch<LoginNotification>(OnLoginNotification);
             dispatcher.Dispatch<LogoutNotification>(OnLogoutNotification);
+            dispatcher.Dispatch<SetStatusNotification>(OnSetStatusNotification);
 
             // Invitations
             dispatcher.Dispatch<SendFriendInvitationNotification>(OnSendFriendInvitationNotification);
@@ -487,6 +488,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
             if (notification.EndPoint.Equals(Client.Data.ClientEndPoint)) {
                 Client.Data.ClientEndPoint = null;
+            }
+        }
+
+        private void OnSetStatusNotification(SetStatusNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.ID);
+
+            if (view_model != null) {
+                view_model.FriendInfo.Status = notification.Status;
             }
         }
 
