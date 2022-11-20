@@ -1,13 +1,16 @@
 ﻿using System;
+using System.IO;
+
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using System.Windows;
 using System.Windows.Media.Imaging;
 
 using ClientApp.Core;
+using Microsoft.Win32;
 
 using Network.Client;
-using Microsoft.Win32;
 
 using Network.Shared.Core;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
@@ -80,13 +83,28 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
             ImagesToSendList = new ObservableCollection<BitmapImage>();
 
             SendMessageCommand = new RelayCommand(o => {
-                if (RichBoxContent.Length > 0 && RichBoxContent.Length <= Values.MaxMessageLength) {
+                if (RichBoxContent != null && RichBoxContent.Length > 0 && RichBoxContent.Length <= Values.MaxMessageLength) {
+                    var images_data = new List<byte[]>();
+
+                    foreach (var image in ImagesToSendList) {
+                        var encoder = new JpegBitmapEncoder();
+
+                        using (var ms = new MemoryStream()) {
+                            encoder.Frames.Add(BitmapFrame.Create(image));
+                            encoder.Save(ms);
+
+                            images_data.Add(ms.ToArray());
+                        }
+                    }
+
                     Client.Instance.SendRequest(new SendMessageRequest() {
                         FriendID = FriendInfo.ID,
-                        Content = RichBoxContent,
+                        Content = !string.IsNullOrEmpty(RichBoxContent) ? RichBoxContent : "",
+                        Images = images_data
                     });
 
                     RichBoxContent = String.Empty;
+                    ImagesToSendList.Clear();
                 }
 
                 // TODO: Error -> message too long
@@ -134,8 +152,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                 openFileDialog.Filter = "Files|*.jpg;*.jpeg;*.png;";
                 openFileDialog.Multiselect = false;
 
-                if (openFileDialog.ShowDialog() == true)
-                {
+                if (openFileDialog.ShowDialog() == true) {
                     var image = new BitmapImage(new Uri(openFileDialog.FileName));
                     ImagesToSendList.Add(image);
                 }

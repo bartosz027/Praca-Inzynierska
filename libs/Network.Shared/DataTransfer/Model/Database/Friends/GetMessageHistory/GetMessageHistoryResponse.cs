@@ -10,6 +10,7 @@ namespace Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory {
         public int SenderID { get; set; }
         public string Content { get; set; }
         public DateTime SendDate { get; set; }
+        public List<string> Images { get; set; }
     }
 
     [Serializable]

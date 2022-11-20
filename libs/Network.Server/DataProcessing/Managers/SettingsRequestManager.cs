@@ -26,7 +26,7 @@ namespace Network.Server.DataProcessing.Managers {
             using var db = new PiDbContext();
             var image_path = "Resources/Avatars/" + TokenGenerator.Next() + ".jpg";
 
-            using (var img = Image.FromStream(new MemoryStream(request.UserImage))) {
+            using (var img = System.Drawing.Image.FromStream(new MemoryStream(request.UserImage))) {
                 img.Save(image_path, ImageFormat.Jpeg);
             }
 

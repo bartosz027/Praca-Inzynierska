@@ -28,6 +28,7 @@ namespace Network.Server.Database
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<FriendInvitation> FriendInvitations { get; set; }
         public virtual DbSet<Friendship> Friendships { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Verification> Verifications { get; set; }
     }

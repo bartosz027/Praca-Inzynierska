@@ -146,6 +146,8 @@
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\DeleteMessage\DeleteMessageNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\DeleteMessage\DeleteMessageRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\DeleteMessage\DeleteMessageResponse.cs" />
+    <Compile Include="DataTransfer\Model\Friends\ManageMessages\DownloadImage\DownloadImageRequest.cs" />
+    <Compile Include="DataTransfer\Model\Friends\ManageMessages\DownloadImage\DownloadImageResponse.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\SendMessage\SendMessageNotification.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\SendMessage\SendMessageRequest.cs" />
     <Compile Include="DataTransfer\Model\Friends\ManageMessages\SendMessage\SendMessageResponse.cs" />

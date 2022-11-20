@@ -146,8 +146,14 @@ namespace Network.Server.DataProcessing.Managers {
                         SenderID = message.SenderID,
 
                         Content = message.Content,
-                        SendDate = message.SendDate
+                        SendDate = message.SendDate,
+
+                        Images = new List<string>()
                     };
+
+                    foreach (var image in message.Images) {
+                        message_info.Images.Add(image.Filename);
+                    }
 
                     response.Messages.Add(message_info);
                 }

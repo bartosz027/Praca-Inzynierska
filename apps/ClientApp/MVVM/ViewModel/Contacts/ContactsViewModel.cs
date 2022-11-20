@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.IO;
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,21 +27,23 @@ using Network.Shared.DataTransfer.Model.Database.Friends.GetFriendList;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetInvitations;
 using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 
+using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
+using Network.Shared.DataTransfer.Model.Database.Friends.SetStatusRequest;
+
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvitation;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
-using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
+using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
+
+using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DownloadImage;
 
 using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
 using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
-
-using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
-using Network.Shared.DataTransfer.Model.Database.Friends.SetStatusRequest;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -234,6 +237,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             dispatcher.Dispatch<AcceptFriendInvitationResponse>(OnAcceptFriendInvitationResponse);
 
             // Text chat
+            dispatcher.Dispatch<DownloadImageResponse>(OnDownloadImageResponse);
             dispatcher.Dispatch<DeleteMessageResponse>(OnDeleteMessageResponse);
             dispatcher.Dispatch<SendMessageResponse>(OnSendMessageResponse);
 
@@ -310,8 +314,11 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             foreach (var message_info in response.Messages) {
                 var message = new Chat.MessageInfo() {
                     ID = message_info.ID,
+
                     Date = message_info.SendDate.ToLocalTime().ToString("HH:mm"),
-                    Content = message_info.Content
+                    Content = message_info.Content,
+
+                    Images = new ObservableCollection<BitmapImage>()
                 };
                 
                 if (message_info.SenderID != friend_info.ID) {
@@ -321,6 +328,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 else {
                     message.Sender = friend_info.Username;
                     message.IsMyMessage = false;
+                }
+
+                foreach (var image in message_info.Images) {
+                    Client.Instance.SendRequest(new DownloadImageRequest() {
+                        FriendID = response.FriendID,
+                        MessageID = message_info.ID,
+                        Filename = image
+                    });
                 }
 
                 view_model.FriendInfo.LastMessageSendDate = message_info.SendDate;
@@ -391,10 +406,14 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             UpdateNotifcationBall();
         }
 
+        private void OnDownloadImageResponse(DownloadImageResponse response) {
+            var message = FriendList.Single(p => p.FriendInfo.ID == response.FriendID).Messages.Single(p => p.ID == response.MessageID);
+            message.Images.Add(ImageLoader.Load(response.ImageBytes));
+        }
+
         private void OnDeleteMessageResponse(DeleteMessageResponse response) {
             var view_model = FriendList.Single(p => p.FriendInfo.ID == response.FriendID);
-            var message = view_model.Messages.Single(p => p.ID == response.MessageID);
-            view_model.Messages.Remove(message);
+            view_model.Messages.Remove(view_model.Messages.Single(p => p.ID == response.MessageID));
         }
 
         private void OnSendMessageResponse(SendMessageResponse response) {
@@ -404,8 +423,19 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 Content = response.Content,
 
                 Sender = Client.Data.Username,
-                IsMyMessage = true
+                IsMyMessage = true,
+
+                Images = new ObservableCollection<BitmapImage>()
             };
+
+
+            foreach (var image in response.Images) {
+                Client.Instance.SendRequest(new DownloadImageRequest() {
+                    FriendID = response.FriendID,
+                    MessageID = message_info.ID,
+                    Filename = image
+                });
+            }
 
             var view_model = FriendList.Single(p => p.FriendInfo.ID == response.FriendID);
             view_model.FriendInfo.LastMessageSendDate = response.SendDate;
@@ -554,8 +584,18 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                         Content = notification.Content,
 
                         Sender = view_model.FriendInfo.Username,
-                        IsMyMessage = false
+                        IsMyMessage = false,
+
+                        Images = new ObservableCollection<BitmapImage>()
                     };
+
+                    foreach (var image in notification.Images) {
+                        Client.Instance.SendRequest(new DownloadImageRequest() {
+                            FriendID = notification.FriendID,
+                            MessageID = message.ID,
+                            Filename = image
+                        });
+                    }
 
                     view_model.Messages.Add(message);
                 }

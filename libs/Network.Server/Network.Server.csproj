@@ -77,6 +77,9 @@
     <Compile Include="Database\Friendship.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\Image.cs">
+      <DependentUpon>PiDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Message.cs">
       <DependentUpon>PiDbModel.tt</DependentUpon>
     </Compile>

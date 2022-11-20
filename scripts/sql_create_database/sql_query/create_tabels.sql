@@ -48,6 +48,12 @@ CREATE TABLE Message (
 	-- NP:Account  -> rename_to("Receiver")
 );
 
+CREATE TABLE Image (
+    ID                  INT                 NOT NULL        PRIMARY KEY IDENTITY,
+	MessageID           INT                 NOT NULL        FOREIGN KEY REFERENCES Message(ID),
+	Filename            VARCHAR(5000)       NOT NULL,
+);
+
 CREATE TABLE FriendInvitation (
 	ID 					INT					NOT NULL		PRIMARY KEY IDENTITY,
 

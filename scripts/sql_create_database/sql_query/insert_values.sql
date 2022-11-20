@@ -34,3 +34,9 @@ SET IDENTITY_INSERT [dbo].[Message] ON
 	INSERT INTO [dbo].[Message] ([ID], [Content], [SendDate], [SenderID], [ReceiverID]) VALUES (5, N'Message sent by karmelek17', N'2022-06-09 21:37:40', 2, 3)
 	INSERT INTO [dbo].[Message] ([ID], [Content], [SendDate], [SenderID], [ReceiverID]) VALUES (6, N'Message sent by pawelek216', N'2022-06-09 21:37:50', 3, 2)
 SET IDENTITY_INSERT [dbo].[Message] OFF
+
+-- Image
+SET IDENTITY_INSERT [dbo].[Image] ON
+INSERT INTO [dbo].[Image] ([ID], [MessageID], [Filename]) VALUES (1, 2, N'Test1.jpg')
+INSERT INTO [dbo].[Image] ([ID], [MessageID], [Filename]) VALUES (2, 4, N'Test2.jpg')
+SET IDENTITY_INSERT [dbo].[Image] OFF

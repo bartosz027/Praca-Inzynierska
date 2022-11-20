@@ -14,6 +14,12 @@ namespace Network.Server.Database
     
     public partial class Message
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Message()
+        {
+            this.Images = new HashSet<Image>();
+        }
+    
         public int ID { get; set; }
         public string Content { get; set; }
         public System.DateTime SendDate { get; set; }
@@ -23,5 +29,7 @@ namespace Network.Server.Database
     
         public virtual Account Receiver { get; set; }
         public virtual Account Sender { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

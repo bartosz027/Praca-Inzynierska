@@ -109,7 +109,7 @@ namespace Network.Server {
 
             // Receive request
             Task.Factory.StartNew(() => {
-                byte[] request_buffer = new byte[256 * 1024]; // 256 KB cache
+                byte[] request_buffer = new byte[256 * 1024 * 1024]; // 256 MB cache
                 int buffer_length = 0;
 
                 while (true) {

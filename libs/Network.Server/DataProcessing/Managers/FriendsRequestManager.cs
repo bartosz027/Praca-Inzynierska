@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+using Network.Server.Core;
 using Network.Server.Database;
 using Network.Server.Model;
 
@@ -13,6 +14,7 @@ using Network.Shared.DataTransfer.Base;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvitation;
 
+using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DownloadImage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DeleteMessage;
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.SendMessage;
 
@@ -30,6 +32,7 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<AcceptFriendInvitationRequest>(OnAcceptFriendInvitationRequest, client);
 
                 // Manage messages
+                dispatcher.Dispatch<DownloadImageRequest>(OnDownloadImageRequest, client);
                 dispatcher.Dispatch<DeleteMessageRequest>(OnDeleteMessageRequest, client);
                 dispatcher.Dispatch<SendMessageRequest>(OnSendMessageRequest, client);
 
@@ -167,6 +170,23 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         // Manage messages
+        private static RequestResult OnDownloadImageRequest(DownloadImageRequest request, ClientInfo client) {
+            var response = new DownloadImageResponse() {
+                Result = ResponseResult.Success,
+
+                FriendID = request.FriendID,
+                MessageID = request.MessageID,
+
+                Filename = request.Filename,
+                ImageBytes = File.ReadAllBytes("Resources/Images/" + request.Filename)
+            };
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
         private static RequestResult OnDeleteMessageRequest(DeleteMessageRequest request, ClientInfo client) {
             var response = new DeleteMessageResponse();
             response.Result = ResponseResult.Success;
@@ -208,8 +228,10 @@ namespace Network.Server.DataProcessing.Managers {
         }
 
         private static RequestResult OnSendMessageRequest(SendMessageRequest request, ClientInfo client) {
-            var response = new SendMessageResponse();
-            response.Result = ResponseResult.Success;
+            var response = new SendMessageResponse() {
+                Result = ResponseResult.Success,
+                Images = new List<string>()
+            };
 
             if (request.Content.Length == 0 || request.Content.Length > Values.MaxMessageLength) {
                 throw new ArgumentException();
@@ -233,6 +255,23 @@ namespace Network.Server.DataProcessing.Managers {
                     SendDate = current_time
                 });
 
+                foreach (var image_data in request.Images) {
+                    var filename = TokenGenerator.Next() + ".jpg";
+                    var image_path = "Resources/Images/" + filename;
+
+                    using (var img = System.Drawing.Image.FromStream(new MemoryStream(image_data))) {
+                        img.Save(image_path, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+
+                    var image = new Image() {
+                        MessageID = message.ID,
+                        Filename = filename
+                    };
+
+                    response.Images.Add(filename);
+                    db.Images.Add(image);
+                }
+
                 db.SaveChanges();
                 db.Dispose();
 
@@ -248,7 +287,9 @@ namespace Network.Server.DataProcessing.Managers {
                         MessageID = message.ID,
 
                         Content = request.Content,
-                        SendDate = current_time
+                        SendDate = current_time,
+
+                        Images = response.Images
                     };
 
                     return new RequestResult() {
