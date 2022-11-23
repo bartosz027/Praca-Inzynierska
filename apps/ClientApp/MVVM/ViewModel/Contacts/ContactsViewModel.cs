@@ -44,6 +44,7 @@ using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DownloadImage;
 
 using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
 using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
+using System.Windows;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -118,6 +119,12 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 CurrentView = ContactManagerVM;
             });
 
+            DeleteFriendCommand = new RelayCommand(o => 
+            {
+                var chat = o as ChatViewModel;
+                MessageBox.Show("Logika: Poziom 1. Strefa LPG imienia:" + chat.FriendInfo.Username);
+            });
+
             EnableNotificationListener();
             CurrentView = ContactManagerVM;
         }
@@ -156,6 +163,8 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
 
         // Commands
         public RelayCommand ContactManagerButtonCommand { get; private set; }
+
+        public RelayCommand DeleteFriendCommand { get; private set; }
 
         // Properties
         public bool NotificationBall {

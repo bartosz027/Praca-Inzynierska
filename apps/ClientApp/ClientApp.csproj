@@ -350,6 +350,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Icons\LightThemeIcons\ImagesGalleryIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\LightThemeIcons\VolumeSliderIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\DarkThemeIcons\VolumeSliderIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -16,6 +16,8 @@ namespace ClientApp.MVVM.ViewModel {
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
 
+            Volume = 50; // 50% glosnosci
+
             Audio.MuteMicrophone(false);
             Audio.MuteHeadphones(false);
 
@@ -110,6 +112,24 @@ namespace ClientApp.MVVM.ViewModel {
             }
         }
         private bool _Status;
+
+        // nie wiem dzie to mozna przeniesc
+        public int Volume
+        {
+            get
+            {
+                return _Volume;
+            }
+            set
+            {
+                _Volume = value;
+
+                // Glosnosc = Volume;
+
+                OnPropertyChanged();
+            }
+        }
+        private int _Volume;
     }
 
 }

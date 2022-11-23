@@ -98,7 +98,17 @@
                     </Border>
 
                     <Border Grid.Column="1"
-                            Style="{DynamicResource PIWinodwNavigationBarMiddle}"/>
+                            Style="{DynamicResource PIWinodwNavigationBarMiddle}">
+                        <Grid>
+                            <Slider VerticalAlignment="Center" 
+                                    HorizontalAlignment="Left"
+                                    Style="{DynamicResource Horizontal_Slider}"
+                                    Width="200"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding Volume}"/>
+                        </Grid>
+                    </Border>
 
                     <Border Grid.Column="2"
                             Style="{DynamicResource PIWinodwNavigationBarMiddle}">

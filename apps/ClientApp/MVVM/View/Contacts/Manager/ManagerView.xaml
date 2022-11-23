@@ -30,12 +30,6 @@
                                  Padding="10,0" Height="37.5"
                                  IsEnabled="False"/>
 
-                    <RadioButton Content="{DynamicResource FriendListButton_String}" 
-                                 Command="{Binding ShowFriendListButtonCommand}"
-                                 
-                                 Style="{DynamicResource PIWindowRadioButon}"
-                                 Padding="13,0,13,2" Height="37.5"/>
-
                     <RadioButton Content="{DynamicResource PendingInvitationsButton_String}" 
                                  Command="{Binding ShowPendingInvitationsButtonCommand}"
                                  

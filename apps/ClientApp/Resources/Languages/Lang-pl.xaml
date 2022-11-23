@@ -102,6 +102,8 @@
     <system:String x:Key="InvisibleStatus_String">Niewidoczny</system:String>
     <system:String x:Key="CopyID_String">Kopiuj UID</system:String>
 
+    <system:String x:Key="DeleteFriend_String">Usuń kontakt ze znajomych</system:String>
+    
     <!-- Języki -->
     <system:String x:Key="LangResources-pl">polski</system:String>
     <system:String x:Key="LangResources-en">english</system:String>
