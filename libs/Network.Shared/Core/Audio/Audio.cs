@@ -23,12 +23,12 @@ namespace Network.Shared.Core.Audio {
             _AudioBuffer.DiscardOnBufferOverflow = true;
 
             var volumeSampleProvider = new VolumeSampleProvider(_AudioBuffer.ToSampleProvider());
-            volumeSampleProvider.Volume = _Volume;
+            volumeSampleProvider.Volume = 2.0f;
 
             _AudioSink = new WaveOut();
             _AudioSink.Init(volumeSampleProvider);
 
-            _AudioSink.Volume = 1.0f;
+            _AudioSink.Volume = 0.5f;
             _AudioSink.Play();
         }
 
@@ -73,11 +73,11 @@ namespace Network.Shared.Core.Audio {
         }
 
         public static void MuteMicrophone(bool flag) {
-            if (_MicrophoneMuted == true && flag == false) {
+            if (_MicrophoneMuted && flag == false) {
                 _AudioSource.StartRecording();
             }
             
-            if (_MicrophoneMuted == false && flag == true) {
+            if (_MicrophoneMuted == false && flag) {
                 _AudioSource.StopRecording();
             }
 
@@ -95,7 +95,7 @@ namespace Network.Shared.Core.Audio {
 
 
         public static void SetVolume(float value) {
-            _Volume = value;
+            _AudioSink.Volume = value;
         }
 
         // Opus
@@ -112,7 +112,7 @@ namespace Network.Shared.Core.Audio {
         private int _BufferMilliseconds = 40;
 
         // Play voice
-        private WaveOut _AudioSink;
+        private static WaveOut _AudioSink;
         private BufferedWaveProvider _AudioBuffer;
 
         // Settings
@@ -120,8 +120,8 @@ namespace Network.Shared.Core.Audio {
         private int _BitsPerSample = 16;
         private int _NumberOfChannels = 1;
 
-        private static bool _MicrophoneMuted = false, _HeadphonesMuted = false;
-        private static float _Volume = 1.0f;
+        private static bool _MicrophoneMuted = false;
+        private static bool _HeadphonesMuted = false;
     }
 
 }

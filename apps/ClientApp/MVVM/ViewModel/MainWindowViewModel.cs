@@ -16,11 +16,10 @@ namespace ClientApp.MVVM.ViewModel {
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
 
-            Volume = 50; // 50% glosnosci
-
             Audio.MuteMicrophone(false);
             Audio.MuteHeadphones(false);
 
+            Volume = 50; // 50%
             Status = Client.Data.Status;
 
             ContactsButtonCommand = new RelayCommand(o => {
@@ -41,8 +40,7 @@ namespace ClientApp.MVVM.ViewModel {
                 Audio.MuteHeadphones();
             });
 
-            AvailableStatusCommand = new RelayCommand(o => 
-            {
+            AvailableStatusCommand = new RelayCommand(o => {
                 if (Status == false) {
                     Client.Instance.SendRequest(new SetStatusRequest() {
                         ID = Client.Data.ID,
@@ -53,8 +51,7 @@ namespace ClientApp.MVVM.ViewModel {
                 }
             });
 
-            InvisibleStatusCommand = new RelayCommand(o => 
-            {
+            InvisibleStatusCommand = new RelayCommand(o => {
                 if (Status == true) {
                     Client.Instance.SendRequest(new SetStatusRequest() {
                         ID = Client.Data.ID,
@@ -65,8 +62,7 @@ namespace ClientApp.MVVM.ViewModel {
                 }
             });
 
-            CopyIDCommand = new RelayCommand(o => 
-            {
+            CopyIDCommand = new RelayCommand(o => {
                 Clipboard.SetText(SettingsVM.UserID);
             });
 
@@ -86,7 +82,9 @@ namespace ClientApp.MVVM.ViewModel {
 
         public RelayCommand AvailableStatusCommand { get; private set; }
         public RelayCommand InvisibleStatusCommand { get; private set; }
+
         public RelayCommand CopyIDCommand { get; private set; }
+
         // Current view
         public object CurrentView {
             get { 
@@ -99,37 +97,29 @@ namespace ClientApp.MVVM.ViewModel {
         }
         private object _CurrentView;
 
-        public bool Status
-        {
-            get
-            {
+        public float Volume {
+            get {
+                return _Volume;
+            }
+            set {
+                _Volume = value;
+                Audio.SetVolume(value / 100.0f);
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Status {
+            get {
                 return _Status;
             }
-            set
-            {
+            set {
                 _Status = value;
                 OnPropertyChanged();
             }
         }
+
+        private float _Volume;
         private bool _Status;
-
-        // nie wiem dzie to mozna przeniesc
-        public int Volume
-        {
-            get
-            {
-                return _Volume;
-            }
-            set
-            {
-                _Volume = value;
-
-                // Glosnosc = Volume;
-
-                OnPropertyChanged();
-            }
-        }
-        private int _Volume;
     }
 
 }
