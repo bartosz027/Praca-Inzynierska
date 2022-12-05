@@ -106,8 +106,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Chat {
                     RichBoxContent = String.Empty;
                     ImagesToSendList.Clear();
                 }
-
-                // TODO: Error -> message too long
             });
 
             RemoveMessageCommand = new RelayCommand(o => {

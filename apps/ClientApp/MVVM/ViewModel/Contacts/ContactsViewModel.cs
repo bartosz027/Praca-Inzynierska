@@ -30,6 +30,7 @@ using Network.Shared.DataTransfer.Model.Database.Friends.GetMessageHistory;
 using Network.Shared.DataTransfer.Model.Database.Friends.SetMessageRead;
 using Network.Shared.DataTransfer.Model.Database.Friends.SetStatusRequest;
 
+using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.DeclineFriendInvitation;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvitation;
 
@@ -41,10 +42,10 @@ using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DownloadImage;
+using Network.Shared.DataTransfer.Model.Friends.DeleteFromFriendList;
 
 using Network.Shared.DataTransfer.Model.Settings.ChangeUsername;
 using Network.Shared.DataTransfer.Model.Settings.ChangeAvatar;
-using System.Windows;
 
 namespace ClientApp.MVVM.ViewModel.Contacts {
 
@@ -119,10 +120,15 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 CurrentView = ContactManagerVM;
             });
 
-            DeleteFriendCommand = new RelayCommand(o => 
-            {
+            DeleteFriendCommand = new RelayCommand(o => {
                 var chat = o as ChatViewModel;
-                MessageBox.Show("Logika: Poziom 1. Strefa LPG imienia:" + chat.FriendInfo.Username);
+
+                Client.Instance.SendRequest(new DeleteFromFriendListRequest() { 
+                    FriendID = chat.FriendInfo.ID
+                });
+
+                FriendList.Remove(FriendList.Single(p => p.FriendInfo.ID == chat.FriendInfo.ID));
+                ContactManagerButtonCommand.Execute(null);
             });
 
             EnableNotificationListener();
@@ -244,6 +250,7 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             // Invitations
             dispatcher.Dispatch<SendFriendInvitationResponse>(OnSendFriendInvitationResponse);
             dispatcher.Dispatch<AcceptFriendInvitationResponse>(OnAcceptFriendInvitationResponse);
+            dispatcher.Dispatch<DeclineFriendInvitationResponse>(OnDeclineFriendInvitationResponse);
 
             // Text chat
             dispatcher.Dispatch<DownloadImageResponse>(OnDownloadImageResponse);
@@ -415,6 +422,16 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             UpdateNotifcationBall();
         }
 
+        private void OnDeclineFriendInvitationResponse(DeclineFriendInvitationResponse response) {
+            var invitation1 = ContactManagerVM.ReceivedInvitations.SingleOrDefault(p => p.UserID == response.UserID);
+            ContactManagerVM.ReceivedInvitations.Remove(invitation1);
+
+            var invitation2 = ContactManagerVM.PendingInvitations.SingleOrDefault(p => p.UserID == response.UserID);
+            ContactManagerVM.PendingInvitations.Remove(invitation2);
+
+            UpdateNotifcationBall();
+        }
+
         private void OnDownloadImageResponse(DownloadImageResponse response) {
             var message = FriendList.Single(p => p.FriendInfo.ID == response.FriendID).Messages.Single(p => p.ID == response.MessageID);
             message.Images.Add(ImageLoader.Load(response.ImageBytes));
@@ -492,9 +509,13 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             dispatcher.Dispatch<LogoutNotification>(OnLogoutNotification);
             dispatcher.Dispatch<SetStatusNotification>(OnSetStatusNotification);
 
+            // Delete from friend list
+            dispatcher.Dispatch<DeleteFromFriendListNotification>(OnDeleteFromFriendListNotification);
+
             // Invitations
             dispatcher.Dispatch<SendFriendInvitationNotification>(OnSendFriendInvitationNotification);
             dispatcher.Dispatch<AcceptFriendInvitationNotification>(OnAcceptFriendInvitationNotification);
+            dispatcher.Dispatch<DeclineFriendInvitationNotification>(OnDeclineFriendInvitationNotification);
 
             // Text chat
             dispatcher.Dispatch<DeleteMessageNotification>(OnDeleteMessageNotification);
@@ -538,6 +559,16 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
             }
         }
 
+        private void OnDeleteFromFriendListNotification(DeleteFromFriendListNotification notification) {
+            var view_model = FriendList.SingleOrDefault(p => p.FriendInfo.ID == notification.FriendID);
+
+            if (view_model != null) {
+                FriendList.Remove(view_model);
+            }
+
+            ContactManagerButtonCommand.Execute(null);
+        }
+
         private void OnSendFriendInvitationNotification(SendFriendInvitationNotification notification) {
             var item = new ContactManagerItem() {
                 UserID = notification.UserID,
@@ -571,6 +602,17 @@ namespace ClientApp.MVVM.ViewModel.Contacts {
                 ContactManagerVM.PendingInvitations.Remove(invitation);
                 FriendList.Insert(0, new ChatViewModel(friend_info));
             }
+        }
+
+        private void OnDeclineFriendInvitationNotification(DeclineFriendInvitationNotification notification) {
+            var invitation1 = ContactManagerVM.PendingInvitations.SingleOrDefault(p => p.UserID == notification.UserID);
+            ContactManagerVM.PendingInvitations.Remove(invitation1);
+
+            var invitation2 = ContactManagerVM.ReceivedInvitations.SingleOrDefault(p => p.UserID == notification.UserID);
+            ContactManagerVM.ReceivedInvitations.Remove(invitation2);
+
+
+            UpdateNotifcationBall();
         }
 
         private void OnDeleteMessageNotification(DeleteMessageNotification notification) {

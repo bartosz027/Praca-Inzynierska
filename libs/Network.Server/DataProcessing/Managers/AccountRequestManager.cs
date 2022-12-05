@@ -55,7 +55,6 @@ namespace Network.Server.DataProcessing.Managers {
             using var db = new PiDbContext();
             var user_account = db.Accounts.SingleOrDefault(p => p.Email == request.Email);
 
-            // TODO: Handle duplicate login
             if (user_account == null || PasswordHasher.Verify(request.Password, user_account.Password) == false) {
                 response.Result = ResponseResult.Failure;
                 response.Errors.Add(ErrorCode.InvalidEmailOrPassword);

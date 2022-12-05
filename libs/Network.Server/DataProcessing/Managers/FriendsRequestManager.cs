@@ -12,6 +12,7 @@ using Network.Shared.Core;
 using Network.Shared.DataTransfer.Base;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
+using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.DeclineFriendInvitation;
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.SendFriendInvitation;
 
 using Network.Shared.DataTransfer.Model.Friends.ManageMessages.DownloadImage;
@@ -22,14 +23,20 @@ using Network.Shared.DataTransfer.Model.Friends.VoiceChat.AcceptVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.DisconnectVoiceChat;
 using Network.Shared.DataTransfer.Model.Friends.VoiceChat.StartVoiceChat;
 
+using Network.Shared.DataTransfer.Model.Friends.DeleteFromFriendList;
+
 namespace Network.Server.DataProcessing.Managers {
 
     internal static class FriendsRequestManager {
         public static void Dispatch(RequestDispatcher dispatcher, ClientInfo client) {
             if (dispatcher.Request.AccessToken == client.AccessToken) {
+                // Delete from friend list
+                dispatcher.Dispatch<DeleteFromFriendListRequest>(OnDeleteFromFriendListRequest, client);
+
                 // Manage invitations
                 dispatcher.Dispatch<SendFriendInvitationRequest>(OnSendFriendInvitationRequest, client);
                 dispatcher.Dispatch<AcceptFriendInvitationRequest>(OnAcceptFriendInvitationRequest, client);
+                dispatcher.Dispatch<DeclineFriendInvitationRequest>(OnDeclineFriendInvitationRequest, client);
 
                 // Manage messages
                 dispatcher.Dispatch<DownloadImageRequest>(OnDownloadImageRequest, client);
@@ -41,6 +48,33 @@ namespace Network.Server.DataProcessing.Managers {
                 dispatcher.Dispatch<AcceptVoiceChatRequest>(OnAcceptVoiceChatRequest, client);
                 dispatcher.Dispatch<DisconnectVoiceChatRequest>(OnDisconnectVoiceChatRequest, client);
             }
+        }
+
+        // Delete from friend list
+        private static RequestResult OnDeleteFromFriendListRequest(DeleteFromFriendListRequest request, ClientInfo client) {
+            using var db = new PiDbContext();
+
+            var friendships = db.Friendships.Where(p => (p.UserID == client.ID && p.FriendID == request.FriendID) || (p.UserID == request.FriendID && p.FriendID == client.ID)).ToList();
+            var receiver = Server.Data.Clients.Find(p => p.ID == request.FriendID);
+
+            foreach (var friendship in friendships) {
+                db.Friendships.Remove(friendship);
+            }
+
+            db.SaveChanges();
+
+            if (receiver != null) {
+                var notification = new DeleteFromFriendListNotification() {
+                    FriendID = client.ID
+                };
+
+                return new RequestResult() {
+                    NotificationReceivers = new List<ClientInfo>() { receiver },
+                    NotificationData = notification
+                };
+            }
+
+            return null;
         }
 
         // Manage invitations
@@ -151,6 +185,42 @@ namespace Network.Server.DataProcessing.Managers {
                         Status = client.Status,
                         Username = client.Username,
                         ImageBytes = File.ReadAllBytes(user_account.UserImage)
+                    };
+
+                    return new RequestResult() {
+                        ResponseReceiver = client,
+                        ResponseData = response,
+
+                        NotificationReceivers = new List<ClientInfo>() { receiver },
+                        NotificationData = notification
+                    };
+                }
+            }
+
+            return new RequestResult() {
+                ResponseReceiver = client,
+                ResponseData = response
+            };
+        }
+
+        private static RequestResult OnDeclineFriendInvitationRequest(DeclineFriendInvitationRequest request, ClientInfo client) {
+            var response = new DeclineFriendInvitationResponse() {
+                UserID = request.UserID,
+                Result = ResponseResult.Success
+            };
+
+            using (var db = new PiDbContext()) {
+                var invitation = db.FriendInvitations.SingleOrDefault(p => (p.SenderID == request.UserID && p.ReceiverID == client.ID) || (p.SenderID == client.ID && p.ReceiverID == request.UserID));
+                var receiver = Server.Data.Clients.Find(p => p.ID == request.UserID);
+
+                if(invitation != null) {
+                    db.FriendInvitations.Remove(invitation);
+                    db.SaveChanges();
+                }
+
+                if(receiver != null) {
+                    var notification = new DeclineFriendInvitationNotification() {
+                        UserID = client.ID
                     };
 
                     return new RequestResult() {

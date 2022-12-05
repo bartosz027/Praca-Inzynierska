@@ -59,7 +59,6 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
                 CurrentView = AddContactVM;
             });
 
-            // TODO: CurrentView = FriendListVM;
             Client.Instance.SendRequest(new GetInvitationsRequest());
         }
 

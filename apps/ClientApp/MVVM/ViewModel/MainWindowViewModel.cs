@@ -63,7 +63,7 @@ namespace ClientApp.MVVM.ViewModel {
             });
 
             CopyIDCommand = new RelayCommand(o => {
-                Clipboard.SetText(SettingsVM.UserID);
+                Clipboard.SetText(SettingsVM.UserID.Substring(5));
             });
 
             CurrentView = ContactsVM;

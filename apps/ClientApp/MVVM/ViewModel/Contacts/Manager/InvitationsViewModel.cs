@@ -1,8 +1,10 @@
-﻿using ClientApp.Core;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
+using ClientApp.Core;
 using Network.Client;
+
 using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.AcceptFriendInvitation;
+using Network.Shared.DataTransfer.Model.Friends.ManageInvitations.DeclineFriendInvitation;
 
 namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
 
@@ -17,7 +19,11 @@ namespace ClientApp.MVVM.ViewModel.Contacts.Manager {
             });
 
             DeclineButtonCommand = new RelayCommand(o => {
-                // TODO: Implement invitation decline
+                var item = o as ContactManagerItem;
+
+                Client.Instance.SendRequest(new DeclineFriendInvitationRequest() {
+                     UserID = item.UserID
+                });
             });
         }
 
