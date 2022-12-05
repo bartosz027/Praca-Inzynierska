@@ -50,7 +50,7 @@
                              Height="40"/>
 
 
-                <RadioButton Content="PLACEHOLDER"
+                <RadioButton Content=""
                              Style="{DynamicResource PIWindowRadioButon}"
                              Margin="0,20,0,0" IsEnabled="False"/>
 

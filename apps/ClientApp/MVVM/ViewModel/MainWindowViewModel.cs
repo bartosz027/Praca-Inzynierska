@@ -16,6 +16,8 @@ namespace ClientApp.MVVM.ViewModel {
             ContactsVM = new ContactsViewModel();
             SettingsVM = new SettingsViewModel();
 
+            IsConnected = Client.Data.TCP.Connected;
+
             Audio.MuteMicrophone(false);
             Audio.MuteHeadphones(false);
 
@@ -117,9 +119,22 @@ namespace ClientApp.MVVM.ViewModel {
                 OnPropertyChanged();
             }
         }
+        public bool IsConnected
+        {
+            get
+            {
+                return _IsConnected;
+            }
+            set
+            {
+                _IsConnected = value;
+                OnPropertyChanged();
+            }
+        }
 
         private float _Volume;
         private bool _Status;
+        private bool _IsConnected;
     }
 
 }

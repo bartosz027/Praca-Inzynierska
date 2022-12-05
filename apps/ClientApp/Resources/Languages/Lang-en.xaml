@@ -3,92 +3,117 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!-- Logowanie -->
-    <system:String x:Key="EnterEmail_String">PLACEHOLDER</system:String>
-    <system:String x:Key="EnterPassword_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EnterEmail_String">Enter your email:</system:String>
+    <system:String x:Key="EnterPassword_String">Enter your password:</system:String>
 
-    <system:String x:Key="AutoLogin_String">PLACEHOLDER</system:String>
-    <system:String x:Key="LoginButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AutoLogin_String">Remember me</system:String>
+    <system:String x:Key="LoginButton_String">Login</system:String>
 
-    <system:String x:Key="ResetPassword_String">PLACEHOLDER</system:String>
-    <system:String x:Key="ResetPasswordButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ResetPassword_String">Do not you remember the password?</system:String>
+    <system:String x:Key="ResetPasswordButton_String">Reset password</system:String>
 
-    <system:String x:Key="NewAccount_String">PLACEHOLDER</system:String>
-    <system:String x:Key="NewAccountButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="NewAccount_String">You dont have an account yet?</system:String>
+    <system:String x:Key="NewAccountButton_String">Create new account</system:String>
 
     <!-- Okrzyki walidacyjne logowanie -->
-    <system:String x:Key="InvalidEmailOrPassword_String">PLACEHOLDER</system:String>
-    <system:String x:Key="AccountNotVerified_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvalidEmailOrPassword_String">Incorrect login details.</system:String>
+    <system:String x:Key="AccountNotVerified_String">The account has not been verified.</system:String>
 
     <!-- Rejestracja -->
-    <system:String x:Key="EnterUsername_String">PLACEHOLDER</system:String>
-    <system:String x:Key="ContinueButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EnterUsername_String">Enter username:</system:String>
+    <system:String x:Key="ContinueButton_String">Next</system:String>
 
-    <system:String x:Key="EnterVerificationCode_String">PLACEHOLDER</system:String>
-    <system:String x:Key="SendVerificationCodeButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EnterVerificationCode_String">Enter the code sent to your e-mail:</system:String>
+    <system:String x:Key="SendVerificationCodeButton_String">Send</system:String>
 
     <!-- Okrzyki walidacyjne rejestracja -->
-    <system:String x:Key="FieldIsEmpty_String">PLACEHOLDER</system:String>
+    <system:String x:Key="FieldIsEmpty_String">All fields must be completed.</system:String>
 
-    <system:String x:Key="EmailAddressTaken_String">PLACEHOLDER</system:String>
-    <system:String x:Key="InvalidEmailAddress_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EmailAddressTaken_String">An account with the given e-mail address exists.</system:String>
+    <system:String x:Key="InvalidEmailAddress_String">Invalid email format.</system:String>
 
-    <system:String x:Key="InvalidUsername_String">PLACEHOLDER</system:String>
-    <system:String x:Key="InvalidPassword_String">PLACEHOLDER</system:String>
+    <system:String x:Key="InvalidUsername_String">The username must contain between {0} and {1} characters.</system:String>
+    <system:String x:Key="InvalidPassword_String">The password must be at least {0} characters long.</system:String>
 
     <!-- Resetowanie hasła -->
-    <system:String x:Key="EnterNewPassword_String">PLACEHOLDER</system:String>
-    <system:String x:Key="EnterNewPasswordAgain_String">PLACEHOLDER</system:String>
+    <system:String x:Key="EnterNewPassword_String">Enter new password:</system:String>
+    <system:String x:Key="EnterNewPasswordAgain_String">Enter the new password again:</system:String>
 
     <!-- Okrzyki walidacyjne resetowanie hasła -->
-    <system:String x:Key="AccountNotFound_String">PLACEHOLDER</system:String>
-    <system:String x:Key="NotSamePassword_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AccountNotFound_String">The account with the given e-mail address does not exist.</system:String>
+    <system:String x:Key="NotSamePassword_String">The passwords must be identical.</system:String>
 
     <!-- Okrzyki walidacyjne kod weryfikacyjny -->
-    <system:String x:Key="FieldVerificationCodeIsEmpty_String">PLACEHOLDER</system:String>
-    <system:String x:Key="InvalidVerificationCode_String">PLACEHOLDER</system:String>
-    <system:String x:Key="ExpiredVerificationCode_String">PLACEHOLDER</system:String>
+    <system:String x:Key="FieldVerificationCodeIsEmpty_String">Enter the verification code.</system:String>
+    <system:String x:Key="InvalidVerificationCode_String">Incorrect code.</system:String>
+    <system:String x:Key="ExpiredVerificationCode_String">Code expired.</system:String>
 
     <!-- Menadżer kontaktów -->
-    <system:String x:Key="ContactsManagerDescription_String">PLACEHOLDER</system:String>
-    <system:String x:Key="AddFriendButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ContactsManagerDescription_String">Contacts manager</system:String>
+    <system:String x:Key="AddFriendButton_String">Send an invitation</system:String>
 
-    <system:String x:Key="FriendListButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="PendingInvitationsButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="ReceivedInvitationsButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="SendInvitationButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="FriendListButton_String">Friends</system:String>
+    <system:String x:Key="PendingInvitationsButton_String">Pending</system:String>
+    <system:String x:Key="ReceivedInvitationsButton_String">Received</system:String>
+    <system:String x:Key="SendInvitationButton_String">Add to friends</system:String>
 
-    <!-- Okrzyki walidacyjne -->
-    <system:String x:Key="AddFriendInvalidID_String">PLACEHOLDER</system:String>
-    <system:String x:Key="AddFriendSuccess_String">PLACEHOLDER</system:String>
-    <system:String x:Key="AddFriendFailure_String">PLACEHOLDER</system:String>
+    <!-- Okrzyki walidacyjne menadżer kontaktów -->
+    <system:String x:Key="AddFriendInvalidID_String">Incorrect user ID format.</system:String>
+    <system:String x:Key="AddFriendSuccess_String">You have successfully sent an invitation, congratulations!</system:String>
+    <system:String x:Key="AddFriendSelfRequest_String">You cannot add yourself as a friend.</system:String>
+    <system:String x:Key="AddFriendExistingRequest_String">The user with the given ID has already been invited.</system:String>
+    <system:String x:Key="AddFriendExistingFriend_String">The user with the given ID is on your friends list.</system:String>
+    <system:String x:Key="AddFriendUserNotExist_String">The user with the given ID does not exist.</system:String>
 
     <!-- Ustawienia -->
-    <system:String x:Key="AccountSettings_String">PLACEHOLDER</system:String>
-    <system:String x:Key="AppSettings_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AccountSettings_String">Account settings</system:String>
+    <system:String x:Key="AppSettings_String">Application settings</system:String>
 
-    <system:String x:Key="ProfileDataButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="AccountDataButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ProfileDataButton_String">Profile data</system:String>
 
-    <system:String x:Key="ThemeButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="ThemeSettingDescription_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ProfileNickName_String">Artistic nickname:</system:String>
+    <system:String x:Key="ProfileAvatar_String">Change avatar:</system:String>
+    <system:String x:Key="ProfileAddAvatar_String">Add picture</system:String>
+    <system:String x:Key="ProfilePreview_String">Preview</system:String>
+    <system:String x:Key="ProfileSaveChanges_String">Save changes</system:String>
 
-    <system:String x:Key="LigthThemeButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="DarkThemeButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="AccountDataButton_String">Account information</system:String>
+    <system:String x:Key="AccountDataEmail_String">E-mail:</system:String>
+    <system:String x:Key="AccountDataPassword_String">Change Password:</system:String>
+    <system:String x:Key="AccountDataOldPassword_String">Enter old password:</system:String>
+    <system:String x:Key="AccountDataNewPassword_String">Enter new password:</system:String>
+    <system:String x:Key="AccountDataNewPassword2_String">Confirm new password:</system:String>
+    <system:String x:Key="AccountDataPasswordChanged_String">The password has been changed correctly.</system:String>
 
-    <system:String x:Key="LanguageDataButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="LogoutButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="ThemeButton_String">Theme</system:String>
+    <system:String x:Key="ThemeSettingDescription_String">Appearance</system:String>
+
+    <system:String x:Key="LigthThemeButton_String">Ligth Theme</system:String>
+    <system:String x:Key="DarkThemeButton_String">Dark Theme</system:String>
+
+    <system:String x:Key="LanguageDataButton_String">Language</system:String>
+    <system:String x:Key="LogoutButton_String">Log out</system:String>
 
     <!-- Menu kontekstowe -->
-    <system:String x:Key="DeleteMessageButton_String">PLACEHOLDER</system:String>
-    <system:String x:Key="CopyMessageButton_String">PLACEHOLDER</system:String>
+    <system:String x:Key="DeleteMessageButton_String">Delete</system:String>
+    <system:String x:Key="CopyMessageButton_String">Copy</system:String>
+
+    <system:String x:Key="AvailableStatus_String">Available</system:String>
+    <system:String x:Key="InvisibleStatus_String">Invisible</system:String>
+    <system:String x:Key="CopyID_String">Copy UID</system:String>
+
+    <system:String x:Key="DeleteFriend_String">Usuń kontakt ze znajomych</system:String>
 
     <!-- Języki -->
     <system:String x:Key="LangResources-pl">polski</system:String>
     <system:String x:Key="LangResources-en">english</system:String>
 
     <!-- Komunikaty -->
-    <system:String x:Key="BlockedInfo_String">PLACEHOLDER</system:String>
-    <system:String x:Key="PendingInfo_String">PLACEHOLDER</system:String>
-    <system:String x:Key="InvitationsInfo_String">PLACEHOLDER</system:String>
+    <system:String x:Key="BlockedInfo_String">jest zablokowany.</system:String>
+    <system:String x:Key="PendingInfo_String">wysłałeś mu zaproszenie.</system:String>
+    <system:String x:Key="InvitationsInfo_String">wysłał ci zaproszenie.</system:String>
+
+    <!-- Okno dzwonka -->
+    <system:String x:Key="CallMessageBox_String">Nowe połączenie</system:String>
 
 </ResourceDictionary>

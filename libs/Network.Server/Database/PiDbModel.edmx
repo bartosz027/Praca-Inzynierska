@@ -464,7 +464,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="e7a9aa18bba3495cba8a5a50673a809f" Name="Diagram1">
+      <Diagram DiagramId="64fec8dcc49148e29fc9c1711349f824" Name="Diagram1">
         <EntityTypeShape EntityType="PiDbModel.Account" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.FriendInvitation" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PiDbModel.Friendship" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
