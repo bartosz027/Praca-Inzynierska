@@ -96,7 +96,7 @@ namespace Network.Client {
 
             // Receive data
             Task.Factory.StartNew(() => {
-                byte[] receive_buffer = new byte[256 * 1024 * 1024]; // 256 MB cache
+                byte[] receive_buffer = new byte[32 * 1024 * 1024]; // 32 MB cache
                 int buffer_length = 0;
 
                 while (true) {
